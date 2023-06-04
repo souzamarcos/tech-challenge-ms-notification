@@ -10,4 +10,5 @@ application {
 
 dependencies {
     implementation(project(":web"))
+    implementation(project(":persistence"))
 }

@@ -17,13 +17,10 @@ subprojects {
 	}
 
 	dependencies {
-		//TODO implementar classes JPA
-		//	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-		implementation("org.springframework.boot:spring-boot-starter-web:3.1.0")
-		runtimeOnly("com.mysql:mysql-connector-j")
+		implementation(rootProject.libs.spring.boot.starter.web)
 
 		//Test
-		testImplementation("org.springframework.boot:spring-boot-starter-test")
+		testImplementation(rootProject.libs.spring.boot.starter.test)
 	}
 }
 
