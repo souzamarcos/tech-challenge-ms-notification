@@ -2,6 +2,7 @@
 spring-boot = "3.1.0"
 flyway = "9.19.1"
 mysql-connector = "8.0.33"
+hibernate = "6.2.4.Final"
 
 [libraries]
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
@@ -10,3 +11,4 @@ spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-start
 spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring-boot" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot" }
 mysql-connector = { module = "com.mysql:mysql-connector-j", version.ref = "mysql-connector" }
+hibernate = { module = "org.hibernate.orm:hibernate-core", version.ref = "hibernate" }
