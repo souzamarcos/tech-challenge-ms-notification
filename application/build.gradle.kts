@@ -9,6 +9,8 @@ application {
 }
 
 dependencies {
+    implementation(project(":entities"))
+    implementation(project(":usecases"))
     implementation(project(":web"))
     implementation(project(":persistence"))
 }

@@ -1,9 +1,8 @@
-package com.fiap.burger.persistence.item;
+package com.fiap.burger.persistence.item.model;
 
 import com.fiap.burger.entities.item.Item;
 import com.fiap.burger.entities.item.ItemType;
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
 
 @Entity(name = "item")
 public record ItemJPA(
