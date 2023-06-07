@@ -9,11 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductService {
 
-    public ProductService(@Autowired ProductRepository repository) {
-        this.repository = repository;
-    }
-
-    private ProductRepository repository;
+    @Autowired
+    ProductRepository repository;
 
     public List<Product> findAll() {
         return repository.findlAll();

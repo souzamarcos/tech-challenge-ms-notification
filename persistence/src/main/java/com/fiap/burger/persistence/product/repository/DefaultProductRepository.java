@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class DefaultProductRepository implements ProductRepository {
   @Autowired
-  private ProductDAO productDAO;
+  ProductDAO productDAO;
 
   @Override
   public List<Product> findlAll() {
