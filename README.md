@@ -35,3 +35,5 @@ Para executar a aplicação basta executar o comando abaixona raiz do projeto:
 ## Endpoints
 
 * `GET /health`
+* `GET /products` - Listar produtos
+* `Post /products` - Cadastrar produto
