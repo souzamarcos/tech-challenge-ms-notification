@@ -21,19 +21,16 @@ Estamos usando um arquivo [.toml para versionar](https://docs.gradle.org/current
 
 ### Configurando ambiente local
 
-Execute o comando abaixo para iniciar os containers com a base de dados e dependências necessárias para rodar a aplicação localmente.
+Execute o comando abaixo para iniciar os containers com a base de dados e executar a aplicação localmente.
 
 ```bash
 docker-compose up --build
 ```
 
-Para executar a aplicação basta executar o comando abaixona raiz do projeto:
-```bash
-./gradlew run
-```
+A aplicação será exposta na porta 8080.
 
 ## Endpoints
 
-* `GET /health`
-* `GET /products` - Listar produtos
-* `Post /products` - Cadastrar produto
+* `GET http://localhost:8080/health`
+* `GET http://localhost:8080/products` - Listar produtos
+* `POST http://localhost:8080/products` - Cadastrar produto
