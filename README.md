@@ -19,12 +19,18 @@ Estamos usando um arquivo [.toml para versionar](https://docs.gradle.org/current
 
 ## Executando aplicação
 
-### Configurando ambiente local
-
 Execute o comando abaixo para iniciar os containers com a base de dados e executar a aplicação localmente.
 
 ```bash
 docker-compose up --build
+```
+
+### Executando somente dependências
+
+Para executar somente dependências externas (Mysql, RabbitMQ, etc) da aplicação para o ambiente de desevolvimento local basta executar o comando abaixo:
+
+```bash
+docker-compose -f docker-compose-without-application.yml up --build
 ```
 
 A aplicação será exposta na porta 8080.
