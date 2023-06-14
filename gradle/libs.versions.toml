@@ -2,7 +2,9 @@
 spring-boot = "3.0.0"
 flyway = "9.19.1"
 mysql-connector = "8.0.33"
-#hibernate = "6.2.4.Final"
+hibernate = "6.2.4.Final"
+hibernate-validator = "8.0.0.Final"
+openapi = "2.1.0"
 
 [libraries]
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
@@ -11,4 +13,6 @@ spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-start
 spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring-boot" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot" }
 mysql-connector = { module = "com.mysql:mysql-connector-j", version.ref = "mysql-connector" }
-#hibernate = { module = "org.hibernate.orm:hibernate-core", version.ref = "hibernate" }
+hibernate = { module = "org.hibernate.orm:hibernate-core", version.ref = "hibernate" }
+hibernate-validator = { module = "org.hibernate.validator:hibernate-validator", version.ref = "hibernate" }
+openapi = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "openapi" }

@@ -37,6 +37,4 @@ A aplicação será exposta na porta 8080.
 
 ## Endpoints
 
-* `GET http://localhost:8080/health`
-* `GET http://localhost:8080/products` - Listar produtos
-* `POST http://localhost:8080/products` - Cadastrar produto
+Para visualizar os endpoints disponíveis na aplicação basta acessar o swagger em [http://localhost:8080/swagger](http://localhost:8080/swagger)
