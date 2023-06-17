@@ -1,7 +1,7 @@
-package com.fiap.burger.usecases.product;
+package com.fiap.burger.domain.service;
 
-import com.fiap.burger.entities.product.Product;
-import com.fiap.burger.usecases.product.repository.ProductRepository;
+import com.fiap.burger.domain.entities.product.Product;
+import com.fiap.burger.domain.adapter.repository.product.ProductRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

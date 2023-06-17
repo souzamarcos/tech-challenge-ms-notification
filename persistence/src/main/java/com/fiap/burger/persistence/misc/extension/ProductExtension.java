@@ -1,6 +1,6 @@
 package com.fiap.burger.persistence.misc.extension;
 
-import com.fiap.burger.entities.product.Product;
+import com.fiap.burger.domain.entities.product.Product;
 import com.fiap.burger.persistence.product.model.ProductJPA;
 
 public class ProductExtension {

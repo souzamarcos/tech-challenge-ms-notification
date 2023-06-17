@@ -1,10 +1,10 @@
 package com.fiap.burger.persistence.product.repository;
 
-import com.fiap.burger.entities.product.Product;
+import com.fiap.burger.domain.entities.product.Product;
 import com.fiap.burger.persistence.product.dao.ProductDAO;
 import com.fiap.burger.persistence.product.model.ProductJPA;
 import com.fiap.burger.persistence.misc.extension.ProductExtension;
-import com.fiap.burger.usecases.product.repository.ProductRepository;
+import com.fiap.burger.domain.adapter.repository.product.ProductRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
-package com.fiap.burger.usecases.product.repository;
+package com.fiap.burger.domain.adapter.repository.product;
 
-import com.fiap.burger.entities.product.Product;
+import com.fiap.burger.domain.entities.product.Product;
 import java.util.List;
 
 public interface ProductRepository {

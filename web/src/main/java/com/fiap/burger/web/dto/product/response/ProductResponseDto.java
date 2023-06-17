@@ -1,7 +1,7 @@
 package com.fiap.burger.web.dto.product.response;
 
-import com.fiap.burger.entities.product.Category;
-import com.fiap.burger.entities.product.Product;
+import com.fiap.burger.domain.entities.product.Category;
+import com.fiap.burger.domain.entities.product.Product;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 

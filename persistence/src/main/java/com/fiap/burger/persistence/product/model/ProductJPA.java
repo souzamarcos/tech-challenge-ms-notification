@@ -1,7 +1,7 @@
 package com.fiap.burger.persistence.product.model;
 
-import com.fiap.burger.entities.product.Product;
-import com.fiap.burger.entities.product.Category;
+import com.fiap.burger.domain.entities.product.Product;
+import com.fiap.burger.domain.entities.product.Category;
 import jakarta.persistence.*;
 
 @Entity(name = "product")

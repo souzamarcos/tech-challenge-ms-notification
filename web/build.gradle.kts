@@ -1,6 +1,5 @@
 dependencies {
-    implementation(project(":entities"))
-    implementation(project(":usecases"))
+    implementation(project(":domain"))
     implementation(project(":persistence"))
 
     implementation(rootProject.libs.spring.boot.starter.web)
