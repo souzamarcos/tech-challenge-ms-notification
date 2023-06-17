@@ -1,6 +1,11 @@
 plugins {
 	java
 	id("org.sonarqube") version "3.4.0.2513"
+	jacoco
+}
+
+repositories {
+	mavenCentral()
 }
 
 subprojects {
@@ -8,6 +13,7 @@ subprojects {
 	apply {
 		plugin("java")
 		plugin("org.sonarqube")
+		plugin("jacoco")
 	}
 
 	group = "com.fiap"
@@ -20,6 +26,7 @@ subprojects {
 
 	dependencies {
 		implementation(rootProject.libs.spring.boot.starter.web)
+		implementation("org.jacoco:org.jacoco.ant:0.8.10")
 
 		//Test
 		testImplementation(rootProject.libs.spring.boot.starter.test)
@@ -30,8 +37,49 @@ subprojects {
 			property("sonar.sources", "src")
 		}
 	}
+
+	tasks.withType<Test> {
+		useJUnitPlatform()
+		testLogging {
+			events("passed", "skipped", "failed")
+		}
+		finalizedBy(tasks.jacocoTestReport)
+	}
+
+	tasks.jacocoTestReport {
+		dependsOn(tasks.test) // tests are required to run before generating the report
+	}
 }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
+tasks.register<JacocoReport>("codeCoverageReport") {
+	// If a subproject applies the 'jacoco' plugin, add the result it to the report
+	subprojects {
+		val subproject = this
+		subproject.plugins.withType<JacocoPlugin>().configureEach {
+			subproject.tasks.matching { it.extensions.findByType<JacocoTaskExtension>() != null }.configureEach {
+				val testTask = this
+				sourceSets(subproject.sourceSets.main.get())
+				executionData(testTask)
+			}
+
+			// To automatically run `test` every time `./gradlew codeCoverageReport` is called,
+			// you may want to set up a task dependency between them as shown below.
+			// Note that this requires the `test` tasks to be resolved eagerly (see `forEach`) which
+			// may have a negative effect on the configuration time of your build.
+			subproject.tasks.matching { it.extensions.findByType<JacocoTaskExtension>() != null }.forEach {
+				rootProject.tasks["codeCoverageReport"].dependsOn(it)
+			}
+		}
+	}
+
+	// enable the different report types (html, xml, csv)
+	reports {
+		// xml is usually used to integrate code coverage with
+		// other tools like SonarQube, Coveralls or Codecov
+		xml.required.set(true)
+
+		// HTML reports can be used to see code coverage
+		// without any external tools
+		html.required.set(true)
+	}
 }

@@ -5,12 +5,13 @@ Projeto da pós graduação da FIAP de Arquitetura de Software
 
 * [Event Storm - MIRO](https://miro.com/app/board/uXjVMK9Fze8=/?share_link_id=624130302810)
 
-## Requisitos
+## Dependências
 * [IntelliJ IDEA (Opcional)](https://www.jetbrains.com/idea/download/#section=windows)
 * [Java JDK 19](https://www.oracle.com/java/technologies/javase/jdk19-archive-downloads.html)
 * [Spring Boot 3.1.0](https://spring.io/projects/spring-boot)
 * [Gradle 7.6.1](https://gradle.org/)
 * [Flyway](https://flywaydb.org/)
+* [Jacoco](https://www.jacoco.org/jacoco/trunk/index.html)
 
 
 ## Versionamento de libs gradle
@@ -35,7 +36,17 @@ docker-compose -f docker-compose-without-application.yml up --build
 
 A aplicação será exposta na porta 8080.
 
-## Sonar
+### Cobertura de teste
+
+Foi configurado juntamente com o plugin do jacoco para o gradle a task com nome `codeCoverageReport` que irá disparar a execução de testes da aplicação e gerar o relatório hml. Para isso execute o comando:
+```bash
+./gradlew codeCoverageReport 
+```
+Para acessar esse relatório gerado acesse o caminho `build/reports/jacoco/codeCoverageReport/html/index.hml` e abre no navegador.
+
+![img.png](static/jacoco_report_example.png)
+
+### Sonar [WIP]
 
 O sonarqube foi configurado localmente e pode ser acessar pelo endereço [localhost:9000](http://localhost:9000).
 No primeiro acesso basta acessar com o login e senha `admin`/`admin` e alterar a senha de sua escolha.
