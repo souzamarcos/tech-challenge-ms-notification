@@ -83,3 +83,7 @@ tasks.register<JacocoReport>("codeCoverageReport") {
 		html.required.set(true)
 	}
 }
+
+tasks.test {
+	dependsOn(tasks.named("codeCoverageReport"))
+}
