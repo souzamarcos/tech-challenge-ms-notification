@@ -1,11 +1,13 @@
 plugins {
 	java
+	id("org.sonarqube") version "3.4.0.2513"
 }
 
 subprojects {
 
 	apply {
 		plugin("java")
+		plugin("org.sonarqube")
 	}
 
 	group = "com.fiap"
@@ -21,6 +23,12 @@ subprojects {
 
 		//Test
 		testImplementation(rootProject.libs.spring.boot.starter.test)
+	}
+
+	sonarqube {
+		properties {
+			property("sonar.sources", "src")
+		}
 	}
 }
 
