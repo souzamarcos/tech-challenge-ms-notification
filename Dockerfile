@@ -12,7 +12,7 @@ RUN mkdir -p /home/gradle/distribution/app
 RUN unzip /home/gradle/application/build/distributions/application-0.0.1-SNAPSHOT.zip -d /home/gradle/distribution/app
 
 #Application
-FROM openjdk:19-jdk-alpine
+FROM eclipse-temurin:19-jdk-jammy
 
 COPY --from=BUILD_STAGE /home/gradle/distribution/app /opt/app
 
