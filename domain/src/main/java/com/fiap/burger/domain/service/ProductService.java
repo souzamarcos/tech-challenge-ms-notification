@@ -1,5 +1,6 @@
 package com.fiap.burger.domain.service;
 
+import com.fiap.burger.domain.entities.product.Category;
 import com.fiap.burger.domain.entities.product.Product;
 import com.fiap.burger.domain.adapter.repository.product.ProductRepository;
 import java.util.List;
@@ -14,6 +15,10 @@ public class ProductService {
 
     public List<Product> findAll() {
         return repository.findlAll();
+    }
+
+    public List<Product> findAllBy(Category category) {
+        return repository.findlAllBy(category);
     }
 
     public Product save(Product product) {

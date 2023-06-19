@@ -6,11 +6,14 @@ import com.fiap.burger.persistence.product.model.ProductJPA;
 public class ProductExtension {
     public static ProductJPA toJPA(Product product) {
         return new ProductJPA(
-            product.id(),
-            product.category(),
-            product.name(),
-            product.description(),
-            product.value()
+            product.getId(),
+            product.getCategory(),
+            product.getName(),
+            product.getDescription(),
+            product.getValue(),
+            product.getCreatedAt(),
+            product.getModifiedAt(),
+            product.getDeletedAt()
         );
     }
 }

@@ -16,11 +16,11 @@ public record ProductResponseDto(
 ) {
     public static ProductResponseDto toResponseDto(Product product) {
         return new ProductResponseDto(
-            product.id(),
-            product.category(),
-            product.name(),
-            product.description(),
-            product.value()
+            product.getId(),
+            product.getCategory(),
+            product.getName(),
+            product.getDescription(),
+            product.getValue()
         );
     }
 }
