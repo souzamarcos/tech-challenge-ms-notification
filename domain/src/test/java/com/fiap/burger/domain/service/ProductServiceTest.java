@@ -58,4 +58,18 @@ class ProductServiceTest {
 
         verify(repository, times(1)).findlAllBy(category);
     }
+
+    @Test
+    public void shouldSaveProduct() {
+        Product product = new ProductBuilder().withId(null).build();
+        Product expected = product;
+
+        when(repository.save(product)).thenReturn(product);
+
+        Product actual = service.save(product);
+
+        assertEquals(expected, actual);
+
+        verify(repository, times(1)).save(expected);
+    }
 }
