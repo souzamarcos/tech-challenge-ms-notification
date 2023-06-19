@@ -1,5 +1,7 @@
 package com.fiap.burger.domain.entities.product;
 
+
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -7,23 +9,53 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ProductTest {
 
     @Test
-    public void shouldCreateStance() {
+    public void shouldCreateInstanceWithSimpleConstructor() {
+        var category = Category.LANCHE;
+        var name = "Product Test";
+        var description = "Product description";
+        var value = 22.2;
+
         Product actual = new Product(
-            1L,
-            Category.LANCHE,
-            "Product Test",
-            "Product description",
-            22.2
+            category,
+            name,
+            description,
+            value
         );
 
-        Product expected = new Product(
-            1L,
-            Category.LANCHE,
-            "Product Test",
-            "Product description",
-            22.2
+        assertEquals(category, actual.getCategory());
+        assertEquals(name, actual.getName());
+        assertEquals(description, actual.getDescription());
+        assertEquals(value, actual.getValue());
+    }
+
+    @Test
+    public void shouldCreateInstanceWithFullConstructor() {
+        var id = 1L;
+        var category = Category.LANCHE;
+        var name = "Product Test";
+        var description = "Product description";
+        var value = 22.2;
+        var createdAt = LocalDateTime.now();
+        var modifiedAt = LocalDateTime.now();
+
+        Product actual = new Product(
+            id,
+            category,
+            name,
+            description,
+            value,
+            createdAt,
+            modifiedAt,
+            null
         );
 
-        assertEquals(expected, actual);
+        assertEquals(category, actual.getCategory());
+        assertEquals(name, actual.getName());
+        assertEquals(description, actual.getDescription());
+        assertEquals(value, actual.getValue());
+        assertEquals(value, actual.getValue());
+        assertEquals(createdAt, actual.getCreatedAt());
+        assertEquals(modifiedAt, actual.getModifiedAt());
+        assertEquals(null, actual.getDeletedAt());
     }
 }

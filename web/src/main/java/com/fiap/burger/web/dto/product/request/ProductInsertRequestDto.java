@@ -14,6 +14,6 @@ public record ProductInsertRequestDto(
     Double value
 ) {
     public Product toEntity() {
-        return new Product(null, category, name, description, value);
+        return new Product(category, name, description, value);
     }
 }
