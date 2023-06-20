@@ -54,6 +54,14 @@ public class Product extends BaseEntity {
         this.value = value;
     }
 
+    public Product(Long id, Category category, String name, String description, Double value) {
+        this.id = id;
+        this.category = category;
+        this.name = name;
+        this.description = description;
+        this.value = value;
+    }
+
     public Product(
         Long id,
         Category category,

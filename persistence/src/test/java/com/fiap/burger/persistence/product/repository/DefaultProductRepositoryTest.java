@@ -7,7 +7,7 @@ import com.fiap.burger.persistence.product.dao.ProductDAO;
 import com.fiap.burger.persistence.product.model.ProductJPA;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -17,7 +17,6 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -35,6 +34,21 @@ class DefaultProductRepositoryTest {
         MockitoAnnotations.openMocks(this);
     }
 
+
+    @Test
+    public void shouldFindById() {
+        var id = 1L;
+        var productJPA = new ProductJPABuilder().withId(1L).build();
+        var expected = productJPA.toEntity();
+
+        when(productDAO.findById(id)).thenReturn(Optional.of(productJPA));
+
+        var actual = repository.findById(id);
+
+        assertEquals(expected, actual);
+
+        verify(productDAO, times(1)).findById(id);
+    }
     @Test
     public void shouldFindAllProducts() {
         var productsJPA = Arrays.asList(new ProductJPABuilder().withId(1L).build(), new ProductJPABuilder().withId(2L).build());
@@ -42,7 +56,7 @@ class DefaultProductRepositoryTest {
 
         when(productDAO.findAllByDeletedAtNull()).thenReturn(productsJPA);
 
-        var actual = repository.findlAll();
+        var actual = repository.findAll();
 
         assertIterableEquals(expected, actual);
 
@@ -57,7 +71,7 @@ class DefaultProductRepositoryTest {
 
         when(productDAO.findAllByCategoryAndDeletedAtNull(category)).thenReturn(productsJPA);
 
-        var actual = repository.findlAllBy(category);
+        var actual = repository.findAllBy(category);
 
         assertIterableEquals(expected, actual);
 

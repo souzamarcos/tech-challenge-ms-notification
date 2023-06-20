@@ -16,12 +16,17 @@ public class DefaultProductRepository implements ProductRepository {
     ProductDAO productDAO;
 
     @Override
-    public List<Product> findlAll() {
+    public Product findById(Long id) {
+        return productDAO.findById(id).map(ProductJPA::toEntity).orElse(null);
+    }
+
+    @Override
+    public List<Product> findAll() {
         return productDAO.findAllByDeletedAtNull().stream().map(ProductJPA::toEntity).collect(Collectors.toList());
     }
 
     @Override
-    public List<Product> findlAllBy(Category category) {
+    public List<Product> findAllBy(Category category) {
         return productDAO.findAllByCategoryAndDeletedAtNull(category)
             .stream()
             .map(ProductJPA::toEntity)
