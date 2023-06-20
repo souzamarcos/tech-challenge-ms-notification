@@ -2,12 +2,34 @@ package com.fiap.burger.domain.entities.product;
 
 import com.fiap.burger.domain.entities.common.BaseEntity;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Product extends BaseEntity {
     private Category category;
     private String name;
     private String description;
     private Double value;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product product)) return false;
+        return Objects.equals(hashCode(), product.hashCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+            getId(),
+            getCategory(),
+            getName(),
+            getDescription(),
+            getValue(),
+            getCreatedAt(),
+            getModifiedAt(),
+            getDeletedAt()
+        );
+    }
 
     public Category getCategory() {
         return category;
