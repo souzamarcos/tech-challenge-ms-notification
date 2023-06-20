@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 
 public class ExceptionHttpResponse {
 
-//    var exceptions = new Set<Pair<Throwable, HttpStatus>>(Pair())
     public static HttpStatus getHttpStatusBy(Exception exception) {
         if (exception instanceof DomainException) return HttpStatus.BAD_REQUEST;
         return HttpStatus.INTERNAL_SERVER_ERROR;
