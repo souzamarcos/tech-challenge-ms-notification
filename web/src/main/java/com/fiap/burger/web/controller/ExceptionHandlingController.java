@@ -9,22 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-//@ControllerAdvice
-//public class ExceptionHandlingController {
-//
-//  // Total control - setup a model and return the view name yourself. Or
-//  // consider subclassing ExceptionHandlerExceptionResolver (see below).
-//  @ExceptionHandler(Exception.class)
-//  public ErrorResponseDto handleError(HttpServletRequest req, Exception ex) {
-//    return ErrorResponseDto.toErrorResponseDto(ex);
-//  }
-//
-////  @ExceptionHandler(Throwable.class)
-////  public ErrorResponseDto handleThrowableError(HttpServletRequest req, Exception ex) {
-////    return ErrorResponseDto.defaultError();
-////  }
-//}
-
 @ControllerAdvice
 public class ExceptionHandlingController extends ResponseEntityExceptionHandler {
 
