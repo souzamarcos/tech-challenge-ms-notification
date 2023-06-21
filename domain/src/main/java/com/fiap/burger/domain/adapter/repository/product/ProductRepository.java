@@ -5,8 +5,10 @@ import com.fiap.burger.domain.entities.product.Product;
 import java.util.List;
 
 public interface ProductRepository {
-    List<Product> findlAll();
 
-    List<Product> findlAllBy(Category category);
+    Product findById(Long id);
+    List<Product> findAll();
+
+    List<Product> findAllBy(Category category);
     Product save(Product product);
 }

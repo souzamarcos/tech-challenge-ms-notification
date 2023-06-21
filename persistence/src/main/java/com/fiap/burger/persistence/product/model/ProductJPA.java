@@ -5,9 +5,11 @@ import com.fiap.burger.domain.entities.product.Category;
 import com.fiap.burger.persistence.misc.common.BaseDomainJPA;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity(name = "product")
 public class ProductJPA extends BaseDomainJPA {
+
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -20,7 +22,8 @@ public class ProductJPA extends BaseDomainJPA {
     @Column(nullable = false)
     Double value;
 
-    public ProductJPA(){}
+    public ProductJPA() {
+    }
 
     public ProductJPA(
         Long id,
@@ -62,7 +65,41 @@ public class ProductJPA extends BaseDomainJPA {
         return value;
     }
 
-    public Product toEntity(){
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product product)) return false;
+        return Objects.equals(hashCode(), product.hashCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+            getId(),
+            getCategory(),
+            getName(),
+            getDescription(),
+            getValue(),
+            getCreatedAt(),
+            getModifiedAt(),
+            getDeletedAt()
+        );
+    }
+
+    public static ProductJPA toJPA(Product product) {
+        return new ProductJPA(
+            product.getId(),
+            product.getCategory(),
+            product.getName(),
+            product.getDescription(),
+            product.getValue(),
+            product.getCreatedAt(),
+            product.getModifiedAt(),
+            product.getDeletedAt()
+        );
+    }
+
+    public Product toEntity() {
         return new Product(id, category, name, description, value, createdAt, modifiedAt, deletedAt);
     }
 }

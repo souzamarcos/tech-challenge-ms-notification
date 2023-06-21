@@ -4,7 +4,6 @@ import com.fiap.burger.domain.entities.product.Category;
 import com.fiap.burger.domain.entities.product.Product;
 import com.fiap.burger.persistence.product.dao.ProductDAO;
 import com.fiap.burger.persistence.product.model.ProductJPA;
-import com.fiap.burger.persistence.misc.extension.ProductExtension;
 import com.fiap.burger.domain.adapter.repository.product.ProductRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,12 +16,17 @@ public class DefaultProductRepository implements ProductRepository {
     ProductDAO productDAO;
 
     @Override
-    public List<Product> findlAll() {
+    public Product findById(Long id) {
+        return productDAO.findById(id).map(ProductJPA::toEntity).orElse(null);
+    }
+
+    @Override
+    public List<Product> findAll() {
         return productDAO.findAllByDeletedAtNull().stream().map(ProductJPA::toEntity).collect(Collectors.toList());
     }
 
     @Override
-    public List<Product> findlAllBy(Category category) {
+    public List<Product> findAllBy(Category category) {
         return productDAO.findAllByCategoryAndDeletedAtNull(category)
             .stream()
             .map(ProductJPA::toEntity)
@@ -31,6 +35,6 @@ public class DefaultProductRepository implements ProductRepository {
 
     @Override
     public Product save(Product product) {
-        return productDAO.save(ProductExtension.toJPA(product)).toEntity();
+        return productDAO.save(ProductJPA.toJPA(product)).toEntity();
     }
 }
