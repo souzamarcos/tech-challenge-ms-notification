@@ -1,8 +1,12 @@
 # Tech Challenge FIAP - Burger
 Projeto da pós graduação da FIAP de Arquitetura de Software
 
-## Documentos
+## Design / Módulos
 
+![Design dos módulos da aplicação](static/design_aplicacao.png)
+
+## Documentação
+* [Wiki - Notion](https://www.notion.so/9dfe9780ad5f4d9587adc565f54bb70f?v=f2ef9c679bcf4ad1b857479c1f317c25)
 * [Event Storm - MIRO](https://miro.com/app/board/uXjVMK9Fze8=/?share_link_id=624130302810)
 
 ## Dependências
@@ -14,10 +18,6 @@ Projeto da pós graduação da FIAP de Arquitetura de Software
 * [Jacoco](https://www.jacoco.org/jacoco/trunk/index.html)
 
 
-## Versionamento de libs gradle
-
-Estamos usando um arquivo [.toml para versionar](https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format) as libs utilizadas pelo gradle. Para saber mais acesse o arquivo [libs.versions.toml](gradle/libs.versions.toml).
-
 ## Executando aplicação
 
 Execute o comando abaixo para iniciar os containers com a base de dados e executar a aplicação localmente.
@@ -26,6 +26,7 @@ Execute o comando abaixo para iniciar os containers com a base de dados e execut
 docker-compose up --build
 ```
 
+## Desenvolvimento
 ### Executando somente dependências
 
 Para executar somente dependências externas (Mysql, RabbitMQ, etc) da aplicação para o ambiente de desevolvimento local basta executar o comando abaixo:
@@ -35,6 +36,10 @@ docker-compose -f docker-compose-without-application.yml up --build
 ```
 
 A aplicação será exposta na porta 8080.
+
+### Versionamento de libs gradle
+
+Estamos usando um arquivo [.toml para versionar](https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format) as libs utilizadas pelo gradle. Para saber mais acesse o arquivo [libs.versions.toml](gradle/libs.versions.toml).
 
 ### Cobertura de teste
 
