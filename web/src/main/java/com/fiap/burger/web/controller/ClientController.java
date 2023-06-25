@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClientController {
 
     @Autowired
-    ClientService clientService;
+    private ClientService clientService;
 
     @Operation(summary = "Consultar cliente", description = "Consultar um cliente", tags = {"cliente"})
     @ApiResponses(value = {

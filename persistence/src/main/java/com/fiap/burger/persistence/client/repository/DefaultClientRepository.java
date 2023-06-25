@@ -5,7 +5,9 @@ import com.fiap.burger.domain.entities.client.Client;
 import com.fiap.burger.persistence.client.dao.ClientDAO;
 import com.fiap.burger.persistence.client.model.ClientJPA;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class DefaultClientRepository implements ClientRepository {
 
     @Autowired
