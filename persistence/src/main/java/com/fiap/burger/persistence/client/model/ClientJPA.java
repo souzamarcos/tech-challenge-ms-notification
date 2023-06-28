@@ -7,10 +7,12 @@ import com.fiap.burger.persistence.product.model.ProductJPA;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Entity(name = "client")
+@Entity
+@Table(name = "client")
 public class ClientJPA extends BaseDomainJPA {
 
     @Column(nullable = false)

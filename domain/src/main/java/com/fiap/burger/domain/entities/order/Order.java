@@ -1,13 +1,20 @@
 package com.fiap.burger.domain.entities.order;
 
+import com.fiap.burger.domain.entities.client.Client;
 import com.fiap.burger.domain.entities.common.BaseEntity;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Order extends BaseEntity {
+
     private Long clientId;
-    private List<OrderItem> item;
+
+
+
+    private Client client;
+
+    //    private List<OrderItem> item;
     private Double total;
     private OrderStatus status;
 
@@ -23,7 +30,7 @@ public class Order extends BaseEntity {
         return Objects.hash(
                 getId(),
                 getClientId(),
-                getItem(),
+//                getItem(),
                 getTotal(),
                 getStatus(),
                 getCreatedAt(),
@@ -36,23 +43,48 @@ public class Order extends BaseEntity {
         return clientId;
     }
 
-    public List<OrderItem> getItem() {
-        return item;
+    public Client getClient() {
+        return client;
     }
+
+//    public List<OrderItem> getItem() {
+//        return item;
+//    }
 
     public Double getTotal() {
         return total;
+    }
+
+    private void calculateTotal() {
+        // TODO fazer calculo do total
+        this.total = 0.0;
     }
 
     public OrderStatus getStatus() {
         return status;
     }
 
-    public Order(Long clientId, List<OrderItem> item, OrderStatus status) {
+    public Order(
+        Long id,
+        Long clientId,
+        Double total,
+        OrderStatus status,
+        LocalDateTime createdAt,
+        LocalDateTime modifiedAt,
+        LocalDateTime deletedAt
+    ) {
+        this.id = id;
         this.clientId = clientId;
-        this.item = item;
+        this.total = total;
         this.status = status;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.deletedAt = deletedAt;
     }
 
-
+    public Order(Long clientId, OrderStatus status) {
+        calculateTotal();
+        this.clientId = this.clientId;
+        this.status = status;
+    }
 }
