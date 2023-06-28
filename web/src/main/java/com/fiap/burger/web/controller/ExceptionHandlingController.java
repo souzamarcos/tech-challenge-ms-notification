@@ -12,8 +12,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ExceptionHandlingController extends ResponseEntityExceptionHandler {
 
-  @ExceptionHandler({ DomainException.class })
-  public ResponseEntity<ErrorResponseDto> handleAccessDeniedException(Exception exception, WebRequest request) {
+  @ExceptionHandler({ RuntimeException.class })
+  public ResponseEntity<ErrorResponseDto> handleExceptions(Exception exception, WebRequest request) {
     return new ResponseEntity(
         ErrorResponseDto.toErrorResponseDto(exception),
         ExceptionHttpResponse.getHttpStatusBy(exception)
