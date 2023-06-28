@@ -51,17 +51,6 @@ Para acessar esse relatório gerado acesse o caminho `build/reports/jacoco/codeC
 
 ![img.png](static/jacoco_report_example.png)
 
-### Sonar [WIP]
-
-O sonarqube foi configurado localmente e pode ser acessar pelo endereço [localhost:9000](http://localhost:9000).
-No primeiro acesso basta acessar com o login e senha `admin`/`admin` e alterar a senha de sua escolha.
-É necessário configurar a aplicação localmente para enviar estatísticas para o sonarqube adicionando o login e senha nas propriedades `systemProp.sonar.login` e `systemProp.sonar.password` no arquivo [gradle.properties](gradle.properties).
-Em seguida basta executar o comando do gradle abaixo para enviar as informações:
-Obs: o container com o sonarqube deve está rodando. Para isso basta executando os passos do [tópico acima.](#executando-somente-dependências)
-
-```bash
-./gradlew sonarqube
-```
 
 ## Endpoints
 

@@ -7,9 +7,9 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Entity(name = "product")
+@Table(name = "product")
+@Entity
 public class ProductJPA extends BaseDomainJPA {
-
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

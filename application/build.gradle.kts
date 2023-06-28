@@ -6,6 +6,9 @@ plugins {
 
 application {
     mainClass.set("com.fiap.burger.application.boot.BurgerApplication")
+    applicationDefaultJvmArgs = listOf(
+        "-Duser.timezone=America/Sao_Paulo"
+    )
 }
 
 dependencies {
