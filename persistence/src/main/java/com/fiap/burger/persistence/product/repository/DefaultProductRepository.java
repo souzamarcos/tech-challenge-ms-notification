@@ -37,4 +37,9 @@ public class DefaultProductRepository implements ProductRepository {
     public Product save(Product product) {
         return productDAO.save(ProductJPA.toJPA(product)).toEntity();
     }
+
+    @Override
+    public void deleteBy(Long id) {
+        productDAO.deleteById(id);
+    }
 }

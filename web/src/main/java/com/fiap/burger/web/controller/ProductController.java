@@ -15,6 +15,7 @@ import jakarta.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -78,5 +79,15 @@ public class ProductController {
     public ProductResponseDto update(@RequestBody ProductUpdateRequestDto productDto) {
         Product persistedProduct = productService.update(productDto.toEntity());
         return ProductResponseDto.toResponseDto(persistedProduct);
+    }
+
+    @Operation(summary = "Deletar produto", description = "Deletar um produto", tags = {"produto"})
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "400", description = "Produto inválido")
+    })
+    @DeleteMapping("/products/{productId}")
+    public ProductResponseDto deleteBy(@PathVariable Long productId) {
+        productService.deleteBy(productId);
+        return null;
     }
 }

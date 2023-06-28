@@ -42,6 +42,10 @@ public class ProductService {
         return repository.save(product);
     }
 
+    public void deleteBy(Long id) {
+        repository.deleteBy(id);
+    }
+
     private void validateProductToInsert(Product product) {
         if(product.getId() != null) throw new InvalidAttributeException("Product should not have defined id", "id");
         validateProduct(product);
