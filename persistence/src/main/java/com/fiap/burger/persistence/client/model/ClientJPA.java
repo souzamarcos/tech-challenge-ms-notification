@@ -52,7 +52,9 @@ public class ClientJPA extends BaseDomainJPA {
         return email;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -64,25 +66,26 @@ public class ClientJPA extends BaseDomainJPA {
     @Override
     public int hashCode() {
         return Objects.hash(
-                getId(),
-                getCpf(),
-                getEmail(),
-                getName(),
-                getCreatedAt(),
-                getModifiedAt(),
-                getDeletedAt()
+            getId(),
+            getCpf(),
+            getEmail(),
+            getName(),
+            getCreatedAt(),
+            getModifiedAt(),
+            getDeletedAt()
         );
     }
 
     public static ClientJPA toJPA(Client client) {
+        if (client == null) return null;
         return new ClientJPA(
-                client.getId(),
-                client.getCpf(),
-                client.getEmail(),
-                client.getName(),
-                client.getCreatedAt(),
-                client.getModifiedAt(),
-                client.getDeletedAt()
+            client.getId(),
+            client.getCpf(),
+            client.getEmail(),
+            client.getName(),
+            client.getCreatedAt(),
+            client.getModifiedAt(),
+            client.getDeletedAt()
         );
     }
 

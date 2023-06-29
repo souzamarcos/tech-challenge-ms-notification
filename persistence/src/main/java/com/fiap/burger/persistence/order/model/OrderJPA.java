@@ -7,6 +7,7 @@ import com.fiap.burger.persistence.misc.common.BaseDomainJPA;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Set;
 import org.aspectj.weaver.ast.Or;
 
@@ -49,6 +50,26 @@ public class OrderJPA extends BaseDomainJPA {
     }
 
     public Order toEntity() {
-        return new Order(id, client.getId(), total, status, createdAt, modifiedAt, deletedAt);
+        return new Order(
+            id,
+            Optional.ofNullable(client).map(ClientJPA::getId).orElse(null),
+            total,
+            status,
+            createdAt,
+            modifiedAt,
+            deletedAt
+        );
+    }
+
+    public static OrderJPA toJPA(Order order) {
+        return new OrderJPA(
+            order.getId(),
+            ClientJPA.toJPA(order.getClient()),
+            order.getTotal(),
+            order.getStatus(),
+            order.getCreatedAt(),
+            order.getModifiedAt(),
+            order.getDeletedAt()
+        );
     }
 }

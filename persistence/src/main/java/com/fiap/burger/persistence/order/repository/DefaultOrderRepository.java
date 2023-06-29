@@ -2,7 +2,6 @@ package com.fiap.burger.persistence.order.repository;
 
 import com.fiap.burger.domain.adapter.repository.order.OrderRepository;
 import com.fiap.burger.domain.entities.order.Order;
-import com.fiap.burger.domain.entities.product.Category;
 import com.fiap.burger.persistence.order.dao.OrderDAO;
 import com.fiap.burger.persistence.order.model.OrderJPA;
 import java.util.List;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class DefaultOrderRepository implements OrderRepository {
     @Autowired
-    OrderDAO productDAO;
+    OrderDAO orderDAO;
 
 //    @Override
 //    public Order findById(Long id) {
@@ -22,7 +21,7 @@ public class DefaultOrderRepository implements OrderRepository {
 
     @Override
     public List<Order> findAll() {
-        return productDAO.findAllByDeletedAtNull().stream().map(OrderJPA::toEntity).collect(Collectors.toList());
+        return orderDAO.findAllByDeletedAtNull().stream().map(OrderJPA::toEntity).collect(Collectors.toList());
     }
 
 //    @Override
@@ -33,10 +32,10 @@ public class DefaultOrderRepository implements OrderRepository {
 //            .collect(Collectors.toList());
 //    }
 //
-//    @Override
-//    public Order save(Order product) {
-//        return productDAO.save(OrderJPA.toJPA(product)).toEntity();
-//    }
+    @Override
+    public Order save(Order product) {
+        return orderDAO.save(OrderJPA.toJPA(product)).toEntity();
+    }
 //
 //    @Override
 //    public void deleteBy(Long id) {

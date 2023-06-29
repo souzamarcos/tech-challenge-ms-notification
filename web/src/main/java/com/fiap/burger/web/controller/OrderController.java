@@ -31,9 +31,8 @@ public class OrderController {
             @ApiResponse(responseCode = "400", description = "Pedido inválido")
     })
     @PostMapping("/orders")
-    public String insert(@RequestBody OrderInsertRequestDto orderDto) {
-
-        return "Mestre ensinandooooo";
+    public OrderResponseDto insert(@RequestBody OrderInsertRequestDto orderDto) {
+        return OrderResponseDto.toResponseDto(service.insert(orderDto.toEntity()));
     }
 
     @Operation(summary = "Listar pedidos", description = "Listar pedidos não deletados", tags = {"pedido"})
@@ -42,6 +41,7 @@ public class OrderController {
     })
     @GetMapping("/orders")
     public List<OrderResponseDto> findAll() {
+        // TODO verificar se precisamos order por id de forma descrescente
         return service.findAll().stream().map(OrderResponseDto::toResponseDto).collect(Collectors.toList());
     }
 }
