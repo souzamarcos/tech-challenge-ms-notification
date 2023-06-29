@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClientController {
 
     @Autowired
-    private ClientService clientService;
+    private ClientService service;
 
     @Operation(summary = "Consultar cliente", description = "Consultar um cliente", tags = {"cliente"})
     @ApiResponses(value = {
@@ -27,7 +27,7 @@ public class ClientController {
     })
     @GetMapping("/{clientId}")
     public ClientResponseDto findById(@PathVariable Long clientId) {
-        var persistedClient = clientService.findById(clientId);
+        var persistedClient = service.findById(clientId);
         if (persistedClient == null) throw new ClientNotFoundException();
         return ClientResponseDto.toResponseDto(persistedClient);
     }

@@ -21,6 +21,6 @@ public record OrderInsertRequestDto (
     //    List<OrderItemInsertRequestDto> items,
 ) {
     public Order toEntity() {
-        return new Order(clientId, OrderStatus.AGUARDANDO_PAGAMENTO);
+        return new Order(clientId, OrderStatus.RECEBIDO);
     }
 }

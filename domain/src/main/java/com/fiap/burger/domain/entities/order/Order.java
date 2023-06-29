@@ -84,7 +84,7 @@ public class Order extends BaseEntity {
 
     public Order(Long clientId, OrderStatus status) {
         calculateTotal();
-        this.clientId = this.clientId;
+        this.clientId = clientId;
         this.status = status;
     }
 }

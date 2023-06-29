@@ -29,19 +29,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     @Autowired
-    ProductService productService;
+    ProductService service;
 
     @Operation(summary = "Listar produtos", description = "Listagem dos produtos cadastrados", tags = {"produto"})
     @GetMapping("/products")
     public List<ProductResponseDto> list(@RequestParam @Nullable Category category) {
         if (category == null) {
-            return productService
+            return service
                 .findAll()
                 .stream()
                 .map(ProductResponseDto::toResponseDto)
                 .collect(Collectors.toList());
         } else {
-            return productService
+            return service
                 .findAllBy(category)
                 .stream()
                 .map(ProductResponseDto::toResponseDto)
@@ -55,7 +55,7 @@ public class ProductController {
     })
     @GetMapping("/products/{productId}")
     public ProductResponseDto findById(@PathVariable Long productId) {
-        var persistedProduct = productService.findById(productId);
+        var persistedProduct = service.findById(productId);
         if (persistedProduct == null) throw new ProductNotFoundException();
         return ProductResponseDto.toResponseDto(persistedProduct);
     }
@@ -66,7 +66,7 @@ public class ProductController {
     })
     @PostMapping("/products")
     public ProductResponseDto insert(@RequestBody ProductInsertRequestDto productDto) {
-        Product persistedProduct = productService.insert(productDto.toEntity());
+        Product persistedProduct = service.insert(productDto.toEntity());
         return ProductResponseDto.toResponseDto(persistedProduct);
     }
 
@@ -77,7 +77,7 @@ public class ProductController {
     })
     @PutMapping("/products")
     public ProductResponseDto update(@RequestBody ProductUpdateRequestDto productDto) {
-        Product persistedProduct = productService.update(productDto.toEntity());
+        Product persistedProduct = service.update(productDto.toEntity());
         return ProductResponseDto.toResponseDto(persistedProduct);
     }
 
@@ -87,7 +87,7 @@ public class ProductController {
     })
     @DeleteMapping("/products/{productId}")
     public ProductResponseDto deleteBy(@PathVariable Long productId) {
-        productService.deleteBy(productId);
+        service.deleteBy(productId);
         return null;
     }
 }

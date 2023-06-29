@@ -14,10 +14,10 @@ public class DefaultOrderRepository implements OrderRepository {
     @Autowired
     OrderDAO orderDAO;
 
-//    @Override
-//    public Order findById(Long id) {
-//        return productDAO.findById(id).map(OrderJPA::toEntity).orElse(null);
-//    }
+    @Override
+    public Order findById(Long id) {
+        return orderDAO.findById(id).map(OrderJPA::toEntity).orElse(null);
+    }
 
     @Override
     public List<Order> findAll() {
