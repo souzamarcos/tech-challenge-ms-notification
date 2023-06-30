@@ -24,14 +24,6 @@ public class DefaultOrderRepository implements OrderRepository {
         return orderDAO.findAllByDeletedAtNull().stream().map(OrderJPA::toEntity).collect(Collectors.toList());
     }
 
-//    @Override
-//    public List<Order> findAllBy(Category category) {
-//        return productDAO.findAllByCategoryAndDeletedAtNull(category)
-//            .stream()
-//            .map(OrderJPA::toEntity)
-//            .collect(Collectors.toList());
-//    }
-//
     @Override
     public Order save(Order product) {
         return orderDAO.save(OrderJPA.toJPA(product)).toEntity();

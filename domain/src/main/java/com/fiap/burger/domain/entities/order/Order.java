@@ -4,18 +4,17 @@ import com.fiap.burger.domain.entities.client.Client;
 import com.fiap.burger.domain.entities.common.BaseEntity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 public class Order extends BaseEntity {
 
     private Long clientId;
 
-
-
     private Client client;
-
-    //    private List<OrderItem> item;
+    private List<OrderItem> items;
     private Double total;
+
     private OrderStatus status;
 
     @Override
@@ -30,7 +29,7 @@ public class Order extends BaseEntity {
         return Objects.hash(
                 getId(),
                 getClientId(),
-//                getItem(),
+                getItems(),
                 getTotal(),
                 getStatus(),
                 getCreatedAt(),
@@ -47,17 +46,16 @@ public class Order extends BaseEntity {
         return client;
     }
 
-//    public List<OrderItem> getItem() {
-//        return item;
-//    }
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
 
     public Double getTotal() {
         return total;
-    }
-
-    private void calculateTotal() {
-        // TODO fazer calculo do total
-        this.total = 0.0;
     }
 
     public OrderStatus getStatus() {
@@ -82,9 +80,29 @@ public class Order extends BaseEntity {
         this.deletedAt = deletedAt;
     }
 
-    public Order(Long clientId, OrderStatus status) {
-        calculateTotal();
+    public Order(
+        Long id,
+        Long clientId,
+        List<OrderItem> items,
+        Double total,
+        OrderStatus status,
+        LocalDateTime createdAt,
+        LocalDateTime modifiedAt,
+        LocalDateTime deletedAt
+    ) {
+        this.id = id;
         this.clientId = clientId;
+        this.items = items;
+        this.total = total;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.deletedAt = deletedAt;
+    }
+
+    public Order(Long clientId, List<OrderItem> items, OrderStatus status) {
+        this.clientId = clientId;
+        this.items = items;
         this.status = status;
     }
 }

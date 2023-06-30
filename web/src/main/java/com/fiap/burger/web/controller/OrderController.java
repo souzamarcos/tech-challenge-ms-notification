@@ -3,6 +3,7 @@ package com.fiap.burger.web.controller;
 import com.fiap.burger.domain.misc.exception.OrderNotFoundException;
 import com.fiap.burger.domain.service.OrderService;
 import com.fiap.burger.web.dto.order.request.OrderInsertRequestDto;
+import com.fiap.burger.web.dto.order.response.ListOrderResponseDto;
 import com.fiap.burger.web.dto.order.response.OrderResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -43,8 +44,8 @@ public class OrderController {
     @Operation(summary = "Listar pedidos", description = "Listar pedidos", tags = {"pedido"})
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Request inválida")})
     @GetMapping("/orders")
-    public List<OrderResponseDto> findAll() {
+    public List<ListOrderResponseDto> findAll() {
         // TODO verificar se precisamos order por id de forma descrescente
-        return service.findAll().stream().map(OrderResponseDto::toResponseDto).collect(Collectors.toList());
+        return service.findAll().stream().map(ListOrderResponseDto::toResponseDto).collect(Collectors.toList());
     }
 }
