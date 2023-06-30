@@ -13,8 +13,6 @@ public record ListOrderResponseDto(
     @Null
     OrderClientResponseDto client,
 
-    //TODO implementar items do pedido
-
     @NotNull
     Double total,
 

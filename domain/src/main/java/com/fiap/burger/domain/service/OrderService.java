@@ -45,7 +45,7 @@ public class OrderService {
         var orderItems = order.getItems();
         orderItems.forEach(item -> item.setOrderId(persistedOrder.getId()));
         orderItemRepository.saveAll(orderItems);
-        return orderRepository.findById(persistedOrder.getId());
+        return persistedOrder;
     }
 
     // TODO refatorar validação e calculo de total pra ficar numa estrutura mais legível

@@ -16,7 +16,7 @@ public class DefaultOrderRepository implements OrderRepository {
 
     @Override
     public Order findById(Long id) {
-        return orderDAO.findById(id).map(OrderJPA::toEntity).orElse(null);
+        return orderDAO.findById(id).map(OrderJPA::toEntityWithItems).orElse(null);
     }
 
     @Override

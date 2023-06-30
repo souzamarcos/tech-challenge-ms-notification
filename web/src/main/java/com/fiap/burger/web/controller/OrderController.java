@@ -28,8 +28,9 @@ public class OrderController {
     @Operation(summary = "Criar pedido", description = "Criação de um novo pedido", tags = {"pedido"})
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Pedido inválido")})
     @PostMapping("/orders")
-    public OrderResponseDto insert(@RequestBody OrderInsertRequestDto orderDto) {
-        return OrderResponseDto.toResponseDto(service.insert(orderDto.toEntity()));
+    public ListOrderResponseDto insert(@RequestBody OrderInsertRequestDto orderDto) {
+        // TODO retornar items do pedido inserido
+        return ListOrderResponseDto.toResponseDto(service.insert(orderDto.toEntity()));
     }
 
     @Operation(summary = "Consultar pedido", description = "Consultar pedidos", tags = {"pedido"})
