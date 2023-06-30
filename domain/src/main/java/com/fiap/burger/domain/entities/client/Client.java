@@ -73,4 +73,13 @@ public class Client extends BaseEntity {
         this.modifiedAt = modifiedAt;
         this.deletedAt = deletedAt;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "cpf='" + cpf + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
