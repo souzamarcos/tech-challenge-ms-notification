@@ -11,7 +11,7 @@ public class OrderItem {
 
 
     Long productId;
-    //    List<Long> additionalIds;
+        List<Long> additionalIds;
     String comment;
 
     @Override
@@ -46,19 +46,19 @@ public class OrderItem {
         return productId;
     }
 
-//    public List<Long> getAdditionalIds() {
-//        return additionalIds;
-//    }
+    public List<Long> getAdditionalIds() {
+        return additionalIds;
+    }
 
     public String getComment() {
         return comment;
     }
 
-    public OrderItem(Long id, Long orderId, Long productId, String comment) {
+    public OrderItem(Long id, Long orderId, Long productId, List<Long> additionalIds, String comment) {
         this.id = id;
         this.orderId = orderId;
         this.productId = productId;
-//        this.additionalIds = additionalIds;
+        this.additionalIds = additionalIds;
         this.comment = comment;
     }
 

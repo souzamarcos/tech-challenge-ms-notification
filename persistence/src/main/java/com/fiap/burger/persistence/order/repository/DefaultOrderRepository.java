@@ -28,6 +28,11 @@ public class DefaultOrderRepository implements OrderRepository {
     public Order save(Order product) {
         return orderDAO.save(OrderJPA.toJPA(product)).toEntity();
     }
+
+    @Override
+    public Order save2(Order product) {
+        return orderDAO.save(OrderJPA.toJPA2(product)).toEntity();
+    }
 //
 //    @Override
 //    public void deleteBy(Long id) {

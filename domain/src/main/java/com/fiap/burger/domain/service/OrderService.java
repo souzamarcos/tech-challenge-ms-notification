@@ -40,11 +40,13 @@ public class OrderService {
         order.setTotal(calculateTotal(order.getItems()));
         validateOrderToInsert(order);
 
-        //TODO refatorar essa parte porque não parece a melhor maneira
-        var persistedOrder = orderRepository.save(order);
-        var orderItems = order.getItems();
-        orderItems.forEach(item -> item.setOrderId(persistedOrder.getId()));
-        orderItemRepository.saveAll(orderItems);
+        var persistedOrder = orderRepository.save2(order);
+
+        //TODO refatorar essa parte porque não parece a melhor maneira e incluir itens adicionais
+//        var persistedOrder = orderRepository.save(order);
+//        var orderItems = order.getItems();
+//        orderItems.forEach(item -> item.setOrderId(persistedOrder.getId()));
+//        orderItemRepository.saveAll(orderItems);
         return persistedOrder;
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 public record OrderItemInsertRequestDto(
     @NotNull
     Long productId,
-//    List<Long> additionalIds,
+    List<Long> additionalIds,
     @Null
     String comment
 ) {
@@ -17,8 +17,9 @@ public record OrderItemInsertRequestDto(
 
         return new OrderItem(
             null,
+            null,
             productId,
-//            additionalIds,
+            additionalIds,
             comment
         );
     }

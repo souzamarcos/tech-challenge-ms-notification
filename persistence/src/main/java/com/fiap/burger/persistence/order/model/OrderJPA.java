@@ -9,9 +9,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
-import org.aspectj.weaver.ast.Or;
 
 @Entity
 @Table(name = "`order`")
@@ -21,7 +19,7 @@ public class OrderJPA extends BaseDomainJPA {
     ClientJPA client;
 
     // TODO melhorar perfomance do fetch
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     List<OrderItemJPA> items;
     @Column
     Double total;
@@ -90,5 +88,26 @@ public class OrderJPA extends BaseDomainJPA {
             order.getModifiedAt(),
             order.getDeletedAt()
         );
+    }
+
+    public static OrderJPA toJPA2(Order order) {
+        OrderJPA newOrder = new OrderJPA(
+                order.getId(),
+                ClientJPA.toJPA(order.getClient()),
+                null,
+                order.getTotal(),
+                order.getStatus(),
+                order.getCreatedAt(),
+                order.getModifiedAt(),
+                order.getDeletedAt()
+        );
+        List<OrderItemJPA> items = order.getItems().stream().map(orderItem -> OrderItemJPA.toJPA2(orderItem, newOrder)).collect(Collectors.toList());
+
+        newOrder.setItems(items);
+        return newOrder;
+    }
+
+    public void setItems(List<OrderItemJPA> items) {
+        this.items = items;
     }
 }

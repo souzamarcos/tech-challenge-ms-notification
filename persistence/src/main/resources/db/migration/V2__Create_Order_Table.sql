@@ -26,6 +26,6 @@ CREATE TABLE `order_item_additional`(
     `order_item_id` BIGINT NOT NULL,
     `product_id` BIGINT NOT NULL,
     CONSTRAINT `pk_id` PRIMARY KEY (id),
-    CONSTRAINT `fk_order_item_additional_order_item_id` FOREIGN KEY (`id`) REFERENCES `order_item` (`id`),
+    CONSTRAINT `fk_order_item_additional_order_item_id` FOREIGN KEY (`order_item_id`) REFERENCES `order_item` (`id`),
     CONSTRAINT `fk_order_item_additional_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
 );
