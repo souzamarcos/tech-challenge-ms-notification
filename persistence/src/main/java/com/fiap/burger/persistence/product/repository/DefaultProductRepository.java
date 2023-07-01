@@ -21,6 +21,11 @@ public class DefaultProductRepository implements ProductRepository {
     }
 
     @Override
+    public List<Product> findByIds(List<Long> ids) {
+        return  productDAO.findAllByIdInAndDeletedAtNull(ids).stream().map(ProductJPA::toEntity).collect(Collectors.toList());
+    }
+
+    @Override
     public List<Product> findAll() {
         return productDAO.findAllByDeletedAtNull().stream().map(ProductJPA::toEntity).collect(Collectors.toList());
     }

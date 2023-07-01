@@ -1,5 +1,7 @@
 package com.fiap.burger.domain.entities.order;
 
+import com.fiap.burger.domain.entities.product.Product;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -11,8 +13,12 @@ public class OrderItem {
 
 
     Long productId;
-    //    List<Long> additionalIds;
+        List<Long> additionalIds;
     String comment;
+
+    Product product;
+
+    List<OrderItemAdditional> orderItemAdditionals;
 
     @Override
     public boolean equals(Object o) {
@@ -26,7 +32,9 @@ public class OrderItem {
         return Objects.hash(
             getOrderId(),
             getProductId(),
-            getComment()
+            getComment(),
+            getProduct(),
+            getOrderItemAdditionals()
         );
     }
 
@@ -46,19 +54,27 @@ public class OrderItem {
         return productId;
     }
 
-//    public List<Long> getAdditionalIds() {
-//        return additionalIds;
-//    }
+    public List<Long> getAdditionalIds() {
+        return additionalIds;
+    }
 
     public String getComment() {
         return comment;
     }
 
-    public OrderItem(Long id, Long orderId, Long productId, String comment) {
+    public Product getProduct() {
+        return product;
+    }
+
+    public List<OrderItemAdditional> getOrderItemAdditionals() {
+        return orderItemAdditionals;
+    }
+
+    public OrderItem(Long id, Long orderId, Long productId, List<Long> additionalIds, String comment) {
         this.id = id;
         this.orderId = orderId;
         this.productId = productId;
-//        this.additionalIds = additionalIds;
+        this.additionalIds = additionalIds;
         this.comment = comment;
     }
 
@@ -66,5 +82,13 @@ public class OrderItem {
         this.orderId = orderId;
         this.productId = productId;
         this.comment = comment;
+    }
+
+    public OrderItem(Long id, Long orderId, List<OrderItemAdditional> orderItemAdditionals, String comment, Product product) {
+        this.id = id;
+        this.orderId = orderId;
+        this.orderItemAdditionals = orderItemAdditionals;
+        this.comment = comment;
+        this.product = product;
     }
 }
