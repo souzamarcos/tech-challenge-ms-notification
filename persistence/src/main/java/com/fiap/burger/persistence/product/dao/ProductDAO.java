@@ -14,6 +14,8 @@ public interface ProductDAO extends JpaRepository<ProductJPA, Long> {
 
     List<ProductJPA> findAllByCategoryAndDeletedAtNull(Category category);
 
+    List<ProductJPA> findAllByIdInAndDeletedAtNull(List<Long> ids);
+
     @Modifying
     @Query("update ProductJPA p set p.deletedAt = CURRENT_TIMESTAMP where p.id = :id")
     void deleteById(@Param("id") Long id);
