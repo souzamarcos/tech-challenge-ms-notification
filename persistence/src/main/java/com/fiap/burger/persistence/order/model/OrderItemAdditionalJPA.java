@@ -4,6 +4,8 @@ import com.fiap.burger.domain.entities.order.OrderItemAdditional;
 import com.fiap.burger.persistence.product.model.ProductJPA;
 import jakarta.persistence.*;
 
+import java.util.Optional;
+
 @Entity
 @Table(name = "order_item_additional")
 public class OrderItemAdditionalJPA {
@@ -38,7 +40,7 @@ public class OrderItemAdditionalJPA {
         return  new OrderItemAdditional(
                 id,
                 orderItemId,
-                product.toEntity()
+                Optional.ofNullable(product).map(ProductJPA::toEntity).orElse(null)
         );
     }
 

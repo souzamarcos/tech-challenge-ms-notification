@@ -65,9 +65,9 @@ public class OrderItemJPA {
         return new OrderItem(
                 id,
                 orderId,
-                orderItemAdditional.stream().map(OrderItemAdditionalJPA::toEntity).collect(Collectors.toList()),
+                Optional.ofNullable(orderItemAdditional).map(items -> items.stream().map(OrderItemAdditionalJPA::toEntity).collect(Collectors.toList())).orElse(null),
                 comment,
-                product.toEntity()
+                Optional.ofNullable(product).map(ProductJPA::toEntity).orElse(null)
         );
     }
 
