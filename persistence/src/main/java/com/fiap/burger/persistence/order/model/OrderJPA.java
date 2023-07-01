@@ -7,6 +7,7 @@ import com.fiap.burger.persistence.misc.common.BaseDomainJPA;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -68,7 +69,7 @@ public class OrderJPA extends BaseDomainJPA {
             id,
             Optional.ofNullable(client).map(ClientJPA::getId).orElse(null),
             //TODO verificar pq os itens as vezes são retornados e as vezes não
-            items.stream().map(OrderItemJPA::toEntity).collect(Collectors.toList()),
+            items.stream().map(OrderItemJPA::toEntityWithAdditional).collect(Collectors.toList()),
             total,
             status,
             createdAt,
@@ -78,19 +79,6 @@ public class OrderJPA extends BaseDomainJPA {
     }
 
     public static OrderJPA toJPA(Order order) {
-        return new OrderJPA(
-            order.getId(),
-            ClientJPA.toJPA(order.getClient()),
-            null,
-            order.getTotal(),
-            order.getStatus(),
-            order.getCreatedAt(),
-            order.getModifiedAt(),
-            order.getDeletedAt()
-        );
-    }
-
-    public static OrderJPA toJPA2(Order order) {
         OrderJPA newOrder = new OrderJPA(
                 order.getId(),
                 ClientJPA.toJPA(order.getClient()),
@@ -101,9 +89,11 @@ public class OrderJPA extends BaseDomainJPA {
                 order.getModifiedAt(),
                 order.getDeletedAt()
         );
-        List<OrderItemJPA> items = order.getItems().stream().map(orderItem -> OrderItemJPA.toJPA2(orderItem, newOrder)).collect(Collectors.toList());
 
-        newOrder.setItems(items);
+        if (!Optional.ofNullable(order.getItems()).orElse(Collections.emptyList()).isEmpty()) {
+            List<OrderItemJPA> items = order.getItems().stream().map(orderItem -> OrderItemJPA.toJPA(orderItem, newOrder)).collect(Collectors.toList());
+            newOrder.setItems(items);
+        }
         return newOrder;
     }
 

@@ -1,7 +1,6 @@
 package com.fiap.burger.domain.service;
 
 import com.fiap.burger.domain.adapter.repository.client.ClientRepository;
-import com.fiap.burger.domain.adapter.repository.order.OrderItemRepository;
 import com.fiap.burger.domain.adapter.repository.order.OrderRepository;
 import com.fiap.burger.domain.adapter.repository.product.ProductRepository;
 import com.fiap.burger.domain.entities.order.Order;
@@ -23,9 +22,6 @@ public class OrderService {
     OrderRepository orderRepository;
 
     @Autowired
-    OrderItemRepository orderItemRepository;
-
-    @Autowired
     ProductRepository productRepository;
 
     public Order findById(Long id) {
@@ -39,14 +35,7 @@ public class OrderService {
     public Order insert(Order order) {
         order.setTotal(calculateTotal(order.getItems()));
         validateOrderToInsert(order);
-
-        var persistedOrder = orderRepository.save2(order);
-
-        //TODO refatorar essa parte porque não parece a melhor maneira e incluir itens adicionais
-//        var persistedOrder = orderRepository.save(order);
-//        var orderItems = order.getItems();
-//        orderItems.forEach(item -> item.setOrderId(persistedOrder.getId()));
-//        orderItemRepository.saveAll(orderItems);
+        var persistedOrder = orderRepository.save(order);
         return persistedOrder;
     }
 

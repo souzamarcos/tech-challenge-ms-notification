@@ -3,7 +3,10 @@ package com.fiap.burger.persistence.order.model;
 import com.fiap.burger.domain.entities.order.OrderItem;
 import com.fiap.burger.persistence.product.model.ProductJPA;
 import jakarta.persistence.*;
+
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Entity
@@ -28,8 +31,6 @@ public class OrderItemJPA {
     @Column(name = "product_id")
     Long productId;
 
-    //    @Column
-    //    List<Long> additionalIds;
     @Column
     String comment;
 
@@ -42,28 +43,12 @@ public class OrderItemJPA {
 
     public OrderItemJPA(
             Long productId,
-//        List<Long> additionalIds,
             String comment,
             OrderJPA orderJPA
     ) {
         this.productId = productId;
-//        this.additionalIds = additionalIds;
         this.comment = comment;
         this.order = orderJPA;
-    }
-
-    public OrderItemJPA(
-        Long id,
-        Long orderId,
-        Long productId,
-//        List<Long> additionalIds,
-        String comment
-    ) {
-        this.id = id;
-        this.orderId = orderId;
-        this.productId = productId;
-//        this.additionalIds = additionalIds;
-        this.comment = comment;
     }
 
     public OrderItem toEntity() {
@@ -76,28 +61,29 @@ public class OrderItemJPA {
         );
     }
 
-    public static OrderItemJPA toJPA(OrderItem orderItem) {
-        return new OrderItemJPA(
-            orderItem.getId(),
-            orderItem.getOrderId(),
-            orderItem.getProductId(),
-            orderItem.getComment()
+    public OrderItem toEntityWithAdditional() {
+        return new OrderItem(
+                id,
+                orderId,
+                orderItemAdditional.stream().map(OrderItemAdditionalJPA::toEntity).collect(Collectors.toList()),
+                comment,
+                product.toEntity()
         );
     }
 
-    public static OrderItemJPA toJPA2(OrderItem orderItem, OrderJPA orderJPA) {
+    public static OrderItemJPA toJPA(OrderItem orderItem, OrderJPA orderJPA) {
         OrderItemJPA newOrderItem = new OrderItemJPA(
                 orderItem.getProductId(),
                 orderItem.getComment(),
                 orderJPA
         );
 
-        List<OrderItemAdditionalJPA> itemAdditionals = orderItem.getAdditionalIds().stream().map(itemAdditional -> OrderItemAdditionalJPA.toJPA2(itemAdditional, newOrderItem)).collect(Collectors.toList());
-
-        newOrderItem.setOrderItemAdditional(itemAdditionals);
+        if (!Optional.ofNullable(orderItem.getAdditionalIds()).orElse(Collections.emptyList()).isEmpty()) {
+            List<OrderItemAdditionalJPA> itemAdditionals = orderItem.getAdditionalIds().stream().map(itemAdditional -> OrderItemAdditionalJPA.toJPA(itemAdditional, newOrderItem)).collect(Collectors.toList());
+            newOrderItem.setOrderItemAdditional(itemAdditionals);
+        }
         return newOrderItem;
     }
-
     public void setOrderItemAdditional(List<OrderItemAdditionalJPA> orderItemAdditional) {
         this.orderItemAdditional = orderItemAdditional;
     }

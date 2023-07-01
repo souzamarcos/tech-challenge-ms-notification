@@ -30,10 +30,24 @@ public class OrderItemAdditionalJPA {
         this.productId = productId;
     }
 
-    public static OrderItemAdditionalJPA toJPA2(Long productId, OrderItemJPA orderItemJPA) {
+    public OrderItemAdditionalJPA() {
+
+    }
+
+    public OrderItemAdditional toEntity() {
+        return  new OrderItemAdditional(
+                id,
+                orderItemId,
+                product.toEntity()
+        );
+    }
+
+
+    public static OrderItemAdditionalJPA toJPA(Long productId, OrderItemJPA orderItemJPA) {
         return  new OrderItemAdditionalJPA(
                 orderItemJPA,
                 productId
         );
     }
+
 }

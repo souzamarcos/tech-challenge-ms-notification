@@ -1,5 +1,7 @@
 package com.fiap.burger.domain.entities.order;
 
+import com.fiap.burger.domain.entities.product.Product;
+
 import java.util.Objects;
 
 public class OrderItemAdditional {
@@ -7,6 +9,8 @@ public class OrderItemAdditional {
 
     Long orderItemId;
     Long productId;
+
+    Product product;
 
     @Override
     public boolean equals(Object o) {
@@ -20,7 +24,8 @@ public class OrderItemAdditional {
         return Objects.hash(
                 getId(),
                 getOrderItemId(),
-                getProductId()
+                getProductId(),
+                getProduct()
         );
     }
 
@@ -36,6 +41,10 @@ public class OrderItemAdditional {
         return productId;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
     public OrderItemAdditional(Long id, Long orderItemId, Long productId) {
         this.id = id;
         this.orderItemId = orderItemId;
@@ -45,5 +54,11 @@ public class OrderItemAdditional {
     public OrderItemAdditional(Long orderItemId, Long productId) {
         this.orderItemId = orderItemId;
         this.productId = productId;
+    }
+
+    public OrderItemAdditional(Long id, Long orderItemId, Product product) {
+        this.id = id;
+        this.orderItemId = orderItemId;
+        this.product = product;
     }
 }
