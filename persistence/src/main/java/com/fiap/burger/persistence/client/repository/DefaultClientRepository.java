@@ -17,4 +17,11 @@ public class DefaultClientRepository implements ClientRepository {
     public Client findById(Long id) {
         return clientDAO.findById(id).map(ClientJPA::toEntity).orElse(null);
     }
+
+    @Override
+    public Client save(Client client)  {
+        return clientDAO.save(ClientJPA.toJPA(client)).toEntity();
+    }
+
+
 }
