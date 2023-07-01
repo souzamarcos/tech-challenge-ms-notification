@@ -5,4 +5,5 @@ import com.fiap.burger.domain.entities.client.Client;
 public interface ClientRepository {
 
     Client findById(Long id);
+    Client save(Client client);
 }
