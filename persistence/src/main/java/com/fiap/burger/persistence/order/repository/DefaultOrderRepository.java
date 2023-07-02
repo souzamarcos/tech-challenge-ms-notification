@@ -2,8 +2,10 @@ package com.fiap.burger.persistence.order.repository;
 
 import com.fiap.burger.domain.adapter.repository.order.OrderRepository;
 import com.fiap.burger.domain.entities.order.Order;
+import com.fiap.burger.domain.entities.order.OrderStatus;
 import com.fiap.burger.persistence.order.dao.OrderDAO;
 import com.fiap.burger.persistence.order.model.OrderJPA;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +29,11 @@ public class DefaultOrderRepository implements OrderRepository {
     @Override
     public Order save(Order product) {
         return orderDAO.save(OrderJPA.toJPA(product)).toEntityWithItems();
+    }
+
+    @Override
+    @Transactional
+    public void updateStatus(Long id, OrderStatus newStatus) {
+        orderDAO.updateStatus(id, newStatus);
     }
 }

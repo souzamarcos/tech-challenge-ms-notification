@@ -3,6 +3,7 @@ package com.fiap.burger.web.controller;
 import com.fiap.burger.domain.misc.exception.OrderNotFoundException;
 import com.fiap.burger.domain.service.OrderService;
 import com.fiap.burger.web.dto.order.request.OrderInsertRequestDto;
+import com.fiap.burger.web.dto.order.request.OrderUpdateStatusRequestDto;
 import com.fiap.burger.web.dto.order.response.ListOrderResponseDto;
 import com.fiap.burger.web.dto.order.response.OrderResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,6 +41,13 @@ public class OrderController {
         var persistedOrder = service.findById(orderId);
         if (persistedOrder == null) throw new OrderNotFoundException(orderId);
         return OrderResponseDto.toResponseDto(persistedOrder);
+    }
+
+    @Operation(summary = "Atualizar status do pedido", description = "Atualizar status de um pedido", tags = {"pedido"})
+    @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Requisição inválida")})
+    @PostMapping("/orders/{orderId}/status")
+    public ListOrderResponseDto insert(@PathVariable Long orderId, @RequestBody OrderUpdateStatusRequestDto orderDto) {
+        return ListOrderResponseDto.toResponseDto(service.updateStatus(orderId, orderDto.newStatus()));
     }
 
     @Operation(summary = "Listar pedidos", description = "Listar pedidos", tags = {"pedido"})

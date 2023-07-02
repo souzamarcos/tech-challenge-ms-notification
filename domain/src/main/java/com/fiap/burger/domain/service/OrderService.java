@@ -11,6 +11,7 @@ import com.fiap.burger.domain.entities.product.Product;
 import com.fiap.burger.domain.misc.exception.InvalidAttributeException;
 import com.fiap.burger.domain.misc.exception.NegativeOrZeroValueException;
 
+import com.fiap.burger.domain.misc.exception.OrderNotFoundException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -36,20 +37,37 @@ public class OrderService {
     }
 
 
-
     public List<Order> findAll() {
         return orderRepository.findAll();
     }
 
     public Order insert(Order order) {
-        List<Long> productsId =  order.getItems().stream().map(OrderItem::getProductId).collect(Collectors.toList());
+        List<Long> productsId = order.getItems().stream().map(OrderItem::getProductId).collect(Collectors.toList());
         productsId.addAll(order.getItems().stream().flatMap(item -> Optional.ofNullable(item.getAdditionalIds()).orElse(Collections.emptyList()).stream()).toList());
         List<Product> products = productRepository.findByIds(productsId);
         validateProducts(order, products);
         order.setTotal(calculateTotal(productsId, products));
         validateOrderToInsert(order);
-        var persistedOrder = orderRepository.save(order);
-        return persistedOrder;
+        return orderRepository.save(order);
+    }
+
+    public Order updateStatus(Long orderId, OrderStatus newStatus) {
+        var order = orderRepository.findById(orderId);
+
+        if (order == null) {
+            throw new OrderNotFoundException(orderId);
+        }
+
+        validateUpdateStatus(newStatus, order.getStatus());
+        orderRepository.updateStatus(order.getId(), newStatus);
+        order.setStatus(newStatus);
+        return order;
+    }
+
+    private void validateUpdateStatus(OrderStatus newStatus, OrderStatus oldStatus) {
+        if (oldStatus.ordinal() + 1 != newStatus.ordinal()) {
+            throw new InvalidAttributeException(String.format("Next status from '%s' should not be '%s'", oldStatus.name(), newStatus.name()), "newStatus");
+        }
     }
 
     private void validateProducts(Order order, List<Product> products) {
@@ -96,20 +114,6 @@ public class OrderService {
 
     private Double calculateTotal(List<Long> productIds, List<Product> products) {
         return productIds.stream().mapToDouble(id -> products.stream().filter(product -> product.getId().equals(id)).findFirst().map(Product::getValue).orElse(0.0)).sum();
-    }
-
-    // TODO refatorar validação e calculo de total pra ficar numa estrutura mais legível
-
-    private Double calculateTotal(List<OrderItem> items) {
-        AtomicReference<Double> itemsTotal = new AtomicReference<>(0.0);
-        items.forEach(item -> {
-            var product = productRepository.findById(item.getProductId());
-            if (product == null) {
-                throw new InvalidAttributeException("Product '" + item.getProductId() + "' not found.", "items.productId");
-            }
-            itemsTotal.updateAndGet(v -> v + product.getValue());
-        });
-        return itemsTotal.get();
     }
 
     private void validateOrderToInsert(Order order) {
