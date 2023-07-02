@@ -39,7 +39,7 @@ public class ClientController {
     public ClientResponseDto insert(@RequestBody ClientInsertRequestDto clientDto) {
         System.out.println(clientDto);
         System.out.println(clientDto.toEntity());
-        Client persistedClient = clientService.insert(clientDto.toEntity());
+        Client persistedClient = service.insert(clientDto.toEntity());
         return ClientResponseDto.toResponseDto(persistedClient);
     }
 }
