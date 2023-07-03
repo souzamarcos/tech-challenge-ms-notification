@@ -31,15 +31,14 @@ public class ClientController {
         return ClientResponseDto.toResponseDto(persistedClient);
     }
 
+
     @Operation(summary = "Cadastrar cliente", description = "Cadastrar um cliente", tags = {"cliente"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Cliente inválido")
     })
     @PostMapping
     public ClientResponseDto insert(@RequestBody ClientInsertRequestDto clientDto) {
-        System.out.println(clientDto);
-        System.out.println(clientDto.toEntity());
-        Client persistedClient = clientService.insert(clientDto.toEntity());
+        Client persistedClient = service.insert(clientDto.toEntity());
         return ClientResponseDto.toResponseDto(persistedClient);
     }
 }
