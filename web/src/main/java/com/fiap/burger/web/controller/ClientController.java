@@ -31,14 +31,23 @@ public class ClientController {
         return ClientResponseDto.toResponseDto(persistedClient);
     }
 
+    @Operation(summary = "Buscar cliente por cpf", description = "Buscar cliente por cpf", tags = {"cliente"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "404", description = "Cliente não encontrado")
+    })
+    @GetMapping("/by-cpf/{clientCpf}")
+    public ClientResponseDto findByCpf(@PathVariable String clientCpf) {
+        var persistedClient = service.findByCpf(clientCpf);
+        if (persistedClient == null) throw new ClientNotFoundException();
+        return ClientResponseDto.toResponseDto(persistedClient);
+    }
+
     @Operation(summary = "Cadastrar cliente", description = "Cadastrar um cliente", tags = {"cliente"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Cliente inválido")
     })
     @PostMapping
     public ClientResponseDto insert(@RequestBody ClientInsertRequestDto clientDto) {
-        System.out.println(clientDto);
-        System.out.println(clientDto.toEntity());
         Client persistedClient = service.insert(clientDto.toEntity());
         return ClientResponseDto.toResponseDto(persistedClient);
     }
