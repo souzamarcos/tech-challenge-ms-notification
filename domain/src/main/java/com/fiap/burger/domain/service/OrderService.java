@@ -41,6 +41,15 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public List<Order> findAllBy(OrderStatus status) {
+        if (status == null) return orderRepository.findAll();
+        return orderRepository.findAllBy(status);
+    }
+
+    public List<Order> findAllInProgress() {
+        return orderRepository.findAllInProgress();
+    }
+
     public Order insert(Order order) {
         List<Long> productsId = order.getItems().stream().map(OrderItem::getProductId).collect(Collectors.toList());
         productsId.addAll(order.getItems().stream().flatMap(item -> Optional.ofNullable(item.getAdditionalIds()).orElse(Collections.emptyList()).stream()).toList());

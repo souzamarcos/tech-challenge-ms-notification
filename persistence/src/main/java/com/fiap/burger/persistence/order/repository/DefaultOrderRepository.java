@@ -7,6 +7,7 @@ import com.fiap.burger.persistence.order.dao.OrderDAO;
 import com.fiap.burger.persistence.order.model.OrderJPA;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,6 +25,23 @@ public class DefaultOrderRepository implements OrderRepository {
     @Override
     public List<Order> findAll() {
         return orderDAO.findAllByDeletedAtNull().stream().map(OrderJPA::toEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Order> findAllBy(OrderStatus status) {
+        return orderDAO.findAllByDeletedAtNullAndStatusEquals(status)
+            .stream()
+            .map(OrderJPA::toEntity)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Order> findAllInProgress() {
+        var inProgressStatuses = Set.of(OrderStatus.EM_PREPARACAO, OrderStatus.PRONTO);
+        return orderDAO.findAllByDeletedAtNullAndStatusInOrderByIdDesc(inProgressStatuses)
+            .stream()
+            .map(OrderJPA::toEntity)
+            .collect(Collectors.toList());
     }
 
     @Override

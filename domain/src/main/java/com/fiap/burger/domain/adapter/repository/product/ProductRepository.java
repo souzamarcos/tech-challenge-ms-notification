@@ -9,9 +9,11 @@ public interface ProductRepository {
     Product findById(Long id);
 
     List<Product> findByIds(List<Long> ids);
+
     List<Product> findAll();
 
     List<Product> findAllBy(Category category);
+
     Product save(Product product);
 
     void deleteBy(Long id);
