@@ -1,6 +1,7 @@
 package com.fiap.burger.web.controller;
 
 import com.fiap.burger.domain.entities.client.Client;
+import com.fiap.burger.domain.misc.exception.ClientCpfAlreadyExistsException;
 import com.fiap.burger.domain.misc.exception.ClientNotFoundException;
 import com.fiap.burger.domain.service.ClientService;
 import com.fiap.burger.web.dto.client.request.ClientInsertRequestDto;
@@ -26,7 +27,6 @@ public class ClientController {
     })
     @GetMapping("/{clientId}")
     public ClientResponseDto findById(@PathVariable Long clientId) {
-        System.out.println(36767687);
         var persistedClient = service.findById(clientId);
         if (persistedClient == null) throw new ClientNotFoundException();
         return ClientResponseDto.toResponseDto(persistedClient);
@@ -49,7 +49,12 @@ public class ClientController {
     })
     @PostMapping
     public ClientResponseDto insert(@RequestBody ClientInsertRequestDto clientDto) {
-        Client persistedClient = service.insert(clientDto.toEntity());
-        return ClientResponseDto.toResponseDto(persistedClient);
+        Client persistedClient = service.findByCpf(clientDto.cpf());
+        if (persistedClient == null) {
+            persistedClient = service.insert(clientDto.toEntity());
+            return ClientResponseDto.toResponseDto(persistedClient);
+        } else {
+            throw new ClientCpfAlreadyExistsException();
+        }
     }
 }
