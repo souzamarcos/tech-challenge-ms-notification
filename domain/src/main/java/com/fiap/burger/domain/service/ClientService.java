@@ -16,6 +16,8 @@ public class ClientService {
 
     public Client findById(Long id) {return repository.findById(id);}
 
+    public Client findByCpf(String cpf) {return repository.findByCpf(cpf);}
+
     public Client insert(Client client) {
         validateClientToInsert(client);
         return repository.save(client);
