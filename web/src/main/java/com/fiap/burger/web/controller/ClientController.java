@@ -26,11 +26,22 @@ public class ClientController {
     })
     @GetMapping("/{clientId}")
     public ClientResponseDto findById(@PathVariable Long clientId) {
+        System.out.println(36767687);
         var persistedClient = service.findById(clientId);
         if (persistedClient == null) throw new ClientNotFoundException();
         return ClientResponseDto.toResponseDto(persistedClient);
     }
 
+    @Operation(summary = "Buscar cliente por cpf", description = "Buscar cliente por cpf", tags = {"cliente"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "404", description = "Cliente não encontrado")
+    })
+    @GetMapping("/by-cpf/{clientCpf}")
+    public ClientResponseDto findByCpf(@PathVariable String clientCpf) {
+        var persistedClient = service.findByCpf(clientCpf);
+        if (persistedClient == null) throw new ClientNotFoundException();
+        return ClientResponseDto.toResponseDto(persistedClient);
+    }
 
     @Operation(summary = "Cadastrar cliente", description = "Cadastrar um cliente", tags = {"cliente"})
     @ApiResponses(value = {
