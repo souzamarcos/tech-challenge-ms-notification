@@ -20,7 +20,7 @@ public class OrderJPA extends BaseDomainJPA {
     ClientJPA client;
 
     // TODO melhorar perfomance do fetch
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     List<OrderItemJPA> items;
     @Column
     Double total;

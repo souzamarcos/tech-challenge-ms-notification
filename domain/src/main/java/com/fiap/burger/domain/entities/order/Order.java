@@ -15,6 +15,7 @@ public class Order extends BaseEntity {
     private List<OrderItem> items;
     private Double total;
 
+
     private OrderStatus status;
 
     @Override
@@ -60,6 +61,10 @@ public class Order extends BaseEntity {
 
     public OrderStatus getStatus() {
         return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
     public Order(

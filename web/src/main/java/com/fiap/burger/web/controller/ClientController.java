@@ -26,7 +26,6 @@ public class ClientController {
     })
     @GetMapping("/{clientId}")
     public ClientResponseDto findById(@PathVariable Long clientId) {
-        System.out.println(36767687);
         var persistedClient = service.findById(clientId);
         if (persistedClient == null) throw new ClientNotFoundException();
         return ClientResponseDto.toResponseDto(persistedClient);
