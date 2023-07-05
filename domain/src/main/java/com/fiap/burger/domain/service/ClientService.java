@@ -7,6 +7,7 @@ import com.fiap.burger.domain.misc.exception.InvalidAttributeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.fiap.burger.domain.misc.ValidationCPF.validateCPF;
 import static com.fiap.burger.domain.misc.ValidationUtils.*;
 
 @Service
@@ -36,7 +37,7 @@ public class ClientService {
     private void validateClient(Client client) {
         validateNotNull(client.getCpf(), "cpf");
         validateNotBlank(client.getCpf(), "cpf");
-        validateCPF(client.getCpf(), "cpf");
+        validateCPF(client.getCpf());
         validateNotNull(client.getEmail(), "email");
         validateNotBlank(client.getEmail(), "email");
         validateEmailFormat(client.getEmail(), "email");
