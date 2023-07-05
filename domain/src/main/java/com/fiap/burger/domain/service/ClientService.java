@@ -2,6 +2,7 @@ package com.fiap.burger.domain.service;
 
 import com.fiap.burger.domain.adapter.repository.client.ClientRepository;
 import com.fiap.burger.domain.entities.client.Client;
+import com.fiap.burger.domain.misc.exception.ClientCpfAlreadyExistsException;
 import com.fiap.burger.domain.misc.exception.InvalidAttributeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,10 @@ public class ClientService {
     public Client findByCpf(String cpf) {return repository.findByCpf(cpf);}
 
     public Client insert(Client client) {
+        Client persistedClient = findByCpf(client.getCpf());
+        if(persistedClient != null) {
+            throw new ClientCpfAlreadyExistsException();
+        }
         validateClientToInsert(client);
         return repository.save(client);
     }

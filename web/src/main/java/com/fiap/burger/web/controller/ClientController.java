@@ -1,7 +1,6 @@
 package com.fiap.burger.web.controller;
 
 import com.fiap.burger.domain.entities.client.Client;
-import com.fiap.burger.domain.misc.exception.ClientCpfAlreadyExistsException;
 import com.fiap.burger.domain.misc.exception.ClientNotFoundException;
 import com.fiap.burger.domain.service.ClientService;
 import com.fiap.burger.web.dto.client.request.ClientInsertRequestDto;
@@ -49,12 +48,7 @@ public class ClientController {
     })
     @PostMapping
     public ClientResponseDto insert(@RequestBody ClientInsertRequestDto clientDto) {
-        Client persistedClient = service.findByCpf(clientDto.cpf());
-        if (persistedClient == null) {
-            persistedClient = service.insert(clientDto.toEntity());
-            return ClientResponseDto.toResponseDto(persistedClient);
-        } else {
-            throw new ClientCpfAlreadyExistsException();
-        }
+        Client persistedClient = service.insert(clientDto.toEntity());
+        return ClientResponseDto.toResponseDto(persistedClient);
     }
 }
