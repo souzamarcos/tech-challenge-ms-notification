@@ -3,6 +3,7 @@ package com.fiap.burger.domain.service;
 import com.fiap.burger.domain.adapter.repository.client.ClientRepository;
 import com.fiap.burger.domain.adapter.repository.order.OrderRepository;
 import com.fiap.burger.domain.adapter.repository.product.ProductRepository;
+import com.fiap.burger.domain.entities.client.Client;
 import com.fiap.burger.domain.entities.order.Order;
 import com.fiap.burger.domain.entities.order.OrderItem;
 import com.fiap.burger.domain.entities.order.OrderStatus;
@@ -51,13 +52,16 @@ public class OrderService {
     }
 
     public Order insert(Order order) {
+        Client client = getClient(order);
         List<Long> productsId = order.getItems().stream().map(OrderItem::getProductId).collect(Collectors.toList());
         productsId.addAll(order.getItems().stream().flatMap(item -> Optional.ofNullable(item.getAdditionalIds()).orElse(Collections.emptyList()).stream()).toList());
         List<Product> products = productRepository.findByIds(productsId);
         validateProducts(order, products);
         order.setTotal(calculateTotal(productsId, products));
         validateOrderToInsert(order);
-        return orderRepository.save(order);
+        var persistedOrder = orderRepository.save(order);
+        persistedOrder.setClient(client);
+        return persistedOrder;
     }
 
     public Order updateStatus(Long orderId, OrderStatus newStatus) {
@@ -125,14 +129,18 @@ public class OrderService {
         return productIds.stream().mapToDouble(id -> products.stream().filter(product -> product.getId().equals(id)).findFirst().map(Product::getValue).orElse(0.0)).sum();
     }
 
-    private void validateOrderToInsert(Order order) {
+    private Client getClient(Order order) {
         if (order.getClientId() != null) {
-            var client = clientRepository.findById(order.getClientId());
+            Client client = clientRepository.findById(order.getClientId());
             if (client == null) {
                 throw new InvalidAttributeException("Client '" + order.getClientId() + "' not found.", "clientId");
             }
+            return client;
         }
+        return null;
+    }
 
+    private void validateOrderToInsert(Order order) {
         if (order.getStatus() != OrderStatus.RECEBIDO) {
             throw new InvalidAttributeException("Order should be created with status 'RECEBIDO'", "id");
         }
