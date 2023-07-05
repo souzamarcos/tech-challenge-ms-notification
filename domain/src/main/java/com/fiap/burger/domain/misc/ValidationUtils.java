@@ -22,10 +22,4 @@ public class ValidationUtils {
             throw new InvalidEmailFormatException();
         }
     }
-
-    public static void validateCPF(String cpf, String attributeName) {
-        if (cpf.length() != 11) {
-            throw new InvalidCPFException();
-        }
-    }
 }
