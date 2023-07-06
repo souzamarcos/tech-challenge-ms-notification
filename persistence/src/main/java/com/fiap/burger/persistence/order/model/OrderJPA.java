@@ -16,7 +16,8 @@ import java.util.stream.Collectors;
 @Table(name = "`order`")
 public class OrderJPA extends BaseDomainJPA {
 
-    @ManyToOne
+    @JoinColumn(name = "client_id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     ClientJPA client;
 
     // TODO melhorar perfomance do fetch
@@ -28,12 +29,15 @@ public class OrderJPA extends BaseDomainJPA {
     @Column
     OrderStatus status;
 
+    @Column(name = "client_id")
+    Long clientId;
+
     public OrderJPA() {
     }
 
     public OrderJPA(
         Long id,
-        ClientJPA client,
+        Long clientId,
         List<OrderItemJPA> items,
         Double total,
         OrderStatus status,
@@ -43,7 +47,7 @@ public class OrderJPA extends BaseDomainJPA {
 
     ) {
         this.id = id;
-        this.client = client;
+        this.clientId = clientId;
         this.total = total;
         this.items = items;
         this.status = status;
@@ -67,7 +71,7 @@ public class OrderJPA extends BaseDomainJPA {
     public Order toEntityWithItems() {
         return new Order(
             id,
-            Optional.ofNullable(client).map(ClientJPA::getId).orElse(null),
+            Optional.ofNullable(client).map(ClientJPA::toEntity).orElse(null),
             //TODO verificar pq os itens as vezes são retornados e as vezes não
             items.stream().map(OrderItemJPA::toEntityWithAdditional).collect(Collectors.toList()),
             total,
@@ -81,7 +85,7 @@ public class OrderJPA extends BaseDomainJPA {
     public static OrderJPA toJPA(Order order) {
         OrderJPA newOrder = new OrderJPA(
                 order.getId(),
-                ClientJPA.toJPA(order.getClient()),
+                order.getClientId(),
                 null,
                 order.getTotal(),
                 order.getStatus(),

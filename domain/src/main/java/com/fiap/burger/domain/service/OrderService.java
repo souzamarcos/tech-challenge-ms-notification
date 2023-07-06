@@ -3,6 +3,7 @@ package com.fiap.burger.domain.service;
 import com.fiap.burger.domain.adapter.repository.client.ClientRepository;
 import com.fiap.burger.domain.adapter.repository.order.OrderRepository;
 import com.fiap.burger.domain.adapter.repository.product.ProductRepository;
+import com.fiap.burger.domain.entities.client.Client;
 import com.fiap.burger.domain.entities.order.Order;
 import com.fiap.burger.domain.entities.order.OrderItem;
 import com.fiap.burger.domain.entities.order.OrderStatus;
@@ -51,13 +52,29 @@ public class OrderService {
     }
 
     public Order insert(Order order) {
+        Client client = getClient(order);
         List<Long> productsId = order.getItems().stream().map(OrderItem::getProductId).collect(Collectors.toList());
         productsId.addAll(order.getItems().stream().flatMap(item -> Optional.ofNullable(item.getAdditionalIds()).orElse(Collections.emptyList()).stream()).toList());
         List<Product> products = productRepository.findByIds(productsId);
         validateProducts(order, products);
         order.setTotal(calculateTotal(productsId, products));
         validateOrderToInsert(order);
-        return orderRepository.save(order);
+        var persistedOrder = orderRepository.save(order);
+        persistedOrder.setClient(client);
+        return persistedOrder;
+    }
+
+    public Order checkout(Long orderId) {
+        var order = orderRepository.findById(orderId);
+
+        if (order == null) {
+            throw new OrderNotFoundException(orderId);
+        }
+
+        validateCheckout(order.getStatus());
+        orderRepository.updateStatus(order.getId(), OrderStatus.RECEBIDO);
+        order.setStatus(OrderStatus.RECEBIDO);
+        return order;
     }
 
     public Order updateStatus(Long orderId, OrderStatus newStatus) {
@@ -74,8 +91,17 @@ public class OrderService {
     }
 
     private void validateUpdateStatus(OrderStatus newStatus, OrderStatus oldStatus) {
+        if (OrderStatus.AGUARDANDO_PAGAMENTO.equals(oldStatus)) {
+            throw new InvalidAttributeException("You can not change status of orders that are awaiting payment.", "oldStatus");
+        }
         if (oldStatus.ordinal() + 1 != newStatus.ordinal()) {
             throw new InvalidAttributeException(String.format("Next status from '%s' should not be '%s'", oldStatus.name(), newStatus.name()), "newStatus");
+        }
+    }
+
+    private void validateCheckout(OrderStatus oldStatus) {
+        if (!OrderStatus.AGUARDANDO_PAGAMENTO.equals(oldStatus)) {
+            throw new InvalidAttributeException("You can only check out orders that are awaiting payment.", "oldStatus");
         }
     }
 
@@ -125,16 +151,20 @@ public class OrderService {
         return productIds.stream().mapToDouble(id -> products.stream().filter(product -> product.getId().equals(id)).findFirst().map(Product::getValue).orElse(0.0)).sum();
     }
 
-    private void validateOrderToInsert(Order order) {
+    private Client getClient(Order order) {
         if (order.getClientId() != null) {
-            var client = clientRepository.findById(order.getClientId());
+            Client client = clientRepository.findById(order.getClientId());
             if (client == null) {
                 throw new InvalidAttributeException("Client '" + order.getClientId() + "' not found.", "clientId");
             }
+            return client;
         }
+        return null;
+    }
 
-        if (order.getStatus() != OrderStatus.RECEBIDO) {
-            throw new InvalidAttributeException("Order should be created with status 'RECEBIDO'", "id");
+    private void validateOrderToInsert(Order order) {
+        if (order.getStatus() != OrderStatus.AGUARDANDO_PAGAMENTO) {
+            throw new InvalidAttributeException("Order should be created with status 'AGUARDANDO PAGAMENTO'", "id");
         }
         validateOrder(order);
     }

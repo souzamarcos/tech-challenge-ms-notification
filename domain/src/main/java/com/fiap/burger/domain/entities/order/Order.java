@@ -67,6 +67,8 @@ public class Order extends BaseEntity {
         this.status = status;
     }
 
+    public void setClient(Client client) { this.client = client; }
+
     public Order(
         Long id,
         Long clientId,
@@ -87,7 +89,7 @@ public class Order extends BaseEntity {
 
     public Order(
         Long id,
-        Long clientId,
+        Client client,
         List<OrderItem> items,
         Double total,
         OrderStatus status,
@@ -96,7 +98,7 @@ public class Order extends BaseEntity {
         LocalDateTime deletedAt
     ) {
         this.id = id;
-        this.clientId = clientId;
+        this.client = client;
         this.items = items;
         this.total = total;
         this.status = status;

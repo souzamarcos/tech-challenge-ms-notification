@@ -18,7 +18,7 @@ public record OrderInsertRequestDto(
         return new Order(
             clientId,
             items().stream().map(OrderItemInsertRequestDto::toEntity).collect(Collectors.toList()),
-            OrderStatus.RECEBIDO
+            OrderStatus.AGUARDANDO_PAGAMENTO
         );
     }
 }

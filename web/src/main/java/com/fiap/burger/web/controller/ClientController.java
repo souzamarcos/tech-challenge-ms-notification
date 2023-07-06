@@ -46,7 +46,7 @@ public class ClientController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Cliente inválido")
     })
-    @PostMapping
+    @PostMapping()
     public ClientResponseDto insert(@RequestBody ClientInsertRequestDto clientDto) {
         Client persistedClient = service.insert(clientDto.toEntity());
         return ClientResponseDto.toResponseDto(persistedClient);
