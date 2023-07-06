@@ -47,7 +47,7 @@ public class ClientController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Cliente inválido")
     })
-    @PostMapping
+    @PostMapping()
     public ClientResponseDto insert(@RequestBody ClientInsertRequestDto clientDto) {
         Client persistedClient = service.findByCpf(clientDto.cpf());
         if (persistedClient == null) {

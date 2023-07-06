@@ -15,24 +15,18 @@ import jakarta.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/products")
 @Tag(name = "produto", description = "API responsável pelo controle de produtos disponíveis para realização de pedidos.")
 public class ProductController {
 
     @Autowired
-    ProductService service;
+    private ProductService service;
 
     @Operation(summary = "Listar produtos", description = "Listagem dos produtos cadastrados", tags = {"produto"})
-    @GetMapping("/products")
+    @GetMapping()
     public List<ProductResponseDto> list(@RequestParam @Nullable Category category) {
         if (category == null) {
             return service
@@ -53,7 +47,7 @@ public class ProductController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "404", description = "Produto não encontrado")
     })
-    @GetMapping("/products/{productId}")
+    @GetMapping("/{productId}")
     public ProductResponseDto findById(@PathVariable Long productId) {
         var persistedProduct = service.findById(productId);
         if (persistedProduct == null) throw new ProductNotFoundException();
@@ -64,7 +58,7 @@ public class ProductController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "400", description = "Produto inválido")
     })
-    @PostMapping("/products")
+    @PostMapping()
     public ProductResponseDto insert(@RequestBody ProductInsertRequestDto productDto) {
         Product persistedProduct = service.insert(productDto.toEntity());
         return ProductResponseDto.toResponseDto(persistedProduct);
@@ -75,7 +69,7 @@ public class ProductController {
         @ApiResponse(responseCode = "400", description = "Produto inválido"),
         @ApiResponse(responseCode = "404", description = "Produto não encontrado")
     })
-    @PutMapping("/products")
+    @PutMapping()
     public ProductResponseDto update(@RequestBody ProductUpdateRequestDto productDto) {
         Product persistedProduct = service.update(productDto.toEntity());
         return ProductResponseDto.toResponseDto(persistedProduct);
@@ -85,7 +79,7 @@ public class ProductController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "400", description = "Produto inválido")
     })
-    @DeleteMapping("/products/{productId}")
+    @DeleteMapping("/{productId}")
     public ProductResponseDto deleteBy(@PathVariable Long productId) {
         service.deleteBy(productId);
         return null;

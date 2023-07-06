@@ -37,7 +37,7 @@ public class DefaultOrderRepository implements OrderRepository {
 
     @Override
     public List<Order> findAllInProgress() {
-        var inProgressStatuses = Set.of(OrderStatus.EM_PREPARACAO, OrderStatus.PRONTO);
+        var inProgressStatuses = Set.of(OrderStatus.RECEBIDO, OrderStatus.EM_PREPARACAO, OrderStatus.PRONTO);
         return orderDAO.findAllByDeletedAtNullAndStatusInOrderByIdDesc(inProgressStatuses)
             .stream()
             .map(OrderJPA::toEntity)

@@ -64,6 +64,19 @@ public class OrderService {
         return persistedOrder;
     }
 
+    public Order checkout(Long orderId) {
+        var order = orderRepository.findById(orderId);
+
+        if (order == null) {
+            throw new OrderNotFoundException(orderId);
+        }
+
+        validateCheckout(order.getStatus());
+        orderRepository.updateStatus(order.getId(), OrderStatus.RECEBIDO);
+        order.setStatus(OrderStatus.RECEBIDO);
+        return order;
+    }
+
     public Order updateStatus(Long orderId, OrderStatus newStatus) {
         var order = orderRepository.findById(orderId);
 
@@ -78,8 +91,17 @@ public class OrderService {
     }
 
     private void validateUpdateStatus(OrderStatus newStatus, OrderStatus oldStatus) {
+        if (OrderStatus.AGUARDANDO_PAGAMENTO.equals(oldStatus)) {
+            throw new InvalidAttributeException("You can not change status of orders that are awaiting payment.", "oldStatus");
+        }
         if (oldStatus.ordinal() + 1 != newStatus.ordinal()) {
             throw new InvalidAttributeException(String.format("Next status from '%s' should not be '%s'", oldStatus.name(), newStatus.name()), "newStatus");
+        }
+    }
+
+    private void validateCheckout(OrderStatus oldStatus) {
+        if (!OrderStatus.AGUARDANDO_PAGAMENTO.equals(oldStatus)) {
+            throw new InvalidAttributeException("You can only check out orders that are awaiting payment.", "oldStatus");
         }
     }
 
@@ -141,8 +163,8 @@ public class OrderService {
     }
 
     private void validateOrderToInsert(Order order) {
-        if (order.getStatus() != OrderStatus.RECEBIDO) {
-            throw new InvalidAttributeException("Order should be created with status 'RECEBIDO'", "id");
+        if (order.getStatus() != OrderStatus.AGUARDANDO_PAGAMENTO) {
+            throw new InvalidAttributeException("Order should be created with status 'AGUARDANDO PAGAMENTO'", "id");
         }
         validateOrder(order);
     }
