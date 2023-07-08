@@ -6,6 +6,7 @@ import com.fiap.burger.domain.misc.exception.ProductNotFoundException;
 import com.fiap.burger.domain.service.ProductService;
 import com.fiap.burger.web.dto.product.request.ProductInsertRequestDto;
 import com.fiap.burger.web.dto.product.request.ProductUpdateRequestDto;
+import com.fiap.burger.web.dto.product.response.ProductResponseByIdDto;
 import com.fiap.burger.web.dto.product.response.ProductResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -48,10 +49,10 @@ public class ProductController {
         @ApiResponse(responseCode = "404", description = "Produto não encontrado")
     })
     @GetMapping("/{productId}")
-    public ProductResponseDto findById(@PathVariable Long productId) {
+    public ProductResponseByIdDto findById(@PathVariable Long productId) {
         var persistedProduct = service.findById(productId);
         if (persistedProduct == null) throw new ProductNotFoundException();
-        return ProductResponseDto.toResponseDto(persistedProduct);
+        return ProductResponseByIdDto.toResponseDto(persistedProduct);
     }
 
     @Operation(summary = "Criar produto", description = "Criação de um novo produto", tags = {"produto"})
@@ -77,11 +78,12 @@ public class ProductController {
 
     @Operation(summary = "Deletar produto", description = "Deletar um produto", tags = {"produto"})
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "400", description = "Produto inválido")
+        @ApiResponse(responseCode = "400", description = "Produto inválido"),
+        @ApiResponse(responseCode = "404", description = "Produto não encontrado")
     })
     @DeleteMapping("/{productId}")
-    public ProductResponseDto deleteBy(@PathVariable Long productId) {
+    public String deleteBy(@PathVariable Long productId) {
         service.deleteBy(productId);
-        return null;
+        return "Product has been successfully deleted.";
     }
 }
