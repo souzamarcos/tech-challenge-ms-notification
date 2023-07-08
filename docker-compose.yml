@@ -3,7 +3,8 @@ services:
   application:
     build: .
     depends_on:
-      - mysql
+      mysql:
+        condition: service_completed_successfully
     environment:
       SPRING_DATASOURCE_URL: 'jdbc:mysql://mysql:3306/burger'
       SPRING_DATASOURCE_USERNAME: 'user'
