@@ -1,18 +1,5 @@
 version: '3.3'
 services:
-  application:
-    build: .
-    depends_on:
-      mysql:
-        condition: service_healthy
-    environment:
-      SPRING_DATASOURCE_URL: 'jdbc:mysql://mysql:3306/burger'
-      SPRING_DATASOURCE_USERNAME: 'user'
-      SPRING_DATASOURCE_PASSWORD: 'password'
-    ports:
-      - '8080:8080'
-    expose:
-      - '8080'
   mysql:
     image: mysql:8.0
     restart: always
@@ -21,11 +8,19 @@ services:
       MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
-    healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
-      timeout: 3s
-      retries: 5
     ports:
       - '3306:3306'
     expose:
       - '3306'
+  application:
+    build: .
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:mysql://mysql:3306/burger'
+      SPRING_DATASOURCE_USERNAME: 'user'
+      SPRING_DATASOURCE_PASSWORD: 'password'
+    ports:
+      - '8080:8080'
+    expose:
+      - '8080'
