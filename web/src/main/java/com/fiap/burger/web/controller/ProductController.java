@@ -78,11 +78,12 @@ public class ProductController {
 
     @Operation(summary = "Deletar produto", description = "Deletar um produto", tags = {"produto"})
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "400", description = "Produto inválido")
+        @ApiResponse(responseCode = "400", description = "Produto inválido"),
+        @ApiResponse(responseCode = "404", description = "Produto não encontrado")
     })
     @DeleteMapping("/{productId}")
-    public ProductResponseDto deleteBy(@PathVariable Long productId) {
+    public String deleteBy(@PathVariable Long productId) {
         service.deleteBy(productId);
-        return null;
+        return "Product has been successfully deleted.";
     }
 }

@@ -3,6 +3,7 @@ package com.fiap.burger.domain.service;
 import com.fiap.burger.domain.entities.product.Category;
 import com.fiap.burger.domain.entities.product.Product;
 import com.fiap.burger.domain.adapter.repository.product.ProductRepository;
+import com.fiap.burger.domain.misc.exception.DeletedProductException;
 import com.fiap.burger.domain.misc.exception.InvalidAttributeException;
 import com.fiap.burger.domain.misc.exception.ProductNotFoundException;
 import java.util.List;
@@ -43,17 +44,20 @@ public class ProductService {
     }
 
     public void deleteBy(Long id) {
+        var product = repository.findById(id);
+        if (product == null) throw new ProductNotFoundException(id);
+        if (product.getDeletedAt() != null) throw new DeletedProductException();
         repository.deleteBy(id);
     }
 
     private void validateProductToInsert(Product product) {
-        if(product.getId() != null) throw new InvalidAttributeException("Product should not have defined id", "id");
+        if (product.getId() != null) throw new InvalidAttributeException("Product should not have defined id", "id");
         validateProduct(product);
     }
 
     private void validateProductToUpdate(Product product) {
         var persistedProduct = repository.findById(product.getId());
-        if(persistedProduct == null) throw new ProductNotFoundException();
+        if (persistedProduct == null) throw new ProductNotFoundException();
         validateProduct(product);
     }
 
