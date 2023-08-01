@@ -18,13 +18,10 @@ Projeto da pós graduação da FIAP de Arquitetura de Software
 * [Jacoco](https://www.jacoco.org/jacoco/trunk/index.html)
 
 
-## Executando aplicação
+## Endpoints
 
-Execute o comando abaixo para iniciar os containers com a base de dados e executar a aplicação localmente.
+Para visualizar os endpoints disponíveis na aplicação basta acessar o swagger em [http://localhost:8080/swagger](http://localhost:8080/swagger)
 
-```bash
-docker-compose up --build
-```
 
 ## Desenvolvimento
 ### Executando somente dependências
@@ -51,7 +48,22 @@ Para acessar esse relatório gerado acesse o caminho `build/reports/jacoco/codeC
 
 ![img.png](static/jacoco_report_example.png)
 
+## Executando aplicação
 
-## Endpoints
+Execute o comando abaixo para iniciar os containers com a base de dados e executar a aplicação localmente.
 
-Para visualizar os endpoints disponíveis na aplicação basta acessar o swagger em [http://localhost:8080/swagger](http://localhost:8080/swagger)
+```bash
+docker-compose up --build
+```
+
+## Executando aplicação com kubernetes
+
+Os arquivos de configuração do kubernetes estão presentes na pasta [config/kubernetes](config/kubernetes/). 
+
+### Kubernetes Local
+Para configurar o ambiente execute os comandos abaixo
+
+```bash
+kubectl apply -f config/kubernetes/local/k8s-pods-config.yaml
+kubectl apply -f config/kubernetes/local/k8s-svc-config.yaml
+```
