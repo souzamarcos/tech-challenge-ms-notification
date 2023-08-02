@@ -64,6 +64,8 @@ Os arquivos de configuração do kubernetes estão presentes na pasta [config/ku
 Para configurar o ambiente execute os comandos abaixo
 
 ```bash
-kubectl apply -f config/kubernetes/local/k8s-pods-config.yaml
-kubectl apply -f config/kubernetes/local/k8s-svc-config.yaml
+kubectl apply -f config/kubernetes/local/k8s-pod-mysql.yaml
+kubectl apply -f config/kubernetes/local/k8s-svc-mysql.yaml
+kubectl apply -f config/kubernetes/local/k8s-pod-burger-application.yaml
+kubectl apply -f config/kubernetes/local/k8s-svc-burger-application.yaml
 ```
