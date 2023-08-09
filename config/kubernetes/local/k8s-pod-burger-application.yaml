@@ -5,6 +5,7 @@ metadata:
   labels:
     app: app-burger
 spec:
+  hostNetwork: true #Habilta cluster a visualizar portas da rede do PC fora do cluster
   containers:
     - name: app-burger
       image: souzamarcos/burger-application:latest
@@ -12,7 +13,7 @@ spec:
         - containerPort: 8080
       env: 
         - name: SPRING_DATASOURCE_URL
-          value: "jdbc:mysql://svc-db-burger:3306/burger"
+          value: "jdbc:mysql://localhost:3306/burger"
         - name: SPRING_DATASOURCE_USERNAME
           value: "user"
         - name: SPRING_DATASOURCE_PASSWORD

@@ -1,12 +1,7 @@
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: svc-db-burger
+  name: mysql
 spec:
-  type: ClusterIP
-  ports:
-  - protocol: TCP
-    port: 3306
-    targetPort: 3306
-  selector:
-    app: db-burger
+  type: ExternalName
+  externalName: localhost

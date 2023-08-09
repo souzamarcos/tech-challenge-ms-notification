@@ -61,11 +61,18 @@ docker-compose up --build
 Os arquivos de configuração do kubernetes estão presentes na pasta [config/kubernetes](config/kubernetes/). 
 
 ### Kubernetes Local
-Para configurar o ambiente execute os comandos abaixo
+Para configurar a aplicação no kubernetes local execute os comandos abaixo:
 
+Iniciar base de dados
+
+``` bash
+docker-compose -f docker-compose-without-application.yml up --build
+```
+
+Configurar deployment, services e pods
 ```bash
-kubectl apply -f config/kubernetes/local/k8s-pod-mysql.yaml
-kubectl apply -f config/kubernetes/local/k8s-svc-mysql.yaml
 kubectl apply -f config/kubernetes/local/k8s-pod-burger-application.yaml
 kubectl apply -f config/kubernetes/local/k8s-svc-burger-application.yaml
 ```
+
+A aplicação estará disponível no endereço [http://localhost:31000/swagger](http://localhost:31000/swagger).
