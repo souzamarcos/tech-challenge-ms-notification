@@ -13,10 +13,11 @@ import com.fiap.burger.domain.misc.exception.InvalidAttributeException;
 import com.fiap.burger.domain.misc.exception.NegativeOrZeroValueException;
 
 import com.fiap.burger.domain.misc.exception.OrderNotFoundException;
+
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,8 +73,10 @@ public class OrderService {
         }
 
         validateCheckout(order.getStatus());
-        orderRepository.updateStatus(order.getId(), OrderStatus.RECEBIDO);
+        LocalDateTime now = LocalDateTime.now();
+        orderRepository.updateStatus(order.getId(), OrderStatus.RECEBIDO, now);
         order.setStatus(OrderStatus.RECEBIDO);
+        order.setModifiedAt(now);
         return order;
     }
 
@@ -85,8 +88,10 @@ public class OrderService {
         }
 
         validateUpdateStatus(newStatus, order.getStatus());
-        orderRepository.updateStatus(order.getId(), newStatus);
+        LocalDateTime now = LocalDateTime.now();
+        orderRepository.updateStatus(order.getId(), newStatus, now);
         order.setStatus(newStatus);
+        order.setModifiedAt(now);
         return order;
     }
 
@@ -106,7 +111,7 @@ public class OrderService {
     }
 
     private void validateProducts(Order order, List<Product> products) {
-        order.getItems().stream().forEach(item -> {
+        order.getItems().forEach(item -> {
             Optional<Product> itemProduct = products.stream().filter(product -> product.getId().equals(item.getProductId())).findFirst();
             if (itemProduct.isEmpty()) {
                 throw new InvalidAttributeException("Product '" + item.getProductId() + "' not found.", "items.productId");
@@ -116,7 +121,7 @@ public class OrderService {
                 throw new InvalidAttributeException("Product '" + item.getProductId() + "' has invalid category for an item.'", "items.productId");
             }
 
-            Optional.ofNullable(item.getAdditionalIds()).orElse(Collections.emptyList()).stream().forEach(additional -> {
+            Optional.ofNullable(item.getAdditionalIds()).orElse(Collections.emptyList()).forEach(additional -> {
                 Optional<Product> additionalProduct = products.stream().filter(product -> product.getId().equals(additional)).findFirst();
                 if (additionalProduct.isEmpty()) {
                     throw new InvalidAttributeException("Product '" + additional + "' not found.", "items.additionalIds");

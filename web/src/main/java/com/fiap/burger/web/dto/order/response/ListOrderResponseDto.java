@@ -5,6 +5,8 @@ import com.fiap.burger.domain.entities.order.OrderStatus;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 
+import java.time.LocalDateTime;
+
 public record ListOrderResponseDto(
 
     @NotNull
@@ -17,7 +19,9 @@ public record ListOrderResponseDto(
     Double total,
 
     @NotNull
-    OrderStatus status
+    OrderStatus status,
+
+    LocalDateTime modifiedAt
 ) {
 
     public static ListOrderResponseDto toResponseDto(Order order) {
@@ -25,7 +29,8 @@ public record ListOrderResponseDto(
             order.getId(),
             OrderClientResponseDto.toResponseDto(order.getClient()),
             order.getTotal(),
-            order.getStatus()
+            order.getStatus(),
+            order.getModifiedAt()
         );
     }
 }

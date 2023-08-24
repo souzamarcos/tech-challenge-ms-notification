@@ -1,7 +1,7 @@
 CREATE TABLE `order`(
     `id` BIGINT NOT NULL AUTO_INCREMENT,
     `client_id` BIGINT NULL,
-    `status` VARCHAR(255) NOT NULL,
+    `status` BIGINT NOT NULL,
     `total` DOUBLE NOT NULL,
     `created_at` DATETIME NOT NULL,
     `modified_at` DATETIME NOT NULL,

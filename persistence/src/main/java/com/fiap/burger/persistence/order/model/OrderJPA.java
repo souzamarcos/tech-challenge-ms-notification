@@ -25,7 +25,7 @@ public class OrderJPA extends BaseDomainJPA {
     List<OrderItemJPA> items;
     @Column
     Double total;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column
     OrderStatus status;
 
