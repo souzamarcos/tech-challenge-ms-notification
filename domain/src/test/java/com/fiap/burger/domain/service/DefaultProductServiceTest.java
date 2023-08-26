@@ -44,7 +44,7 @@ class DefaultProductServiceTest {
 
         when(repository.findById(id)).thenReturn(expected);
 
-        var actual = service.findById(id);
+        var actual = service.findById(repository, id);
 
         assertEquals(expected, actual);
 
@@ -57,7 +57,7 @@ class DefaultProductServiceTest {
 
         when(repository.findAll()).thenReturn(expected);
 
-        List<Product> actual = service.findAll();
+        List<Product> actual = service.findAll(repository);
 
         assertEquals(expected, actual);
 
@@ -71,7 +71,7 @@ class DefaultProductServiceTest {
 
         when(repository.findAllBy(category)).thenReturn(expected);
 
-        List<Product> actual = service.findAllBy(category);
+        List<Product> actual = service.findAllBy(repository, category);
 
         assertEquals(expected, actual);
 
@@ -84,7 +84,7 @@ class DefaultProductServiceTest {
 
         when(repository.save(product)).thenReturn(product);
 
-        Product actual = service.insert(product);
+        Product actual = service.insert(repository, product);
 
         assertEquals(product, actual);
 
@@ -95,7 +95,7 @@ class DefaultProductServiceTest {
     public void shouldThrowInvalidAttributeExceptionWhenProductIdIsNotNullToInsert() {
         Product product = new ProductBuilder().withId(1L).build();
 
-        assertThrows(InvalidAttributeException.class, () -> service.insert(product));
+        assertThrows(InvalidAttributeException.class, () -> service.insert(repository, product));
 
         verify(repository, times(0)).save(product);
     }
@@ -103,7 +103,7 @@ class DefaultProductServiceTest {
     public void shouldThrowNullAttributeExceptionWhenProductCategoryIsNullToInsert() {
         Product product = new ProductBuilder().withId(null).withCategory(null).build();
 
-        assertThrows(NullAttributeException.class, () -> service.insert(product));
+        assertThrows(NullAttributeException.class, () -> service.insert(repository, product));
 
         verify(repository, times(0)).save(product);
     }
@@ -112,7 +112,7 @@ class DefaultProductServiceTest {
     public void shouldThrowNullAttributeExceptionWhenProductNameIsNullToInsert() {
         Product product = new ProductBuilder().withId(null).withName(null).build();
 
-        assertThrows(NullAttributeException.class, () -> service.insert(product));
+        assertThrows(NullAttributeException.class, () -> service.insert(repository, product));
 
         verify(repository, times(0)).save(product);
     }
@@ -121,7 +121,7 @@ class DefaultProductServiceTest {
     public void shouldThrowBlankAttributeExceptionWhenProductNameIsBlankToInsert() {
         Product product = new ProductBuilder().withId(null).withName("  ").build();
 
-        assertThrows(BlankAttributeException.class, () -> service.insert(product));
+        assertThrows(BlankAttributeException.class, () -> service.insert(repository, product));
 
         verify(repository, times(0)).save(product);
     }
@@ -130,7 +130,7 @@ class DefaultProductServiceTest {
     public void shouldThrowNullAttributeExceptionWhenProductDescriptionIsNullToInsert() {
         Product product = new ProductBuilder().withId(null).withDescription(null).build();
 
-        assertThrows(NullAttributeException.class, () -> service.insert(product));
+        assertThrows(NullAttributeException.class, () -> service.insert(repository, product));
 
         verify(repository, times(0)).save(product);
     }
@@ -139,7 +139,7 @@ class DefaultProductServiceTest {
     public void shouldThrowBlankAttributeExceptionWhenProductDescriptionIsBlankToInsert() {
         Product product = new ProductBuilder().withId(null).withDescription("  ").build();
 
-        assertThrows(BlankAttributeException.class, () -> service.insert(product));
+        assertThrows(BlankAttributeException.class, () -> service.insert(repository, product));
 
         verify(repository, times(0)).save(product);
     }
@@ -148,7 +148,7 @@ class DefaultProductServiceTest {
     public void shouldThrowNullAttributeExceptionWhenProductValueIsNullToInsert() {
         Product product = new ProductBuilder().withId(null).withValue(null).build();
 
-        assertThrows(NullAttributeException.class, () -> service.insert(product));
+        assertThrows(NullAttributeException.class, () -> service.insert(repository, product));
 
         verify(repository, times(0)).save(product);
     }
@@ -157,7 +157,7 @@ class DefaultProductServiceTest {
     public void shouldThrowBlankAttributeExceptionWhenProductValueIsLessThanZeroToInsert() {
         Product product = new ProductBuilder().withId(null).withValue(-0.1).build();
 
-        assertThrows(NegativeOrZeroValueException.class, () -> service.insert(product));
+        assertThrows(NegativeOrZeroValueException.class, () -> service.insert(repository, product));
 
         verify(repository, times(0)).save(product);
     }
@@ -166,7 +166,7 @@ class DefaultProductServiceTest {
     public void shouldThrowBlankAttributeExceptionWhenProductValueIsZeroToInsert() {
         Product product = new ProductBuilder().withId(null).withValue(0.0).build();
 
-        assertThrows(NegativeOrZeroValueException.class, () -> service.insert(product));
+        assertThrows(NegativeOrZeroValueException.class, () -> service.insert(repository, product));
 
         verify(repository, times(0)).save(product);
     }
