@@ -14,5 +14,6 @@ application {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":web"))
+    implementation(project(":api"))
     implementation(project(":persistence"))
 }
