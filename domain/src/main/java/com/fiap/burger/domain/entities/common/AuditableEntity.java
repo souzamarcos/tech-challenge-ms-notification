@@ -18,4 +18,8 @@ public abstract class AuditableEntity {
     public LocalDateTime getDeletedAt() {
         return deletedAt;
     }
+
+    public void setModifiedAt(LocalDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
 }

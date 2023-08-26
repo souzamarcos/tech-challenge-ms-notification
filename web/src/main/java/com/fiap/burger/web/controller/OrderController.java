@@ -1,7 +1,6 @@
 package com.fiap.burger.web.controller;
 
 import com.fiap.burger.domain.entities.order.OrderStatus;
-import com.fiap.burger.domain.entities.product.Category;
 import com.fiap.burger.domain.misc.exception.OrderNotFoundException;
 import com.fiap.burger.domain.service.OrderService;
 import com.fiap.burger.web.dto.order.request.OrderInsertRequestDto;
