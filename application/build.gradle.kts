@@ -13,7 +13,7 @@ application {
 
 dependencies {
     implementation(project(":domain"))
-    implementation(project(":web"))
+    implementation(project(":controller"))
     implementation(project(":api"))
     implementation(project(":persistence"))
 }

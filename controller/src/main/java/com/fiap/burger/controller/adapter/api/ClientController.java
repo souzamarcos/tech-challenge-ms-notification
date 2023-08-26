@@ -1,4 +1,4 @@
-package com.fiap.burger.web.adapter.api.client;
+package com.fiap.burger.controller.adapter.api;
 
 import com.fiap.burger.domain.entities.client.Client;
 

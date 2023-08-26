@@ -1,11 +1,11 @@
-package com.fiap.burger.web.controller;
+package com.fiap.burger.controller.controller;
 
+import com.fiap.burger.controller.adapter.api.ProductController;
 import com.fiap.burger.domain.adapter.repository.product.ProductRepository;
 import com.fiap.burger.domain.adapter.service.ProductService;
 import com.fiap.burger.domain.entities.product.Category;
 import com.fiap.burger.domain.entities.product.Product;
 import com.fiap.burger.domain.misc.exception.ProductNotFoundException;
-import com.fiap.burger.web.adapter.api.product.ProductController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 

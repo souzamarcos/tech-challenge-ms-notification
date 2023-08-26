@@ -1,12 +1,13 @@
-package com.fiap.burger.web.controller;
+package com.fiap.burger.controller.controller;
 
+import com.fiap.burger.controller.adapter.api.ClientController;
 import com.fiap.burger.domain.adapter.repository.client.ClientRepository;
 import com.fiap.burger.domain.adapter.service.ClientService;
 import com.fiap.burger.domain.entities.client.Client;
 import com.fiap.burger.domain.misc.exception.ClientNotFoundException;
-import com.fiap.burger.web.adapter.api.client.ClientController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DefaultClientController implements ClientController {

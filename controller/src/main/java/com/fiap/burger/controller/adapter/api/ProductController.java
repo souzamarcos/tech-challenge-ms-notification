@@ -1,4 +1,4 @@
-package com.fiap.burger.web.adapter.api.product;
+package com.fiap.burger.controller.adapter.api;
 
 import com.fiap.burger.domain.entities.product.Category;
 import com.fiap.burger.domain.entities.product.Product;

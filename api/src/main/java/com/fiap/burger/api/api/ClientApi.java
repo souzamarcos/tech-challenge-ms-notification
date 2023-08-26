@@ -2,7 +2,7 @@ package com.fiap.burger.api.api;
 
 import com.fiap.burger.api.dto.client.request.ClientInsertRequestDto;
 import com.fiap.burger.api.dto.client.response.ClientResponseDto;
-import com.fiap.burger.web.adapter.api.client.ClientController;
+import com.fiap.burger.controller.adapter.api.ClientController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

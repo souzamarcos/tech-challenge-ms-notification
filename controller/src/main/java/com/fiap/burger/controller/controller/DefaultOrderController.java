@@ -1,5 +1,6 @@
-package com.fiap.burger.web.controller;
+package com.fiap.burger.controller.controller;
 
+import com.fiap.burger.controller.adapter.api.OrderController;
 import com.fiap.burger.domain.adapter.repository.client.ClientRepository;
 import com.fiap.burger.domain.adapter.repository.order.OrderRepository;
 import com.fiap.burger.domain.adapter.repository.product.ProductRepository;
@@ -7,7 +8,6 @@ import com.fiap.burger.domain.adapter.service.OrderService;
 import com.fiap.burger.domain.entities.order.Order;
 import com.fiap.burger.domain.entities.order.OrderStatus;
 import com.fiap.burger.domain.misc.exception.OrderNotFoundException;
-import com.fiap.burger.web.adapter.api.order.OrderController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -56,3 +56,4 @@ public class DefaultOrderController implements OrderController {
         return service.checkout(orderRepository, orderId);
     }
 }
+
