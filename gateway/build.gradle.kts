@@ -1,5 +1,6 @@
 dependencies {
-    implementation(project(":domain"))
+    implementation(project(":entity"))
+    implementation(project(":usecase"))
 
     implementation(rootProject.libs.flyway.core)
     implementation(rootProject.libs.flyway.mysql)
