@@ -3,10 +3,9 @@ kind: Service
 metadata:
   name: svc-app-burger
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - port: 80
       targetPort: 8080
-      nodePort: 31000
   selector:
     app: app-burger
