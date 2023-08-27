@@ -5,7 +5,7 @@ import com.fiap.burger.api.dto.product.request.ProductUpdateRequestDto;
 import com.fiap.burger.api.dto.product.response.ProductResponseByIdDto;
 import com.fiap.burger.api.dto.product.response.ProductResponseDto;
 import com.fiap.burger.controller.adapter.api.ProductController;
-import com.fiap.burger.domain.entities.product.Category;
+import com.fiap.burger.entity.entity.product.Category;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

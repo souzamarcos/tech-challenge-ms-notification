@@ -31,7 +31,4 @@ public class DefaultClientRepository implements ClientRepository {
         return clientDAO.save(ClientJPA.toJPA(client)).toEntity();
     }
 
-
-
-
 }

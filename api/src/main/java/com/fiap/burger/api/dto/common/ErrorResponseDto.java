@@ -1,6 +1,6 @@
 package com.fiap.burger.api.dto.common;
 
-import com.fiap.burger.domain.misc.exception.DomainException;
+import com.fiap.burger.usecase.misc.exception.DomainException;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.fiap.burger.api.dto.common;
 
-import com.fiap.burger.domain.misc.exception.DomainException;
-import com.fiap.burger.domain.misc.exception.NotFoundException;
+import com.fiap.burger.usecase.misc.exception.DomainException;
+import com.fiap.burger.usecase.misc.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 
 public class ExceptionHttpResponse {

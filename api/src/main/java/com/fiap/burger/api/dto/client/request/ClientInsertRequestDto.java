@@ -1,6 +1,6 @@
 package com.fiap.burger.api.dto.client.request;
 
-import com.fiap.burger.domain.entities.client.Client;
+import com.fiap.burger.entity.entity.client.Client;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
