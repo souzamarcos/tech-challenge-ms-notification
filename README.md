@@ -58,20 +58,32 @@ docker-compose up --build
 
 ## Executando aplicação com kubernetes
 
-Os arquivos de configuração do kubernetes estão presentes na pasta [config/kubernetes](config/kubernetes/). 
+Os arquivos de configuração do kubernetes estão presentes na pasta [config/kubernetes](config/kubernetes/).
 
 ### Kubernetes Local
-Para configurar a aplicação no kubernetes local execute os comandos abaixo:
+Para configurar a aplicação no kubernetes local execute as etapas abaixo:
 
-Iniciar base de dados
+1 - Iniciar base de dados através do comando
 
 ``` bash
 docker-compose -f docker-compose-without-application.yml up --build
 ```
 
-Configurar deployment, services e pods
+2 - Procurar o IP da máquina através do comando:
+Windows
 ```bash
-kubectl apply -f config/kubernetes/local/k8s-pod-burger-application.yaml
+ipconfig
+```
+Linux | Mac
+```bash
+ifconfig
+```
+
+3 - Substitua o host da base de dados configurado na váriavel `SPRING_DATASOURCE_URL` no arquivo [k8s-deployment-burger-application.yaml](/config/kubernetes/local/k8s-deployment-burger-application.yaml), subistitua o endereço `localhost` pelo ip da máquina consultado na etapa acima. Caso decida usar uma base MySql em outro local, coloque o endereço da mesma.
+
+4 - Aplique os recursos do kubernetes
+```bash
+kubectl apply -f config/kubernetes/local/k8s-deployment-burger-application.yaml
 kubectl apply -f config/kubernetes/local/k8s-svc-burger-application.yaml
 ```
 

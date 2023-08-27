@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-burger-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-burger
+  template:
+    metadata:
+      labels:
+        app: app-burger
+    spec:
+      #hostNetwork: true #Habilta cluster a visualizar portas da rede do PC fora do cluster
+      containers:
+        - name: app-burger
+          image: souzamarcos/burger-application:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://192.168.29.11:3306/burger"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "user"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "password"
