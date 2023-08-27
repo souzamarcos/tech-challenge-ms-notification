@@ -6,6 +6,8 @@ import com.fiap.burger.domain.entities.order.OrderStatus;
 import com.fiap.burger.persistence.order.dao.OrderDAO;
 import com.fiap.burger.persistence.order.model.OrderJPA;
 import jakarta.transaction.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -38,7 +40,7 @@ public class DefaultOrderRepository implements OrderRepository {
     @Override
     public List<Order> findAllInProgress() {
         var inProgressStatuses = Set.of(OrderStatus.RECEBIDO, OrderStatus.EM_PREPARACAO, OrderStatus.PRONTO);
-        return orderDAO.findAllByDeletedAtNullAndStatusInOrderByIdDesc(inProgressStatuses)
+        return orderDAO.findAllInProgress(inProgressStatuses)
             .stream()
             .map(OrderJPA::toEntity)
             .collect(Collectors.toList());
@@ -51,7 +53,7 @@ public class DefaultOrderRepository implements OrderRepository {
 
     @Override
     @Transactional
-    public void updateStatus(Long id, OrderStatus newStatus) {
-        orderDAO.updateStatus(id, newStatus);
+    public void updateStatus(Long id, OrderStatus newStatus, LocalDateTime modifiedAt) {
+        orderDAO.updateStatus(id, newStatus, modifiedAt);
     }
 }
