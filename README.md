@@ -48,7 +48,7 @@ Para acessar esse relatório gerado acesse o caminho `build/reports/jacoco/codeC
 
 ![img.png](static/jacoco_report_example.png)
 
-## Executando aplicação
+## Executando aplicação sem kubernetes
 
 Execute o comando abaixo para iniciar os containers com a base de dados e executar a aplicação localmente.
 
@@ -59,8 +59,6 @@ docker-compose up --build
 ## Executando aplicação com kubernetes
 
 Os arquivos de configuração do kubernetes estão presentes na pasta [config/kubernetes](config/kubernetes/).
-
-### Kubernetes Local
 Para configurar a aplicação no kubernetes local execute as etapas abaixo:
 
 1 - Iniciar base de dados através do comando
@@ -70,6 +68,7 @@ docker-compose -f docker-compose-without-application.yml up --build
 ```
 
 2 - Procurar o IP da máquina através do comando:
+
 Windows
 ```bash
 ipconfig
