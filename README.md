@@ -84,6 +84,7 @@ ifconfig
 ```bash
 kubectl apply -f config/kubernetes/local/k8s-deployment-burger-application.yaml
 kubectl apply -f config/kubernetes/local/k8s-svc-burger-application.yaml
+kubectl apply -f config/kubernetes/local/k8s-hpa-burger-application.yaml
 ```
 
 A aplicação estará disponível no endereço [http://localhost/swagger](http://localhost:31000/swagger).
