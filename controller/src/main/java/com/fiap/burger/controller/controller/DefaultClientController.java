@@ -3,13 +3,13 @@ package com.fiap.burger.controller.controller;
 import com.fiap.burger.controller.adapter.api.ClientController;
 import com.fiap.burger.usecase.adapter.gateway.ClientGateway;
 import com.fiap.burger.usecase.adapter.usecase.ClientUseCase;
-import com.fiap.burger.entity.entity.client.Client;
+import com.fiap.burger.entity.client.Client;
 import com.fiap.burger.usecase.misc.exception.ClientNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Component
 public class DefaultClientController implements ClientController {
     @Autowired
     private ClientUseCase useCase;

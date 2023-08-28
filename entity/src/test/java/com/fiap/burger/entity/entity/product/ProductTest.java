@@ -1,5 +1,7 @@
 package com.fiap.burger.entity.entity.product;
 
+import com.fiap.burger.entity.product.Category;
+import com.fiap.burger.entity.product.Product;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

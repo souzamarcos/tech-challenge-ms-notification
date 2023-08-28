@@ -1,6 +1,6 @@
 package com.fiap.burger.usecase.adapter.gateway;
 
-import com.fiap.burger.entity.entity.client.Client;
+import com.fiap.burger.entity.client.Client;
 
 public interface ClientGateway {
     Client findById(Long id);

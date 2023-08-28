@@ -1,6 +1,6 @@
 package com.fiap.burger.api.dto.order.response;
 
-import com.fiap.burger.entity.entity.order.OrderItem;
+import com.fiap.burger.entity.order.OrderItem;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 

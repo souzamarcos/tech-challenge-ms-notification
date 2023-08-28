@@ -1,7 +1,7 @@
 package com.fiap.burger.gateway.order.gateway;
 
-import com.fiap.burger.entity.entity.order.Order;
-import com.fiap.burger.entity.entity.order.OrderStatus;
+import com.fiap.burger.entity.order.Order;
+import com.fiap.burger.entity.order.OrderStatus;
 import com.fiap.burger.gateway.order.dao.OrderDAO;
 import com.fiap.burger.gateway.order.model.OrderJPA;
 import com.fiap.burger.usecase.adapter.gateway.OrderGateway;

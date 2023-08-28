@@ -1,4 +1,4 @@
-package com.fiap.burger.entity.entity.common;
+package com.fiap.burger.entity.common;
 
 import java.time.LocalDateTime;
 

@@ -5,7 +5,7 @@ import com.fiap.burger.api.dto.order.request.OrderUpdateStatusRequestDto;
 import com.fiap.burger.api.dto.order.response.ListOrderResponseDto;
 import com.fiap.burger.api.dto.order.response.OrderResponseDto;
 import com.fiap.burger.controller.adapter.api.OrderController;
-import com.fiap.burger.entity.entity.order.OrderStatus;
+import com.fiap.burger.entity.order.OrderStatus;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

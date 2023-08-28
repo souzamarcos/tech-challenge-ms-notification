@@ -1,4 +1,4 @@
-package com.fiap.burger.entity.entity.product;
+package com.fiap.burger.entity.product;
 
 public enum Category {
     LANCHE,

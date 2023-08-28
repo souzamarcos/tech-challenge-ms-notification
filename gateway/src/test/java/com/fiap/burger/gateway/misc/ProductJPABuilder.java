@@ -1,6 +1,6 @@
 package com.fiap.burger.gateway.misc;
 
-import com.fiap.burger.entity.entity.product.Category;
+import com.fiap.burger.entity.product.Category;
 import com.fiap.burger.gateway.product.model.ProductJPA;
 
 import java.time.LocalDateTime;

@@ -1,6 +1,6 @@
-package com.fiap.burger.entity.entity.product;
+package com.fiap.burger.entity.product;
 
-import com.fiap.burger.entity.entity.common.BaseEntity;
+import com.fiap.burger.entity.common.BaseEntity;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

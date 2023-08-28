@@ -1,6 +1,6 @@
 package com.fiap.burger.gateway.client.gateway;
 
-import com.fiap.burger.entity.entity.client.Client;
+import com.fiap.burger.entity.client.Client;
 import com.fiap.burger.gateway.client.dao.ClientDAO;
 import com.fiap.burger.gateway.client.model.ClientJPA;
 import com.fiap.burger.usecase.adapter.gateway.ClientGateway;

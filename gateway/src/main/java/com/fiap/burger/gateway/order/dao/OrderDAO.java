@@ -1,6 +1,6 @@
 package com.fiap.burger.gateway.order.dao;
 
-import com.fiap.burger.entity.entity.order.OrderStatus;
+import com.fiap.burger.entity.order.OrderStatus;
 import com.fiap.burger.gateway.order.model.OrderJPA;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

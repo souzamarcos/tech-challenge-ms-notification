@@ -1,6 +1,6 @@
 package com.fiap.burger.api.dto.order.response;
 
-import com.fiap.burger.entity.entity.order.OrderItemAdditional;
+import com.fiap.burger.entity.order.OrderItemAdditional;
 
 public record OrderItemAdditionalResponseDto (
         Long productId,

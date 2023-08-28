@@ -1,7 +1,7 @@
 package com.fiap.burger.gateway.product.gateway;
 
-import com.fiap.burger.entity.entity.product.Category;
-import com.fiap.burger.entity.entity.product.Product;
+import com.fiap.burger.entity.product.Category;
+import com.fiap.burger.entity.product.Product;
 import com.fiap.burger.gateway.product.dao.ProductDAO;
 import com.fiap.burger.gateway.product.model.ProductJPA;
 import com.fiap.burger.usecase.adapter.gateway.ProductGateway;

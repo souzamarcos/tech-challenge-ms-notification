@@ -1,7 +1,7 @@
-package com.fiap.burger.entity.entity.order;
+package com.fiap.burger.entity.order;
 
-import com.fiap.burger.entity.entity.client.Client;
-import com.fiap.burger.entity.entity.common.BaseEntity;
+import com.fiap.burger.entity.client.Client;
+import com.fiap.burger.entity.common.BaseEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;

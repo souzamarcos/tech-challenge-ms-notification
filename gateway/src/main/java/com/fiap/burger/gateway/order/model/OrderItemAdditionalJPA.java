@@ -1,6 +1,6 @@
 package com.fiap.burger.gateway.order.model;
 
-import com.fiap.burger.entity.entity.order.OrderItemAdditional;
+import com.fiap.burger.entity.order.OrderItemAdditional;
 import com.fiap.burger.gateway.product.model.ProductJPA;
 import jakarta.persistence.*;
 

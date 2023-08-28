@@ -1,6 +1,6 @@
 package com.fiap.burger.gateway.product.dao;
 
-import com.fiap.burger.entity.entity.product.Category;
+import com.fiap.burger.entity.product.Category;
 import com.fiap.burger.gateway.product.model.ProductJPA;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

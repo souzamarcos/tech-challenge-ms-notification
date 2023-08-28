@@ -1,19 +1,19 @@
 package com.fiap.burger.controller.controller;
 
 import com.fiap.burger.controller.adapter.api.OrderController;
-import com.fiap.burger.entity.entity.order.Order;
-import com.fiap.burger.entity.entity.order.OrderStatus;
+import com.fiap.burger.entity.order.Order;
+import com.fiap.burger.entity.order.OrderStatus;
 import com.fiap.burger.usecase.adapter.gateway.ClientGateway;
 import com.fiap.burger.usecase.adapter.gateway.OrderGateway;
 import com.fiap.burger.usecase.adapter.gateway.ProductGateway;
 import com.fiap.burger.usecase.adapter.usecase.OrderUseCase;
 import com.fiap.burger.usecase.misc.exception.OrderNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@RestController
+@Component
 public class DefaultOrderController implements OrderController {
     @Autowired
     private OrderUseCase useCase;

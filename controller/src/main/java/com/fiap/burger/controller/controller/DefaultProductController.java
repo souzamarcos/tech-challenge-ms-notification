@@ -1,17 +1,17 @@
 package com.fiap.burger.controller.controller;
 
 import com.fiap.burger.controller.adapter.api.ProductController;
-import com.fiap.burger.entity.entity.product.Category;
-import com.fiap.burger.entity.entity.product.Product;
+import com.fiap.burger.entity.product.Category;
+import com.fiap.burger.entity.product.Product;
 import com.fiap.burger.usecase.adapter.gateway.ProductGateway;
 import com.fiap.burger.usecase.adapter.usecase.ProductUseCase;
 import com.fiap.burger.usecase.misc.exception.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@RestController
+@Component
 public class DefaultProductController implements ProductController {
     @Autowired
     private ProductUseCase useCase;

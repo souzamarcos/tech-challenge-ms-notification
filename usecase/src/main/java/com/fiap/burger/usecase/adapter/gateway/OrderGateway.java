@@ -1,7 +1,7 @@
 package com.fiap.burger.usecase.adapter.gateway;
 
-import com.fiap.burger.entity.entity.order.Order;
-import com.fiap.burger.entity.entity.order.OrderStatus;
+import com.fiap.burger.entity.order.Order;
+import com.fiap.burger.entity.order.OrderStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,6 +1,6 @@
-package com.fiap.burger.entity.entity.order;
+package com.fiap.burger.entity.order;
 
-import com.fiap.burger.entity.entity.product.Product;
+import com.fiap.burger.entity.product.Product;
 
 import java.util.List;
 import java.util.Objects;

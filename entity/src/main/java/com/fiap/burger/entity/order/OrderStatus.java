@@ -1,4 +1,4 @@
-package com.fiap.burger.entity.entity.order;
+package com.fiap.burger.entity.order;
 
 public enum OrderStatus {
     CANCELADO,

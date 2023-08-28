@@ -1,7 +1,7 @@
 package com.fiap.burger.gateway.order.model;
 
-import com.fiap.burger.entity.entity.order.Order;
-import com.fiap.burger.entity.entity.order.OrderStatus;
+import com.fiap.burger.entity.order.Order;
+import com.fiap.burger.entity.order.OrderStatus;
 import com.fiap.burger.gateway.client.model.ClientJPA;
 import com.fiap.burger.gateway.misc.common.BaseDomainJPA;
 import jakarta.persistence.*;

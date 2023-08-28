@@ -1,6 +1,6 @@
 package com.fiap.burger.gateway.client.model;
 
-import com.fiap.burger.entity.entity.client.Client;
+import com.fiap.burger.entity.client.Client;
 import com.fiap.burger.gateway.misc.common.BaseDomainJPA;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

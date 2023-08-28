@@ -1,6 +1,6 @@
 package com.fiap.burger.usecase.usecase;
 
-import com.fiap.burger.entity.entity.client.Client;
+import com.fiap.burger.entity.client.Client;
 import com.fiap.burger.usecase.adapter.gateway.ClientGateway;
 import com.fiap.burger.usecase.adapter.usecase.ClientUseCase;
 import com.fiap.burger.usecase.misc.exception.ClientCpfAlreadyExistsException;

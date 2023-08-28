@@ -1,7 +1,7 @@
 package com.fiap.burger.usecase.usecase;
 
-import com.fiap.burger.entity.entity.product.Category;
-import com.fiap.burger.entity.entity.product.Product;
+import com.fiap.burger.entity.product.Category;
+import com.fiap.burger.entity.product.Product;
 import com.fiap.burger.usecase.adapter.gateway.ProductGateway;
 import com.fiap.burger.usecase.adapter.usecase.ProductUseCase;
 import com.fiap.burger.usecase.misc.exception.DeletedProductException;
