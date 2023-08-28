@@ -78,9 +78,13 @@ Linux | Mac
 ifconfig
 ```
 
-3 - Substitua o host da base de dados configurado na váriavel `SPRING_DATASOURCE_URL` no arquivo [k8s-deployment-burger-application.yaml](/config/kubernetes/local/k8s-deployment-burger-application.yaml), subistitua o endereço `localhost` pelo ip da máquina consultado na etapa acima. Caso decida usar uma base MySql em outro local, coloque o endereço da mesma.
 
-4 - Aplique os recursos do kubernetes
+3 - Crie as as secrets e defina a URL da base de dados. **No comando abaixo substitua o texto `<HOST>` pelo ip da máquina consultado na etapa acima**. Caso decida usar uma base MySql em outro local, coloque o endereço da mesma.
+```bash
+kubectl create secret generic mysql-secret --from-literal=url='jdbc:mysql://<HOST>:3306/burger' --from-literal=username='user' --from-literal=password='password'
+```
+
+4 - Aplique os outros recursos do kubernetes
 ```bash
 kubectl apply -f config/kubernetes/local/k8s-deployment-burger-application.yaml
 kubectl apply -f config/kubernetes/local/k8s-svc-burger-application.yaml
@@ -88,3 +92,12 @@ kubectl apply -f config/kubernetes/local/k8s-hpa-burger-application.yaml
 ```
 
 A aplicação estará disponível no endereço [http://localhost/swagger](http://localhost:31000/swagger).
+
+
+> Obs: Caso queira remover todos os recursos criados execute os comandos abaixo:
+>```bash
+>kubectl delete -f config/kubernetes/local/k8s-hpa-burger-application.yaml
+>kubectl delete -f config/kubernetes/local/k8s-svc-burger-application.yaml
+>kubectl delete -f config/kubernetes/local/k8s-deployment-burger-application.yaml
+>kubectl delete secret mysql-secret 
+>```

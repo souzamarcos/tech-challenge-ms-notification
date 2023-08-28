@@ -12,7 +12,6 @@ spec:
       labels:
         app: app-burger
     spec:
-      #hostNetwork: true #Habilta cluster a visualizar portas da rede do PC fora do cluster
       containers:
         - name: app-burger
           image: souzamarcos/burger-application:latest
@@ -20,11 +19,20 @@ spec:
             - containerPort: 8080
           env:
             - name: SPRING_DATASOURCE_URL
-              value: "jdbc:mysql://192.168.29.11:3306/burger"
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: url
             - name: SPRING_DATASOURCE_USERNAME
-              value: "user"
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: username
             - name: SPRING_DATASOURCE_PASSWORD
-              value: "password"
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
           startupProbe:
             httpGet:
               path: /health
