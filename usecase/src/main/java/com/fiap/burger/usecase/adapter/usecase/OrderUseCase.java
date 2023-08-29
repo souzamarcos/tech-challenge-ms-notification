@@ -9,17 +9,17 @@ import com.fiap.burger.usecase.adapter.gateway.ProductGateway;
 import java.util.List;
 
 public interface OrderUseCase {
-    Order findById(OrderGateway orderGateway, Long id);
+    Order findById(Long id);
 
-    List<Order> findAll(OrderGateway orderGateway);
+    List<Order> findAll();
 
-    List<Order> findAllBy(OrderGateway orderGateway, OrderStatus status);
+    List<Order> findAllBy(OrderStatus status);
 
-    List<Order> findAllInProgress(OrderGateway orderGateway);
+    List<Order> findAllInProgress();
 
-    Order insert(OrderGateway orderGateway, ProductGateway productGateway, ClientGateway clientGateway, Order order);
+    Order insert(Order order);
 
-    Order updateStatus(OrderGateway orderGateway, Long orderId, OrderStatus newStatus);
+    Order updateStatus(Long orderId, OrderStatus newStatus);
 
-    Order checkout(OrderGateway orderGateway, Long orderId);
+    Order checkout(Long orderId);
 }
