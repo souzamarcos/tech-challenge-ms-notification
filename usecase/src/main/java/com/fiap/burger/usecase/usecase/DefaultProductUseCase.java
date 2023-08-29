@@ -7,42 +7,46 @@ import com.fiap.burger.usecase.adapter.usecase.ProductUseCase;
 import com.fiap.burger.usecase.misc.exception.DeletedProductException;
 import com.fiap.burger.usecase.misc.exception.InvalidAttributeException;
 import com.fiap.burger.usecase.misc.exception.ProductNotFoundException;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static com.fiap.burger.usecase.misc.validation.ValidationUtils.*;
 
-@Service
 public class DefaultProductUseCase implements ProductUseCase {
 
-    public Product findById(ProductGateway repository, Long id) {
-        return repository.findById(id);
+    private final ProductGateway productGateway;
+
+    public DefaultProductUseCase(ProductGateway productGateway) {
+        this.productGateway = productGateway;
     }
 
-    public List<Product> findAll(ProductGateway repository) {
-        return repository.findAll();
+    public Product findById(Long id) {
+        return productGateway.findById(id);
     }
 
-    public List<Product> findAllBy(ProductGateway repository, Category category) {
-        return repository.findAllBy(category);
+    public List<Product> findAll() {
+        return productGateway.findAll();
     }
 
-    public Product insert(ProductGateway repository, Product product) {
+    public List<Product> findAllBy(Category category) {
+        return productGateway.findAllBy(category);
+    }
+
+    public Product insert(Product product) {
         validateProductToInsert(product);
-        return repository.save(product);
+        return productGateway.save(product);
     }
 
-    public Product update(ProductGateway repository, Product product) {
-        validateProductToUpdate(repository, product);
-        return repository.save(product);
+    public Product update(Product product) {
+        validateProductToUpdate(product);
+        return productGateway.save(product);
     }
 
-    public void deleteBy(ProductGateway repository, Long id) {
-        var product = repository.findById(id);
+    public void deleteBy(Long id) {
+        var product = productGateway.findById(id);
         if (product == null) throw new ProductNotFoundException(id);
         if (product.getDeletedAt() != null) throw new DeletedProductException();
-        repository.deleteBy(id);
+        productGateway.deleteBy(id);
     }
 
     private void validateProductToInsert(Product product) {
@@ -50,8 +54,8 @@ public class DefaultProductUseCase implements ProductUseCase {
         validateProduct(product);
     }
 
-    private void validateProductToUpdate(ProductGateway repository, Product product) {
-        var persistedProduct = repository.findById(product.getId());
+    private void validateProductToUpdate(Product product) {
+        var persistedProduct = productGateway.findById(product.getId());
         if (persistedProduct == null) throw new ProductNotFoundException();
         validateProduct(product);
     }
