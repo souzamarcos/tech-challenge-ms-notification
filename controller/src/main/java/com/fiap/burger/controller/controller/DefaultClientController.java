@@ -14,22 +14,19 @@ public class DefaultClientController implements ClientController {
     @Autowired
     private ClientUseCase useCase;
 
-    @Autowired
-    private ClientGateway gateway;
-
     public Client findById(@PathVariable Long clientId) {
-        var persistedClient = useCase.findById(gateway, clientId);
+        var persistedClient = useCase.findById(clientId);
         if (persistedClient == null) throw new ClientNotFoundException();
         return persistedClient;
     }
 
     public Client findByCpf(@PathVariable String clientCpf) {
-        var persistedClient = useCase.findByCpf(gateway, clientCpf);
+        var persistedClient = useCase.findByCpf(clientCpf);
         if (persistedClient == null) throw new ClientNotFoundException();
         return persistedClient;
     }
 
     public Client insert(Client client) {
-        return useCase.insert(gateway, client);
+        return useCase.insert(client);
     }
 }

@@ -4,9 +4,9 @@ import com.fiap.burger.entity.client.Client;
 import com.fiap.burger.usecase.adapter.gateway.ClientGateway;
 
 public interface ClientUseCase {
-    Client findById(ClientGateway gateway, Long id);
+    Client findById(Long id);
 
-    Client findByCpf(ClientGateway gateway, String cpf);
+    Client findByCpf(String cpf);
 
-    Client insert(ClientGateway gateway, Client client);
+    Client insert(Client client);
 }
