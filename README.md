@@ -18,13 +18,10 @@ Projeto da pós graduação da FIAP de Arquitetura de Software
 * [Jacoco](https://www.jacoco.org/jacoco/trunk/index.html)
 
 
-## Executando aplicação
+## Endpoints
 
-Execute o comando abaixo para iniciar os containers com a base de dados e executar a aplicação localmente.
+Para visualizar os endpoints disponíveis na aplicação basta acessar o swagger em [http://localhost:8080/swagger](http://localhost:8080/swagger)
 
-```bash
-docker-compose up --build
-```
 
 ## Desenvolvimento
 ### Executando somente dependências
@@ -51,7 +48,56 @@ Para acessar esse relatório gerado acesse o caminho `build/reports/jacoco/codeC
 
 ![img.png](static/jacoco_report_example.png)
 
+## Executando aplicação sem kubernetes
 
-## Endpoints
+Execute o comando abaixo para iniciar os containers com a base de dados e executar a aplicação localmente.
 
-Para visualizar os endpoints disponíveis na aplicação basta acessar o swagger em [http://localhost:8080/swagger](http://localhost:8080/swagger)
+```bash
+docker-compose up --build
+```
+
+## Executando aplicação com kubernetes
+
+Os arquivos de configuração do kubernetes estão presentes na pasta [config/kubernetes](config/kubernetes/).
+Para configurar a aplicação no kubernetes local execute as etapas abaixo:
+
+1 - Iniciar base de dados através do comando
+
+``` bash
+docker-compose -f docker-compose-without-application.yml up --build
+```
+
+2 - Procurar o IP da máquina através do comando:
+
+Windows
+```bash
+ipconfig
+```
+Linux | Mac
+```bash
+ifconfig
+```
+
+
+3 - Crie as as secrets e defina a URL da base de dados. **No comando abaixo substitua o texto `<HOST>` pelo ip da máquina consultado na etapa acima**. Caso decida usar uma base MySql em outro local, coloque o endereço da mesma.
+```bash
+kubectl create secret generic mysql-secret --from-literal=url='jdbc:mysql://<HOST>:3306/burger' --from-literal=username='user' --from-literal=password='password'
+```
+
+4 - Aplique os outros recursos do kubernetes
+```bash
+kubectl apply -f config/kubernetes/local/k8s-deployment-burger-application.yaml
+kubectl apply -f config/kubernetes/local/k8s-svc-burger-application.yaml
+kubectl apply -f config/kubernetes/local/k8s-hpa-burger-application.yaml
+```
+
+A aplicação estará disponível no endereço [http://localhost/swagger](http://localhost:31000/swagger).
+
+
+> Obs: Caso queira remover todos os recursos criados execute os comandos abaixo:
+>```bash
+>kubectl delete -f config/kubernetes/local/k8s-hpa-burger-application.yaml
+>kubectl delete -f config/kubernetes/local/k8s-svc-burger-application.yaml
+>kubectl delete -f config/kubernetes/local/k8s-deployment-burger-application.yaml
+>kubectl delete secret mysql-secret 
+>```
