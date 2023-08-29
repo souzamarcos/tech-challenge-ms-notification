@@ -10,29 +10,29 @@ import java.util.stream.Collectors;
 
 public record OrderResponseDto(
 
-        @NotNull
-        Long id,
+    @NotNull
+    Long id,
 
-        @Null
-        OrderClientResponseDto client,
+    @Null
+    OrderClientResponseDto client,
 
-        @NotNull
-        List<OrderItemResponseDto> items,
+    @NotNull
+    List<OrderItemResponseDto> items,
 
-        @NotNull
-        Double total,
+    @NotNull
+    Double total,
 
-        @NotNull
-        OrderStatus status
+    @NotNull
+    OrderStatus status
 ) {
 
     public static OrderResponseDto toResponseDto(Order order) {
         return new OrderResponseDto(
-                order.getId(),
-                OrderClientResponseDto.toResponseDto(order.getClient()),
-                order.getItems().stream().map(OrderItemResponseDto::toResponseDto).collect(Collectors.toList()),
-                order.getTotal(),
-                order.getStatus()
+            order.getId(),
+            OrderClientResponseDto.toResponseDto(order.getClient()),
+            order.getItems().stream().map(OrderItemResponseDto::toResponseDto).collect(Collectors.toList()),
+            order.getTotal(),
+            order.getStatus()
         );
     }
 }

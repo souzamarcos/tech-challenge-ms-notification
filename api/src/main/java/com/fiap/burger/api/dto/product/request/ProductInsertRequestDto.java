@@ -6,12 +6,12 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 
 public record ProductInsertRequestDto(
-        @NotBlank Category category,
-        @NotBlank String name,
-        @NotBlank String description,
-        @NotBlank
-        @DecimalMin("0.01")
-        Double value
+    @NotBlank Category category,
+    @NotBlank String name,
+    @NotBlank String description,
+    @NotBlank
+    @DecimalMin("0.01")
+    Double value
 ) {
     public Product toEntity() {
         return new Product(category, name, description, value);

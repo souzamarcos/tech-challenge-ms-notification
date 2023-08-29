@@ -28,15 +28,15 @@ public class ProductApi {
     @GetMapping()
     public List<ProductResponseDto> list(@RequestParam @Nullable Category category) {
         return controller
-                .list(category)
-                .stream()
-                .map(ProductResponseDto::toResponseDto)
-                .collect(Collectors.toList());
+            .list(category)
+            .stream()
+            .map(ProductResponseDto::toResponseDto)
+            .collect(Collectors.toList());
     }
 
     @Operation(summary = "Consultar produto", description = "Consultar um produto", tags = {"produto"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "404", description = "Produto não encontrado")
+        @ApiResponse(responseCode = "404", description = "Produto não encontrado")
     })
     @GetMapping("/{productId}")
     public ProductResponseByIdDto findById(@PathVariable Long productId) {
@@ -45,7 +45,7 @@ public class ProductApi {
 
     @Operation(summary = "Criar produto", description = "Criação de um novo produto", tags = {"produto"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "400", description = "Produto inválido")
+        @ApiResponse(responseCode = "400", description = "Produto inválido")
     })
     @PostMapping()
     public ProductResponseDto insert(@RequestBody ProductInsertRequestDto productDto) {
@@ -54,8 +54,8 @@ public class ProductApi {
 
     @Operation(summary = "Atualizar produto", description = "Atualizar um produto", tags = {"produto"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "400", description = "Produto inválido"),
-            @ApiResponse(responseCode = "404", description = "Produto não encontrado")
+        @ApiResponse(responseCode = "400", description = "Produto inválido"),
+        @ApiResponse(responseCode = "404", description = "Produto não encontrado")
     })
     @PutMapping()
     public ProductResponseDto update(@RequestBody ProductUpdateRequestDto productDto) {
@@ -64,8 +64,8 @@ public class ProductApi {
 
     @Operation(summary = "Deletar produto", description = "Deletar um produto", tags = {"produto"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "400", description = "Produto inválido"),
-            @ApiResponse(responseCode = "404", description = "Produto não encontrado")
+        @ApiResponse(responseCode = "400", description = "Produto inválido"),
+        @ApiResponse(responseCode = "404", description = "Produto não encontrado")
     })
     @DeleteMapping("/{productId}")
     public String deleteBy(@PathVariable Long productId) {

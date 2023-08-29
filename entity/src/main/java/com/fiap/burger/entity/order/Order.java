@@ -27,14 +27,14 @@ public class Order extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(
-                getId(),
-                getClientId(),
-                getItems(),
-                getTotal(),
-                getStatus(),
-                getCreatedAt(),
-                getModifiedAt(),
-                getDeletedAt()
+            getId(),
+            getClientId(),
+            getItems(),
+            getTotal(),
+            getStatus(),
+            getCreatedAt(),
+            getModifiedAt(),
+            getDeletedAt()
         );
     }
 
@@ -66,16 +66,18 @@ public class Order extends BaseEntity {
         this.status = status;
     }
 
-    public void setClient(Client client) { this.client = client; }
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     public Order(
-            Long id,
-            Client client,
-            Double total,
-            OrderStatus status,
-            LocalDateTime createdAt,
-            LocalDateTime modifiedAt,
-            LocalDateTime deletedAt
+        Long id,
+        Client client,
+        Double total,
+        OrderStatus status,
+        LocalDateTime createdAt,
+        LocalDateTime modifiedAt,
+        LocalDateTime deletedAt
     ) {
         this.id = id;
         this.client = client;
@@ -87,14 +89,14 @@ public class Order extends BaseEntity {
     }
 
     public Order(
-            Long id,
-            Client client,
-            List<OrderItem> items,
-            Double total,
-            OrderStatus status,
-            LocalDateTime createdAt,
-            LocalDateTime modifiedAt,
-            LocalDateTime deletedAt
+        Long id,
+        Client client,
+        List<OrderItem> items,
+        Double total,
+        OrderStatus status,
+        LocalDateTime createdAt,
+        LocalDateTime modifiedAt,
+        LocalDateTime deletedAt
     ) {
         this.id = id;
         this.client = client;

@@ -4,7 +4,7 @@ import com.fiap.burger.entity.order.OrderStatus;
 import jakarta.validation.constraints.NotNull;
 
 public record OrderUpdateStatusRequestDto(
-        @NotNull
-        OrderStatus newStatus
+    @NotNull
+    OrderStatus newStatus
 ) {
 }

@@ -27,7 +27,7 @@ public class DefaultClientGateway implements ClientGateway {
     }
 
     @Override
-    public Client save(Client client)  {
+    public Client save(Client client) {
         return clientDAO.save(ClientJPA.toJPA(client)).toEntity();
     }
 

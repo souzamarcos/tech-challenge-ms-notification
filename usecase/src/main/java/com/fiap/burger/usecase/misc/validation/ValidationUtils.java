@@ -9,14 +9,15 @@ import java.util.regex.Pattern;
 
 public class ValidationUtils {
     public static void validateNotNull(Object value, String attributeName) {
-        if(value == null) throw new NullAttributeException(attributeName);
+        if (value == null) throw new NullAttributeException(attributeName);
     }
 
     public static void validateNotBlank(String value, String attributeName) {
-        if(value.isBlank()) throw new BlankAttributeException(attributeName);
+        if (value.isBlank()) throw new BlankAttributeException(attributeName);
     }
+
     public static void validatePositiveNotZero(Double value, String attributeName) {
-        if(value <= 0 ) throw new NegativeOrZeroValueException(attributeName);
+        if (value <= 0) throw new NegativeOrZeroValueException(attributeName);
     }
 
     public static void validateEmailFormat(String email, String attributeName) {

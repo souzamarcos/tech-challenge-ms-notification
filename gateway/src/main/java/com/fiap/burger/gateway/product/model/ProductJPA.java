@@ -27,14 +27,14 @@ public class ProductJPA extends BaseDomainJPA {
     }
 
     public ProductJPA(
-            Long id,
-            Category category,
-            String name,
-            String description,
-            Double value,
-            LocalDateTime createdAt,
-            LocalDateTime modifiedAt,
-            LocalDateTime deletedAt
+        Long id,
+        Category category,
+        String name,
+        String description,
+        Double value,
+        LocalDateTime createdAt,
+        LocalDateTime modifiedAt,
+        LocalDateTime deletedAt
     ) {
         this.id = id;
         this.category = category;
@@ -76,27 +76,27 @@ public class ProductJPA extends BaseDomainJPA {
     @Override
     public int hashCode() {
         return Objects.hash(
-                getId(),
-                getCategory(),
-                getName(),
-                getDescription(),
-                getValue(),
-                getCreatedAt(),
-                getModifiedAt(),
-                getDeletedAt()
+            getId(),
+            getCategory(),
+            getName(),
+            getDescription(),
+            getValue(),
+            getCreatedAt(),
+            getModifiedAt(),
+            getDeletedAt()
         );
     }
 
     public static ProductJPA toJPA(Product product) {
         return new ProductJPA(
-                product.getId(),
-                product.getCategory(),
-                product.getName(),
-                product.getDescription(),
-                product.getValue(),
-                product.getCreatedAt(),
-                product.getModifiedAt(),
-                product.getDeletedAt()
+            product.getId(),
+            product.getCategory(),
+            product.getName(),
+            product.getDescription(),
+            product.getValue(),
+            product.getCreatedAt(),
+            product.getModifiedAt(),
+            product.getDeletedAt()
         );
     }
 

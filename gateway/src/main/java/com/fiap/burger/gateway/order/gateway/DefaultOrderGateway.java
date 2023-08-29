@@ -32,18 +32,18 @@ public class DefaultOrderGateway implements OrderGateway {
     @Override
     public List<Order> findAllBy(OrderStatus status) {
         return orderDAO.findAllByDeletedAtNullAndStatusEquals(status)
-                .stream()
-                .map(OrderJPA::toEntity)
-                .collect(Collectors.toList());
+            .stream()
+            .map(OrderJPA::toEntity)
+            .collect(Collectors.toList());
     }
 
     @Override
     public List<Order> findAllInProgress() {
         var inProgressStatuses = Set.of(OrderStatus.RECEBIDO, OrderStatus.EM_PREPARACAO, OrderStatus.PRONTO);
         return orderDAO.findAllInProgress(inProgressStatuses)
-                .stream()
-                .map(OrderJPA::toEntity)
-                .collect(Collectors.toList());
+            .stream()
+            .map(OrderJPA::toEntity)
+            .collect(Collectors.toList());
     }
 
     @Override

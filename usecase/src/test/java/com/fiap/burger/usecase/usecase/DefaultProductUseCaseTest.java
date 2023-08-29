@@ -21,7 +21,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 public class DefaultProductUseCaseTest {
 
@@ -98,6 +97,7 @@ public class DefaultProductUseCaseTest {
 
         verify(gateway, times(0)).save(product);
     }
+
     @Test
     public void shouldThrowNullAttributeExceptionWhenProductCategoryIsNullToInsert() {
         Product product = new ProductBuilder().withId(null).withCategory(null).build();

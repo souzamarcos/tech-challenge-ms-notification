@@ -30,11 +30,11 @@ public class OrderItem {
     @Override
     public int hashCode() {
         return Objects.hash(
-                getOrderId(),
-                getProductId(),
-                getComment(),
-                getProduct(),
-                getOrderItemAdditionals()
+            getOrderId(),
+            getProductId(),
+            getComment(),
+            getProduct(),
+            getOrderItemAdditionals()
         );
     }
 

@@ -22,10 +22,10 @@ public class OrderItemAdditional {
     @Override
     public int hashCode() {
         return Objects.hash(
-                getId(),
-                getOrderItemId(),
-                getProductId(),
-                getProduct()
+            getId(),
+            getOrderItemId(),
+            getProductId(),
+            getProduct()
         );
     }
 

@@ -36,14 +36,14 @@ public class OrderJPA extends BaseDomainJPA {
     }
 
     public OrderJPA(
-            Long id,
-            Long clientId,
-            List<OrderItemJPA> items,
-            Double total,
-            OrderStatus status,
-            LocalDateTime createdAt,
-            LocalDateTime modifiedAt,
-            LocalDateTime deletedAt
+        Long id,
+        Long clientId,
+        List<OrderItemJPA> items,
+        Double total,
+        OrderStatus status,
+        LocalDateTime createdAt,
+        LocalDateTime modifiedAt,
+        LocalDateTime deletedAt
 
     ) {
         this.id = id;
@@ -58,40 +58,40 @@ public class OrderJPA extends BaseDomainJPA {
 
     public Order toEntity() {
         return new Order(
-                id,
-                Optional.ofNullable(client).map(ClientJPA::toEntity).orElse(null),
-                total,
-                status,
-                createdAt,
-                modifiedAt,
-                deletedAt
+            id,
+            Optional.ofNullable(client).map(ClientJPA::toEntity).orElse(null),
+            total,
+            status,
+            createdAt,
+            modifiedAt,
+            deletedAt
         );
     }
 
     public Order toEntityWithItems() {
         return new Order(
-                id,
-                Optional.ofNullable(client).map(ClientJPA::toEntity).orElse(null),
-                //TODO verificar pq os itens as vezes são retornados e as vezes não
-                items.stream().map(OrderItemJPA::toEntityWithAdditional).collect(Collectors.toList()),
-                total,
-                status,
-                createdAt,
-                modifiedAt,
-                deletedAt
+            id,
+            Optional.ofNullable(client).map(ClientJPA::toEntity).orElse(null),
+            //TODO verificar pq os itens as vezes são retornados e as vezes não
+            items.stream().map(OrderItemJPA::toEntityWithAdditional).collect(Collectors.toList()),
+            total,
+            status,
+            createdAt,
+            modifiedAt,
+            deletedAt
         );
     }
 
     public static OrderJPA toJPA(Order order) {
         OrderJPA newOrder = new OrderJPA(
-                order.getId(),
-                order.getClientId(),
-                null,
-                order.getTotal(),
-                order.getStatus(),
-                order.getCreatedAt(),
-                order.getModifiedAt(),
-                order.getDeletedAt()
+            order.getId(),
+            order.getClientId(),
+            null,
+            order.getTotal(),
+            order.getStatus(),
+            order.getCreatedAt(),
+            order.getModifiedAt(),
+            order.getDeletedAt()
         );
 
         if (!Optional.ofNullable(order.getItems()).orElse(Collections.emptyList()).isEmpty()) {

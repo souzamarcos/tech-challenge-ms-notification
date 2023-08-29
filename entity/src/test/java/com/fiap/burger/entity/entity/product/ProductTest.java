@@ -18,10 +18,10 @@ public class ProductTest {
         var value = 22.2;
 
         Product actual = new Product(
-                category,
-                name,
-                description,
-                value
+            category,
+            name,
+            description,
+            value
         );
 
         assertEquals(category, actual.getCategory());
@@ -41,14 +41,14 @@ public class ProductTest {
         var modifiedAt = LocalDateTime.now();
 
         Product actual = new Product(
-                id,
-                category,
-                name,
-                description,
-                value,
-                createdAt,
-                modifiedAt,
-                null
+            id,
+            category,
+            name,
+            description,
+            value,
+            createdAt,
+            modifiedAt,
+            null
         );
 
         assertEquals(category, actual.getCategory());

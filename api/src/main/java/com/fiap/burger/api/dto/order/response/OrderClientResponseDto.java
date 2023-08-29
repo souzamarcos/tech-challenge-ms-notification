@@ -6,13 +6,13 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Optional;
 
 public record OrderClientResponseDto(
-        @NotNull
-        Long id,
-        String name
+    @NotNull
+    Long id,
+    String name
 ) {
     public static OrderClientResponseDto toResponseDto(Client client) {
         return Optional.ofNullable(client)
-                .map(c -> new OrderClientResponseDto(c.getId(), c.getName()))
-                .orElse(null);
+            .map(c -> new OrderClientResponseDto(c.getId(), c.getName()))
+            .orElse(null);
     }
 }

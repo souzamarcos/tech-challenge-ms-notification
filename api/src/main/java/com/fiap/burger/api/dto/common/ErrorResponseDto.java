@@ -10,14 +10,14 @@ public record ErrorResponseDto(@NotNull List<ErrorResponseDataDto> errors) {
     public static ErrorResponseDto toErrorResponseDto(Exception exception) {
         if (exception instanceof DomainException) {
             return new ErrorResponseDto(
-                    List.of(new ErrorResponseDataDto(exception.getMessage(), ((DomainException) exception).getParameters()))
+                List.of(new ErrorResponseDataDto(exception.getMessage(), ((DomainException) exception).getParameters()))
             );
         } else return defaultError();
     }
 
     private static ErrorResponseDto defaultError() {
         return new ErrorResponseDto(
-                List.of(new ErrorResponseDataDto("Unexpected error", Map.of()))
+            List.of(new ErrorResponseDataDto("Unexpected error", Map.of()))
         );
     }
 }

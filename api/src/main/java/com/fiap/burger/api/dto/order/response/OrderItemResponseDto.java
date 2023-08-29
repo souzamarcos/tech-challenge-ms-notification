@@ -8,22 +8,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public record OrderItemResponseDto(
-        @NotNull
-        Long productId,
+    @NotNull
+    Long productId,
 
-        String productName,
+    String productName,
 
-        @Null
-        String comment,
+    @Null
+    String comment,
 
-        List<OrderItemAdditionalResponseDto> additionals
+    List<OrderItemAdditionalResponseDto> additionals
 ) {
     public static OrderItemResponseDto toResponseDto(OrderItem order) {
         return new OrderItemResponseDto(
-                order.getProduct().getId(),
-                order.getProduct().getName(),
-                order.getComment(),
-                order.getOrderItemAdditionals().stream().map(OrderItemAdditionalResponseDto::toResponseDto).collect(Collectors.toList())
+            order.getProduct().getId(),
+            order.getProduct().getName(),
+            order.getComment(),
+            order.getOrderItemAdditionals().stream().map(OrderItemAdditionalResponseDto::toResponseDto).collect(Collectors.toList())
         );
     }
 }

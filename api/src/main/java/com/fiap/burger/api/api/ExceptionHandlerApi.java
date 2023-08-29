@@ -11,12 +11,12 @@ import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
 public class ExceptionHandlerApi {
-    @ExceptionHandler({ RuntimeException.class })
+    @ExceptionHandler({RuntimeException.class})
     public ResponseEntity<ErrorResponseDto> handleExceptions(Exception exception, WebRequest request) {
         LOGGER.error("Handling error: ", exception);
         return new ResponseEntity<>(
-                ErrorResponseDto.toErrorResponseDto(exception),
-                ExceptionHttpResponse.getHttpStatusBy(exception)
+            ErrorResponseDto.toErrorResponseDto(exception),
+            ExceptionHttpResponse.getHttpStatusBy(exception)
         );
     }
 

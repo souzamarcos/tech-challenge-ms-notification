@@ -9,16 +9,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public record OrderInsertRequestDto(
-        @Null
-        Long clientId,
-        @NotNull
-        List<OrderItemInsertRequestDto> items
+    @Null
+    Long clientId,
+    @NotNull
+    List<OrderItemInsertRequestDto> items
 ) {
     public Order toEntity() {
         return new Order(
-                clientId,
-                items().stream().map(OrderItemInsertRequestDto::toEntity).collect(Collectors.toList()),
-                OrderStatus.AGUARDANDO_PAGAMENTO
+            clientId,
+            items().stream().map(OrderItemInsertRequestDto::toEntity).collect(Collectors.toList()),
+            OrderStatus.AGUARDANDO_PAGAMENTO
         );
     }
 }

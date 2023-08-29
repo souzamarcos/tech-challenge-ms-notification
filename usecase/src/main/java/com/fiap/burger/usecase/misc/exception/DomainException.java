@@ -6,11 +6,11 @@ public abstract class DomainException extends RuntimeException {
 
     protected Map<String, String> parameters = Map.of();
 
-    public DomainException (String message) {
+    public DomainException(String message) {
         super(message);
     }
 
-    public DomainException (String message, Map<String, String> parameters) {
+    public DomainException(String message, Map<String, String> parameters) {
         super(message);
         this.parameters = parameters;
     }

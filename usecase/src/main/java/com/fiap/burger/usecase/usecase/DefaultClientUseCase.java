@@ -13,13 +13,17 @@ import static com.fiap.burger.usecase.misc.validation.ValidationUtils.*;
 @Service
 public class DefaultClientUseCase implements ClientUseCase {
 
-    public Client findById(ClientGateway repository, Long id) {return repository.findById(id);}
+    public Client findById(ClientGateway repository, Long id) {
+        return repository.findById(id);
+    }
 
-    public Client findByCpf(ClientGateway repository, String cpf) {return repository.findByCpf(cpf);}
+    public Client findByCpf(ClientGateway repository, String cpf) {
+        return repository.findByCpf(cpf);
+    }
 
     public Client insert(ClientGateway repository, Client client) {
         Client persistedClient = findByCpf(repository, client.getCpf());
-        if(persistedClient != null) {
+        if (persistedClient != null) {
             throw new ClientCpfAlreadyExistsException();
         }
         validateClientToInsert(client);
@@ -27,7 +31,7 @@ public class DefaultClientUseCase implements ClientUseCase {
     }
 
     private void validateClientToInsert(Client client) {
-        if(client.getId() != null) throw new InvalidAttributeException("Client should not have defined id", "id");
+        if (client.getId() != null) throw new InvalidAttributeException("Client should not have defined id", "id");
         validateClient(client);
     }
 

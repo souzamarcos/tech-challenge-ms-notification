@@ -20,7 +20,7 @@ public class ClientApi {
 
     @Operation(summary = "Consultar cliente", description = "Consultar um cliente", tags = {"cliente"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "404", description = "Cliente não encontrado")
+        @ApiResponse(responseCode = "404", description = "Cliente não encontrado")
     })
     @GetMapping("/{clientId}")
     public ClientResponseDto findById(@PathVariable Long clientId) {
@@ -29,7 +29,7 @@ public class ClientApi {
 
     @Operation(summary = "Buscar cliente por cpf", description = "Buscar cliente por cpf", tags = {"cliente"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "404", description = "Cliente não encontrado")
+        @ApiResponse(responseCode = "404", description = "Cliente não encontrado")
     })
     @GetMapping("/by-cpf/{clientCpf}")
     public ClientResponseDto findByCpf(@PathVariable String clientCpf) {
@@ -38,7 +38,7 @@ public class ClientApi {
 
     @Operation(summary = "Cadastrar cliente", description = "Cadastrar um cliente", tags = {"cliente"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "400", description = "Cliente inválido")
+        @ApiResponse(responseCode = "400", description = "Cliente inválido")
     })
     @PostMapping()
     public ClientResponseDto insert(@RequestBody ClientInsertRequestDto clientDto) {

@@ -21,14 +21,14 @@ public class Product extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(
-                getId(),
-                getCategory(),
-                getName(),
-                getDescription(),
-                getValue(),
-                getCreatedAt(),
-                getModifiedAt(),
-                getDeletedAt()
+            getId(),
+            getCategory(),
+            getName(),
+            getDescription(),
+            getValue(),
+            getCreatedAt(),
+            getModifiedAt(),
+            getDeletedAt()
         );
     }
 
@@ -64,14 +64,14 @@ public class Product extends BaseEntity {
     }
 
     public Product(
-            Long id,
-            Category category,
-            String name,
-            String description,
-            Double value,
-            LocalDateTime createdAt,
-            LocalDateTime modifiedAt,
-            LocalDateTime deletedAt
+        Long id,
+        Category category,
+        String name,
+        String description,
+        Double value,
+        LocalDateTime createdAt,
+        LocalDateTime modifiedAt,
+        LocalDateTime deletedAt
     ) {
         this.id = id;
         this.category = category;

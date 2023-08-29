@@ -25,13 +25,13 @@ public class Client extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(
-                getId(),
-                getCpf(),
-                getEmail(),
-                getName(),
-                getCreatedAt(),
-                getModifiedAt(),
-                getDeletedAt()
+            getId(),
+            getCpf(),
+            getEmail(),
+            getName(),
+            getCreatedAt(),
+            getModifiedAt(),
+            getDeletedAt()
         );
     }
 
@@ -47,7 +47,7 @@ public class Client extends BaseEntity {
         return name;
     }
 
-    public Client(Long id,String cpf, String email, String name) {
+    public Client(Long id, String cpf, String email, String name) {
         this.id = id;
         this.cpf = cpf;
         this.email = email;
@@ -61,13 +61,13 @@ public class Client extends BaseEntity {
     }
 
     public Client(
-            Long id,
-            String cpf,
-            String email,
-            String name,
-            LocalDateTime createdAt,
-            LocalDateTime modifiedAt,
-            LocalDateTime deletedAt
+        Long id,
+        String cpf,
+        String email,
+        String name,
+        LocalDateTime createdAt,
+        LocalDateTime modifiedAt,
+        LocalDateTime deletedAt
     ) {
         this.id = id;
         this.cpf = cpf;
@@ -81,9 +81,9 @@ public class Client extends BaseEntity {
     @Override
     public String toString() {
         return "Client{" +
-                "cpf='" + cpf + '\'' +
-                ", email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+            "cpf='" + cpf + '\'' +
+            ", email='" + email + '\'' +
+            ", name='" + name + '\'' +
+            '}';
     }
 }

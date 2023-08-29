@@ -23,7 +23,7 @@ public class DefaultProductGateway implements ProductGateway {
 
     @Override
     public List<Product> findByIds(List<Long> ids) {
-        return  productDAO.findAllByIdInAndDeletedAtNull(ids).stream().map(ProductJPA::toEntity).collect(Collectors.toList());
+        return productDAO.findAllByIdInAndDeletedAtNull(ids).stream().map(ProductJPA::toEntity).collect(Collectors.toList());
     }
 
     @Override
@@ -34,9 +34,9 @@ public class DefaultProductGateway implements ProductGateway {
     @Override
     public List<Product> findAllBy(Category category) {
         return productDAO.findAllByCategoryAndDeletedAtNull(category)
-                .stream()
-                .map(ProductJPA::toEntity)
-                .collect(Collectors.toList());
+            .stream()
+            .map(ProductJPA::toEntity)
+            .collect(Collectors.toList());
     }
 
     @Override

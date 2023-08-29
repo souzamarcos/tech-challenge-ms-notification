@@ -9,28 +9,28 @@ import java.time.LocalDateTime;
 
 public record ListOrderResponseDto(
 
-        @NotNull
-        Long id,
+    @NotNull
+    Long id,
 
-        @Null
-        OrderClientResponseDto client,
+    @Null
+    OrderClientResponseDto client,
 
-        @NotNull
-        Double total,
+    @NotNull
+    Double total,
 
-        @NotNull
-        OrderStatus status,
+    @NotNull
+    OrderStatus status,
 
-        LocalDateTime modifiedAt
+    LocalDateTime modifiedAt
 ) {
 
     public static ListOrderResponseDto toResponseDto(Order order) {
         return new ListOrderResponseDto(
-                order.getId(),
-                OrderClientResponseDto.toResponseDto(order.getClient()),
-                order.getTotal(),
-                order.getStatus(),
-                order.getModifiedAt()
+            order.getId(),
+            OrderClientResponseDto.toResponseDto(order.getClient()),
+            order.getTotal(),
+            order.getStatus(),
+            order.getModifiedAt()
         );
     }
 }

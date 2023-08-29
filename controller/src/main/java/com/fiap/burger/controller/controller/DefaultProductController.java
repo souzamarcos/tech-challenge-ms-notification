@@ -17,14 +17,15 @@ public class DefaultProductController implements ProductController {
     private ProductUseCase useCase;
     @Autowired
     private ProductGateway gateway;
+
     @Override
     public List<Product> list(Category category) {
         if (category == null) {
             return useCase
-                    .findAll(gateway);
+                .findAll(gateway);
         } else {
             return useCase
-                    .findAllBy(gateway, category);
+                .findAllBy(gateway, category);
         }
     }
 

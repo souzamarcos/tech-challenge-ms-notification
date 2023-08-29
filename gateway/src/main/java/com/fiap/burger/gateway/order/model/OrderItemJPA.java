@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 public class OrderItemJPA {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @JoinColumn(name = "order_id", insertable = true, updatable = false)
     @ManyToOne(optional = false)
     OrderJPA order;
 
-    @Column(name = "order_id", insertable = false, updatable=false)
+    @Column(name = "order_id", insertable = false, updatable = false)
     Long orderId;
 
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
@@ -42,9 +42,9 @@ public class OrderItemJPA {
     }
 
     public OrderItemJPA(
-            Long productId,
-            String comment,
-            OrderJPA orderJPA
+        Long productId,
+        String comment,
+        OrderJPA orderJPA
     ) {
         this.productId = productId;
         this.comment = comment;
@@ -53,29 +53,29 @@ public class OrderItemJPA {
 
     public OrderItem toEntity() {
         return new OrderItem(
-                id,
-                orderId,
-                productId,
-                null,
-                comment
+            id,
+            orderId,
+            productId,
+            null,
+            comment
         );
     }
 
     public OrderItem toEntityWithAdditional() {
         return new OrderItem(
-                id,
-                orderId,
-                Optional.ofNullable(orderItemAdditional).map(items -> items.stream().map(OrderItemAdditionalJPA::toEntity).collect(Collectors.toList())).orElse(null),
-                comment,
-                Optional.ofNullable(product).map(ProductJPA::toEntity).orElse(null)
+            id,
+            orderId,
+            Optional.ofNullable(orderItemAdditional).map(items -> items.stream().map(OrderItemAdditionalJPA::toEntity).collect(Collectors.toList())).orElse(null),
+            comment,
+            Optional.ofNullable(product).map(ProductJPA::toEntity).orElse(null)
         );
     }
 
     public static OrderItemJPA toJPA(OrderItem orderItem, OrderJPA orderJPA) {
         OrderItemJPA newOrderItem = new OrderItemJPA(
-                orderItem.getProductId(),
-                orderItem.getComment(),
-                orderJPA
+            orderItem.getProductId(),
+            orderItem.getComment(),
+            orderJPA
         );
 
         if (!Optional.ofNullable(orderItem.getAdditionalIds()).orElse(Collections.emptyList()).isEmpty()) {
@@ -84,6 +84,7 @@ public class OrderItemJPA {
         }
         return newOrderItem;
     }
+
     public void setOrderItemAdditional(List<OrderItemAdditionalJPA> orderItemAdditional) {
         this.orderItemAdditional = orderItemAdditional;
     }

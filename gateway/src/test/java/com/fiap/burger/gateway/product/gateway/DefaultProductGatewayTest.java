@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 public class DefaultProductGatewayTest {
 
@@ -49,6 +48,7 @@ public class DefaultProductGatewayTest {
 
         verify(productDAO, times(1)).findById(id);
     }
+
     @Test
     public void shouldFindAllProducts() {
         var productsJPA = Arrays.asList(new ProductJPABuilder().withId(1L).build(), new ProductJPABuilder().withId(2L).build());

@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface ProductController {
     List<Product> list(Category category);
+
     Product findById(Long productId);
+
     Product insert(Product product);
+
     Product update(Product product);
+
     String deleteBy(Long productId);
 
 }
