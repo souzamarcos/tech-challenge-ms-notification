@@ -7,12 +7,14 @@ plugins {
 application {
     mainClass.set("com.fiap.burger.application.boot.BurgerApplication")
     applicationDefaultJvmArgs = listOf(
-        "-Duser.timezone=America/Sao_Paulo"
+            "-Duser.timezone=America/Sao_Paulo"
     )
 }
 
 dependencies {
-    implementation(project(":domain"))
-    implementation(project(":web"))
-    implementation(project(":persistence"))
+    implementation(project(":entity"))
+    implementation(project(":usecase"))
+    implementation(project(":controller"))
+    implementation(project(":api"))
+    implementation(project(":gateway"))
 }

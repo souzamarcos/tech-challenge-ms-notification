@@ -1,5 +1,7 @@
 rootProject.name = "burger"
 include("application")
-include("web")
-include("persistence")
-include("domain")
+include("api")
+include("controller")
+include("usecase")
+include("entity")
+include("gateway")
