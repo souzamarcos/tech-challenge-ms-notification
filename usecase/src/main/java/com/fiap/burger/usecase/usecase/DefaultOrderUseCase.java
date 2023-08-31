@@ -21,30 +21,37 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
 public class DefaultOrderUseCase implements OrderUseCase {
 
-    public Order findById(OrderGateway orderGateway, Long id) {
+    private OrderGateway orderGateway;
+    private ProductGateway productGateway;
+    private ClientGateway clientGateway;
+
+    public DefaultOrderUseCase(OrderGateway orderGateway, ProductGateway productGateway, ClientGateway clientGateway) {
+        this.orderGateway = orderGateway;
+        this.productGateway = productGateway;
+        this.clientGateway = clientGateway;
+    }
+
+    public Order findById(Long id) {
         return orderGateway.findById(id);
     }
 
-
-    public List<Order> findAll(OrderGateway orderGateway) {
+    public List<Order> findAll() {
         return orderGateway.findAll();
     }
 
-    public List<Order> findAllBy(OrderGateway orderGateway, OrderStatus status) {
+    public List<Order> findAllBy(OrderStatus status) {
         if (status == null) return orderGateway.findAll();
         return orderGateway.findAllBy(status);
     }
 
-    public List<Order> findAllInProgress(OrderGateway orderGateway) {
+    public List<Order> findAllInProgress() {
         return orderGateway.findAllInProgress();
     }
 
-    public Order insert(OrderGateway orderGateway, ProductGateway productGateway,
-                        ClientGateway clientGateway, Order order) {
-        Client client = getClient(clientGateway, order);
+    public Order insert(Order order) {
+        Client client = getClient(order);
         List<Long> productsId = order.getItems().stream().map(OrderItem::getProductId).collect(Collectors.toList());
         productsId.addAll(order.getItems().stream().flatMap(item -> Optional.ofNullable(item.getAdditionalIds()).orElse(Collections.emptyList()).stream()).toList());
         List<Product> products = productGateway.findByIds(productsId);
@@ -56,7 +63,7 @@ public class DefaultOrderUseCase implements OrderUseCase {
         return persistedOrder;
     }
 
-    public Order checkout(OrderGateway orderGateway, Long orderId) {
+    public Order checkout(Long orderId) {
         var order = orderGateway.findById(orderId);
 
         if (order == null) {
@@ -71,7 +78,7 @@ public class DefaultOrderUseCase implements OrderUseCase {
         return order;
     }
 
-    public Order updateStatus(OrderGateway orderGateway, Long orderId, OrderStatus newStatus) {
+    public Order updateStatus(Long orderId, OrderStatus newStatus) {
         var order = orderGateway.findById(orderId);
 
         if (order == null) {
@@ -147,7 +154,7 @@ public class DefaultOrderUseCase implements OrderUseCase {
         return productIds.stream().mapToDouble(id -> products.stream().filter(product -> product.getId().equals(id)).findFirst().map(Product::getValue).orElse(0.0)).sum();
     }
 
-    private Client getClient(ClientGateway clientGateway, Order order) {
+    private Client getClient(Order order) {
         if (order.getClientId() != null) {
             Client client = clientGateway.findById(order.getClientId());
             if (client == null) {

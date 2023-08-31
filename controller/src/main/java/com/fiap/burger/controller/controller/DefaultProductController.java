@@ -21,34 +21,32 @@ public class DefaultProductController implements ProductController {
     @Override
     public List<Product> list(Category category) {
         if (category == null) {
-            return useCase
-                .findAll(gateway);
+            return useCase.findAll();
         } else {
-            return useCase
-                .findAllBy(gateway, category);
+            return useCase.findAllBy(category);
         }
     }
 
     @Override
     public Product findById(Long productId) {
-        var persistedProduct = useCase.findById(gateway, productId);
+        var persistedProduct = useCase.findById(productId);
         if (persistedProduct == null) throw new ProductNotFoundException();
         return persistedProduct;
     }
 
     @Override
     public Product insert(Product product) {
-        return useCase.insert(gateway, product);
+        return useCase.insert(product);
     }
 
     @Override
     public Product update(Product product) {
-        return useCase.update(gateway, product);
+        return useCase.update(product);
     }
 
     @Override
     public String deleteBy(Long productId) {
-        useCase.deleteBy(gateway, productId);
+        useCase.deleteBy(productId);
         return "Product has been successfully deleted.";
     }
 }

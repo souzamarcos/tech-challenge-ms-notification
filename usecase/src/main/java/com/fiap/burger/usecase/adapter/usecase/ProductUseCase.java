@@ -7,15 +7,15 @@ import com.fiap.burger.usecase.adapter.gateway.ProductGateway;
 import java.util.List;
 
 public interface ProductUseCase {
-    Product findById(ProductGateway gateway, Long id);
+    Product findById(Long id);
 
-    List<Product> findAll(ProductGateway gateway);
+    List<Product> findAll();
 
-    List<Product> findAllBy(ProductGateway gateway, Category category);
+    List<Product> findAllBy(Category category);
 
-    Product insert(ProductGateway gateway, Product product);
+    Product insert(Product product);
 
-    Product update(ProductGateway gateway, Product product);
+    Product update(Product product);
 
-    void deleteBy(ProductGateway gateway, Long id);
+    void deleteBy(Long id);
 }

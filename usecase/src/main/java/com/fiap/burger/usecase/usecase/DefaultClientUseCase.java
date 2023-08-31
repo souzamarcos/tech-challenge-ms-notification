@@ -10,19 +10,24 @@ import org.springframework.stereotype.Service;
 import static com.fiap.burger.usecase.misc.validation.ValidationCPF.validateCPF;
 import static com.fiap.burger.usecase.misc.validation.ValidationUtils.*;
 
-@Service
 public class DefaultClientUseCase implements ClientUseCase {
 
-    public Client findById(ClientGateway repository, Long id) {
+    private ClientGateway repository;
+
+    public DefaultClientUseCase(ClientGateway repository){
+        this.repository = repository;
+    }
+
+    public Client findById(Long id) {
         return repository.findById(id);
     }
 
-    public Client findByCpf(ClientGateway repository, String cpf) {
+    public Client findByCpf(String cpf) {
         return repository.findByCpf(cpf);
     }
 
-    public Client insert(ClientGateway repository, Client client) {
-        Client persistedClient = findByCpf(repository, client.getCpf());
+    public Client insert(Client client) {
+        Client persistedClient = findByCpf(client.getCpf());
         if (persistedClient != null) {
             throw new ClientCpfAlreadyExistsException();
         }

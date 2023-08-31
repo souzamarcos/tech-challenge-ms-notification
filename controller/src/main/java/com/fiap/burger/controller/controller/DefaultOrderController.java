@@ -26,34 +26,34 @@ public class DefaultOrderController implements OrderController {
 
     @Override
     public Order insert(Order order) {
-        return useCase.insert(orderGateway, productGateway, clientGateway, order);
+        return useCase.insert(order);
     }
 
     @Override
     public Order findById(Long orderId) {
-        var persistedOrder = useCase.findById(orderGateway, orderId);
+        var persistedOrder = useCase.findById(orderId);
         if (persistedOrder == null) throw new OrderNotFoundException(orderId);
         return persistedOrder;
     }
 
     @Override
     public Order updateStatus(Long orderId, OrderStatus newStatus) {
-        return useCase.updateStatus(orderGateway, orderId, newStatus);
+        return useCase.updateStatus(orderId, newStatus);
     }
 
     @Override
     public List<Order> findAllBy(OrderStatus status) {
-        return useCase.findAllBy(orderGateway, status);
+        return useCase.findAllBy(status);
     }
 
     @Override
     public List<Order> findAllInProgress() {
-        return useCase.findAllInProgress(orderGateway);
+        return useCase.findAllInProgress();
     }
 
     @Override
     public Order checkout(Long orderId) {
-        return useCase.checkout(orderGateway, orderId);
+        return useCase.checkout(orderId);
     }
 }
 

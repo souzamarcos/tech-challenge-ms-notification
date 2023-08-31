@@ -25,7 +25,6 @@ subprojects {
 	}
 
 	dependencies {
-		implementation(rootProject.libs.spring.boot.starter.web)
 		implementation("org.jacoco:org.jacoco.ant:0.8.10")
 
 		//Test
