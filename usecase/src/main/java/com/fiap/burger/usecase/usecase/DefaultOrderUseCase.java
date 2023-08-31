@@ -13,7 +13,6 @@ import com.fiap.burger.usecase.adapter.usecase.OrderUseCase;
 import com.fiap.burger.usecase.misc.exception.InvalidAttributeException;
 import com.fiap.burger.usecase.misc.exception.NegativeOrZeroValueException;
 import com.fiap.burger.usecase.misc.exception.OrderNotFoundException;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -23,9 +22,9 @@ import java.util.stream.Collectors;
 
 public class DefaultOrderUseCase implements OrderUseCase {
 
-    private OrderGateway orderGateway;
-    private ProductGateway productGateway;
-    private ClientGateway clientGateway;
+    private final OrderGateway orderGateway;
+    private final ProductGateway productGateway;
+    private final ClientGateway clientGateway;
 
     public DefaultOrderUseCase(OrderGateway orderGateway, ProductGateway productGateway, ClientGateway clientGateway) {
         this.orderGateway = orderGateway;
@@ -94,6 +93,9 @@ public class DefaultOrderUseCase implements OrderUseCase {
     }
 
     private void validateUpdateStatus(OrderStatus newStatus, OrderStatus oldStatus) {
+        if (OrderStatus.CANCELADO.equals(oldStatus)) {
+            throw new InvalidAttributeException("You can not change status of orders that are canceled.", "oldStatus");
+        }
         if (OrderStatus.AGUARDANDO_PAGAMENTO.equals(oldStatus)) {
             throw new InvalidAttributeException("You can not change status of orders that are awaiting payment.", "oldStatus");
         }
