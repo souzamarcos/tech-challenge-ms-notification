@@ -69,8 +69,8 @@ public class ProductJPA extends BaseDomainJPA {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Product product)) return false;
-        return Objects.equals(hashCode(), product.hashCode());
+        if (!(o instanceof ProductJPA productJPA)) return false;
+        return Objects.equals(hashCode(), productJPA.hashCode());
     }
 
     @Override
