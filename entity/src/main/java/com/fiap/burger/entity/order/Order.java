@@ -2,6 +2,7 @@ package com.fiap.burger.entity.order;
 
 import com.fiap.burger.entity.client.Client;
 import com.fiap.burger.entity.common.BaseEntity;
+import com.fiap.burger.entity.payment.Payment;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +13,8 @@ public class Order extends BaseEntity {
     private Long clientId;
     private Client client;
     private List<OrderItem> items;
+
+    private List<Payment> payments;
     private Double total;
 
 
@@ -30,6 +33,7 @@ public class Order extends BaseEntity {
             getId(),
             getClientId(),
             getItems(),
+            getPayments(),
             getTotal(),
             getStatus(),
             getCreatedAt(),
@@ -48,6 +52,10 @@ public class Order extends BaseEntity {
 
     public List<OrderItem> getItems() {
         return items;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
     }
 
     public void setTotal(Double total) {
@@ -101,6 +109,28 @@ public class Order extends BaseEntity {
         this.id = id;
         this.client = client;
         this.items = items;
+        this.total = total;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.deletedAt = deletedAt;
+    }
+
+    public Order(
+            Long id,
+            Client client,
+            List<OrderItem> items,
+            List<Payment> payments,
+            Double total,
+            OrderStatus status,
+            LocalDateTime createdAt,
+            LocalDateTime modifiedAt,
+            LocalDateTime deletedAt
+    ) {
+        this.id = id;
+        this.client = client;
+        this.items = items;
+        this.payments = payments;
         this.total = total;
         this.status = status;
         this.createdAt = createdAt;

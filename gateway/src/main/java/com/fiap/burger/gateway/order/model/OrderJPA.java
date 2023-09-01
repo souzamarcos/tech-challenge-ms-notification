@@ -4,6 +4,7 @@ import com.fiap.burger.entity.order.Order;
 import com.fiap.burger.entity.order.OrderStatus;
 import com.fiap.burger.gateway.client.model.ClientJPA;
 import com.fiap.burger.gateway.misc.common.BaseDomainJPA;
+import com.fiap.burger.gateway.payment.model.PaymentJPA;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,9 @@ public class OrderJPA extends BaseDomainJPA {
     // TODO melhorar perfomance do fetch
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     List<OrderItemJPA> items;
+
+    @OneToMany(mappedBy = "orderJPA", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    List<PaymentJPA> payments;
     @Column
     Double total;
     @Enumerated(EnumType.ORDINAL)
@@ -39,6 +43,7 @@ public class OrderJPA extends BaseDomainJPA {
         Long id,
         Long clientId,
         List<OrderItemJPA> items,
+        List<PaymentJPA> payments,
         Double total,
         OrderStatus status,
         LocalDateTime createdAt,
@@ -50,6 +55,7 @@ public class OrderJPA extends BaseDomainJPA {
         this.clientId = clientId;
         this.total = total;
         this.items = items;
+        this.payments = payments;
         this.status = status;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
@@ -72,7 +78,6 @@ public class OrderJPA extends BaseDomainJPA {
         return new Order(
             id,
             Optional.ofNullable(client).map(ClientJPA::toEntity).orElse(null),
-            //TODO verificar pq os itens as vezes são retornados e as vezes não
             items.stream().map(OrderItemJPA::toEntityWithAdditional).collect(Collectors.toList()),
             total,
             status,
@@ -82,10 +87,25 @@ public class OrderJPA extends BaseDomainJPA {
         );
     }
 
+    public Order toEntityWithItemsAndPayments() {
+        return new Order(
+                id,
+                Optional.ofNullable(client).map(ClientJPA::toEntity).orElse(null),
+                items.stream().map(OrderItemJPA::toEntityWithAdditional).collect(Collectors.toList()),
+                payments.stream().map(PaymentJPA::toEntity).collect(Collectors.toList()),
+                total,
+                status,
+                createdAt,
+                modifiedAt,
+                deletedAt
+        );
+    }
+
     public static OrderJPA toJPA(Order order) {
         OrderJPA newOrder = new OrderJPA(
             order.getId(),
             order.getClientId(),
+            null,
             null,
             order.getTotal(),
             order.getStatus(),

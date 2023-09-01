@@ -1,13 +1,14 @@
 package com.fiap.burger.entity.payment;
 
 import com.fiap.burger.entity.common.BaseEntity;
+import com.fiap.burger.entity.order.Order;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Payment extends BaseEntity {
 
-    private Long orderId;
+    private Order order;
     private PaymentStatus status;
     private String qrCode;
     private String externalId;
@@ -17,21 +18,18 @@ public class Payment extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return getOrderId().equals(payment.getOrderId());
+        return getOrder().equals(payment.getOrder()) && getStatus() == payment.getStatus() && Objects.equals(getQrCode(), payment.getQrCode()) && Objects.equals(getExternalId(), payment.getExternalId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getOrderId());
+        return Objects.hash(getOrder(), getStatus(), getQrCode(), getExternalId());
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
 
     public PaymentStatus getStatus() {
         return status;
@@ -59,7 +57,7 @@ public class Payment extends BaseEntity {
 
     public Payment(
             Long id,
-            Long orderId,
+            Order order,
             PaymentStatus status,
             String qrCode,
             String externalId,
@@ -68,7 +66,7 @@ public class Payment extends BaseEntity {
             LocalDateTime deletedAt
     ) {
         this.id = id;
-        this.orderId = orderId;
+        this.order = order;
         this.status = status;
         this.qrCode = qrCode;
         this.externalId = externalId;
@@ -79,14 +77,14 @@ public class Payment extends BaseEntity {
 
     public Payment(
             Long id,
-            Long orderId,
+            Order order,
             PaymentStatus status,
             LocalDateTime createdAt,
             LocalDateTime modifiedAt,
             LocalDateTime deletedAt
     ) {
         this.id = id;
-        this.orderId = orderId;
+        this.order = order;
         this.status = status;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
@@ -95,11 +93,11 @@ public class Payment extends BaseEntity {
 
     public Payment(
             Long id,
-            Long orderId,
+            Order order,
             PaymentStatus status
     ) {
         this.id = id;
-        this.orderId = orderId;
+        this.order = order;
         this.status = status;
     }
 }

@@ -3,6 +3,7 @@ package com.fiap.burger.gateway.payment.model;
 import com.fiap.burger.entity.payment.Payment;
 import com.fiap.burger.entity.payment.PaymentStatus;
 import com.fiap.burger.gateway.misc.common.BaseDomainJPA;
+import com.fiap.burger.gateway.order.model.OrderJPA;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -12,8 +13,9 @@ import java.util.Objects;
 @Entity
 public class PaymentJPA extends BaseDomainJPA {
 
-    @Column(nullable = false)
-    Long orderId;
+    @JoinColumn(name = "order_id", insertable = true, updatable = false)
+    @ManyToOne(optional = false)
+    OrderJPA orderJPA;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     PaymentStatus status;
@@ -24,13 +26,9 @@ public class PaymentJPA extends BaseDomainJPA {
     @Column
     String externalId;
 
-
-    public PaymentJPA() {
-    }
-
     public PaymentJPA(
         Long id,
-        Long orderId,
+        OrderJPA orderJPA,
         PaymentStatus status,
         String qrCode,
         String externalId,
@@ -39,7 +37,7 @@ public class PaymentJPA extends BaseDomainJPA {
         LocalDateTime deletedAt
     ) {
         this.id = id;
-        this.orderId = orderId;
+        this.orderJPA = orderJPA;
         this.status = status;
         this.qrCode = qrCode;
         this.externalId = externalId;
@@ -52,8 +50,8 @@ public class PaymentJPA extends BaseDomainJPA {
         return id;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public OrderJPA getOrderJPA() {
+        return orderJPA;
     }
 
     public PaymentStatus getStatus() {
@@ -79,7 +77,7 @@ public class PaymentJPA extends BaseDomainJPA {
     public int hashCode() {
         return Objects.hash(
                 getId(),
-                getOrderId(),
+                getOrderJPA(),
                 getStatus(),
                 getQrCode(),
                 getExternalId(),
@@ -92,7 +90,7 @@ public class PaymentJPA extends BaseDomainJPA {
     public static PaymentJPA toJPA(Payment payment) {
         return new PaymentJPA(
                 payment.getId(),
-                payment.getOrderId(),
+                OrderJPA.toJPA(payment.getOrder()),
                 payment.getStatus(),
                 payment.getQrCode(),
                 payment.getExternalId(),
@@ -103,6 +101,6 @@ public class PaymentJPA extends BaseDomainJPA {
     }
 
     public Payment toEntity() {
-        return new Payment(id, orderId, status, qrCode, externalId, createdAt, modifiedAt, deletedAt);
+        return new Payment(id, orderJPA.toEntity(), status, qrCode, externalId, createdAt, modifiedAt, deletedAt);
     }
 }
