@@ -106,4 +106,12 @@ public class Payment extends BaseEntity {
     ) {
         this.order = order;
     }
+
+    public Payment(
+            Order order,
+            PaymentStatus status
+    ) {
+        this.order = order;
+        this.status = status;
+    }
 }

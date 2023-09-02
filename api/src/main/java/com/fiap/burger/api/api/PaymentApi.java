@@ -1,6 +1,7 @@
 package com.fiap.burger.api.api;
 
 import com.fiap.burger.api.dto.payment.request.PaymentInsertRequestDto;
+import com.fiap.burger.api.dto.payment.request.PaymentWebhookRequestDto;
 import com.fiap.burger.api.dto.payment.response.PaymentResponseDto;
 import com.fiap.burger.controller.adapter.api.PaymentController;
 import com.fiap.burger.entity.payment.PaymentStatus;
@@ -51,7 +52,7 @@ public class PaymentApi {
     @Operation(summary = "Enviar Webhook", description = "Enviar Webhook de pagamento", tags = {"pagamento"})
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Request inválida")})
     @PostMapping("/webhook")
-    public PaymentResponseDto insert(@RequestBody PaymentInsertRequestDto orderIdDto, PaymentStatus status) {
+    public PaymentResponseDto insert(@RequestBody PaymentWebhookRequestDto webHookDto) {
         // TODO retornar items do pedido inserido
         return null;
     }
