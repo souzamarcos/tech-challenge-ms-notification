@@ -24,7 +24,11 @@ public class DefaultPaymentController implements PaymentController {
     @Override
     public List<Payment> findByOrderId(Long orderId) {
         var persistedPayment = useCase.findByOrderId(orderId);
-        //if (persistedPayment == null) throw new PaymentNotFoundException(id);
         return persistedPayment;
+    }
+
+    @Override
+    public Payment insert(Long orderId) {
+        return null;
     }
 }
