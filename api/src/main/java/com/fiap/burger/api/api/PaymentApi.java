@@ -3,11 +3,13 @@ package com.fiap.burger.api.api;
 import com.fiap.burger.api.dto.payment.request.PaymentInsertRequestDto;
 import com.fiap.burger.api.dto.payment.response.PaymentResponseDto;
 import com.fiap.burger.controller.adapter.api.PaymentController;
+import com.fiap.burger.entity.payment.PaymentStatus;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,7 +38,7 @@ public class PaymentApi {
     @Operation(summary = "Enviar Webhook", description = "Enviar Webhook de pagamento", tags = {"pagamento"})
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Request inválida")})
     @PostMapping("/webhook")
-    public PaymentResponseDto insert() {
+    public PaymentResponseDto insert(@RequestBody PaymentInsertRequestDto orderIdDto, PaymentStatus status) {
         // TODO retornar items do pedido inserido
         return null;
     }
