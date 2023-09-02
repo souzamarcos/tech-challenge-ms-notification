@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/payments")
 @Tag(name = "pagamento", description = "API responsável pelo controle de pagamento.")
@@ -25,5 +27,16 @@ public class PaymentApi {
     @GetMapping("/{id}")
     public PaymentResponseDto findById(@PathVariable Long id) {
         return PaymentResponseDto.toResponseDto(paymentController.findById(id));
+    }
+
+    @Operation(summary = "Consultar pagamentos pelo orderId", description = "Consultar pagamento pelo orderId", tags = {"pagamento"})
+    @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Request inválida")})
+    @GetMapping("/byOrderId/{orderId}")
+    public List<PaymentResponseDto> findByOrderId(@PathVariable Long orderId) {
+        return paymentController
+                .findByOrderId(orderId)
+                .stream()
+                .map(PaymentResponseDto::toResponseDto)
+                .toList();
     }
 }

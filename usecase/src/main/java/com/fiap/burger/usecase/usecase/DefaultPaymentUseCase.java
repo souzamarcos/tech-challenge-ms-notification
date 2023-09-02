@@ -4,6 +4,8 @@ import com.fiap.burger.entity.payment.Payment;
 import com.fiap.burger.usecase.adapter.gateway.PaymentGateway;
 import com.fiap.burger.usecase.adapter.usecase.PaymentUseCase;
 
+import java.util.List;
+
 
 public class DefaultPaymentUseCase implements PaymentUseCase {
 
@@ -15,6 +17,10 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
 
     public Payment findById(Long id) {
         return paymentGateway.findById(id);
+    }
+
+    public List<Payment> findByOrderId(Long orderId) {
+        return paymentGateway.findByOrderId(orderId);
     }
 
 

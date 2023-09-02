@@ -7,6 +7,8 @@ import com.fiap.burger.usecase.misc.exception.PaymentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class DefaultPaymentController implements PaymentController {
 
@@ -16,6 +18,13 @@ public class DefaultPaymentController implements PaymentController {
     public Payment findById(Long id) {
         var persistedPayment = useCase.findById(id);
         if (persistedPayment == null) throw new PaymentNotFoundException(id);
+        return persistedPayment;
+    }
+
+    @Override
+    public List<Payment> findByOrderId(Long orderId) {
+        var persistedPayment = useCase.findByOrderId(orderId);
+        //if (persistedPayment == null) throw new PaymentNotFoundException(id);
         return persistedPayment;
     }
 }
