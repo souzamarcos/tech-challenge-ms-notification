@@ -16,6 +16,8 @@ public interface PaymentDAO extends JpaRepository<PaymentJPA, Long> {
 
     List<PaymentJPA> findAllByDeletedAtNullAndOrderJPA(OrderJPA orderJPA);
 
-
-
+    @Transactional
+    @Modifying
+    @Query("UPDATE PaymentJPA p SET p.status = :newStatus WHERE p.id = :paymentId")
+    void updatePaymentStatus(@Param("paymentId") Long paymentId, @Param("newStatus") PaymentStatus newStatus);
 }

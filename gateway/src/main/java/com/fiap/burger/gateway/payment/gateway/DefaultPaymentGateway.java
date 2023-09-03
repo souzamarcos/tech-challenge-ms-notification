@@ -46,5 +46,10 @@ public class DefaultPaymentGateway implements PaymentGateway {
         return paymentDAO.save(PaymentJPA.toJPA(payment)).toEntity();
     }
 
+    @Override
+    public void updatePaymentStatus(Long id, PaymentStatus status) {
+        paymentDAO.updatePaymentStatus(id, status);
+    }
+
 }
 

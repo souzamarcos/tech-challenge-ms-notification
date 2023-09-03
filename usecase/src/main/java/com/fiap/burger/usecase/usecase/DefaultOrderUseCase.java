@@ -33,7 +33,11 @@ public class DefaultOrderUseCase implements OrderUseCase {
     }
 
     public Order findById(Long id) {
-        return orderGateway.findById(id);
+        var order = orderGateway.findById(id);
+        if (order == null) {
+            throw new OrderNotFoundException(id);
+        }
+        return order;
     }
 
     public List<Order> findAll() {

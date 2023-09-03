@@ -60,11 +60,4 @@ public class OrderApi {
     public List<ListOrderResponseDto> findAllInProgress() {
         return controller.findAllInProgress().stream().map(ListOrderResponseDto::toResponseDto).collect(Collectors.toList());
     }
-
-    @Operation(summary = "Realizar pagamento do pedido", description = "Realizar pagamento do pedido", tags = {"pedido"})
-    @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Requisição inválida")})
-    @PostMapping("/{orderId}/checkout")
-    public ListOrderResponseDto checkout(@PathVariable Long orderId) {
-        return ListOrderResponseDto.toResponseDto(controller.checkout(orderId));
-    }
 }
