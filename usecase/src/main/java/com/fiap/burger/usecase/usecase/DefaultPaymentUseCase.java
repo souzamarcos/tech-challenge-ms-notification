@@ -57,11 +57,4 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
             orderUseCase.updateStatus(persistedPayment.getOrder().getId(), OrderStatus.CANCELADO);
         }
     }
-
-    private boolean isThereAnyApprovedPayment(List<Payment> payments) {
-        List<Payment> approvedPayments = payments.stream().filter(element ->  PaymentStatus.APROVADO.equals(element.getStatus())).toList();
-        return approvedPayments.size() >= 1;
-    }
-
-
 }
