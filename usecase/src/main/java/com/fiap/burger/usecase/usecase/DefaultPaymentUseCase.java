@@ -7,7 +7,7 @@ import com.fiap.burger.entity.payment.PaymentStatus;
 import com.fiap.burger.usecase.adapter.gateway.PaymentGateway;
 import com.fiap.burger.usecase.adapter.usecase.OrderUseCase;
 import com.fiap.burger.usecase.adapter.usecase.PaymentUseCase;
-import com.fiap.burger.usecase.misc.exception.OrderAlreadyPaidException;
+import com.fiap.burger.usecase.misc.exception.OrderCannotBePaidException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -36,10 +36,8 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
 
         Order order = orderUseCase.findById(orderId);
 
-        List<Payment> persistedPayments = findByOrderId(order.getId());
-
-        if(isThereAnyApprovedPayment(persistedPayments)) {
-            throw new OrderAlreadyPaidException(orderId);
+        if(!orderUseCase.canBePaid(order.getStatus())) {
+            throw new OrderCannotBePaidException(orderId);
         }
 
         return paymentGateway.save(Payment.createPaymentWithOrderAndOpenStatus(order));
@@ -51,13 +49,17 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
 
         Payment persistedPayment = findById(id);
 
-        if(persistedPayment.getStatus() == PaymentStatus.APROVADO) {
+        if(PaymentStatus.APROVADO.equals(persistedPayment.getStatus())) {
             orderUseCase.checkout(persistedPayment.getOrder().getId());
+        }
+
+        if(PaymentStatus.RECUSADO.equals(persistedPayment.getStatus())) {
+            orderUseCase.updateStatus(persistedPayment.getOrder().getId(), OrderStatus.CANCELADO);
         }
     }
 
     private boolean isThereAnyApprovedPayment(List<Payment> payments) {
-        List<Payment> approvedPayments = payments.stream().filter(element -> element.getStatus() == PaymentStatus.APROVADO).toList();
+        List<Payment> approvedPayments = payments.stream().filter(element ->  PaymentStatus.APROVADO.equals(element.getStatus())).toList();
         return approvedPayments.size() >= 1;
     }
 
