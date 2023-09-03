@@ -106,6 +106,14 @@ public class Payment extends BaseEntity {
     }
 
     public Payment(
+            Long id,
+            PaymentStatus status
+    ) {
+        this.id = id;
+        this.status = status;
+    }
+
+    public Payment(
             Order order,
             PaymentStatus status
     ) {

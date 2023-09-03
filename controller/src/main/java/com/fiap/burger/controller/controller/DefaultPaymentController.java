@@ -2,6 +2,7 @@ package com.fiap.burger.controller.controller;
 
 import com.fiap.burger.controller.adapter.api.PaymentController;
 import com.fiap.burger.entity.payment.Payment;
+import com.fiap.burger.entity.payment.PaymentStatus;
 import com.fiap.burger.usecase.adapter.usecase.PaymentUseCase;
 import com.fiap.burger.usecase.misc.exception.PaymentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,10 @@ public class DefaultPaymentController implements PaymentController {
     @Override
     public Payment insert(Long orderId) {
         return useCase.insert(orderId);
+    }
+
+    @Override
+    public void updateStatus(Long id, PaymentStatus status) {
+        useCase.updateStatus(id, status);
     }
 }

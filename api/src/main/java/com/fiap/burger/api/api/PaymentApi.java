@@ -41,18 +41,17 @@ public class PaymentApi {
                 .toList();
     }
 
-    @Operation(summary = "Efetuar pagamento", description = "Efetuar pagamento de pedido", tags = {"pagamento"})
+    @Operation(summary = "Criar pagamento", description = "Criar pagamento de pedido", tags = {"pagamento"})
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Request inválida")})
     @PostMapping()
     public PaymentResponseDto insert(@RequestBody PaymentInsertRequestDto paymentInsertRequestDto) {
-        // TODO retornar items do pedido inserido
         return PaymentResponseDto.toResponseDto(paymentController.insert(paymentInsertRequestDto.orderId()));
     }
 
-    @Operation(summary = "Enviar Webhook", description = "Enviar Webhook de pagamento", tags = {"pagamento"})
+    @Operation(summary = "Receber Webhook com status de pagamento", description = "Receber Webhook com status de pagamento", tags = {"pagamento"})
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Request inválida")})
-    @PostMapping("/webhook")
+    @PutMapping("/webhook")
     public void paymentResponse(@RequestBody PaymentWebhookRequestDto webHookDto) {
-
+        paymentController.updateStatus(webHookDto.id(), webHookDto.status());
     }
 }

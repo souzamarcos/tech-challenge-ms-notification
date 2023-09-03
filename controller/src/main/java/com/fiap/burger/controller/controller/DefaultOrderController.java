@@ -32,7 +32,6 @@ public class DefaultOrderController implements OrderController {
     @Override
     public Order findById(Long orderId) {
         var persistedOrder = useCase.findById(orderId);
-        if (persistedOrder == null) throw new OrderNotFoundException(orderId);
         return persistedOrder;
     }
 
@@ -49,11 +48,6 @@ public class DefaultOrderController implements OrderController {
     @Override
     public List<Order> findAllInProgress() {
         return useCase.findAllInProgress();
-    }
-
-    @Override
-    public Order checkout(Long orderId) {
-        return useCase.checkout(orderId);
     }
 }
 

@@ -4,15 +4,18 @@ import com.fiap.burger.entity.order.Order;
 import com.fiap.burger.entity.payment.Payment;
 import com.fiap.burger.entity.payment.PaymentStatus;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-public class PaymentWebhookRequestDto {
+public record PaymentWebhookRequestDto (
 
     @NotBlank
-    Order orderId;
+    Long id,
 
-    PaymentStatus status;
+    @NotBlank
+    PaymentStatus status
+){
 
     public Payment toEntity() {
-        return new Payment(orderId, status);
+        return new Payment(id, status);
     }
 }
