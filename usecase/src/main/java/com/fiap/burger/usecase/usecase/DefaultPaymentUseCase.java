@@ -7,7 +7,9 @@ import com.fiap.burger.entity.payment.PaymentStatus;
 import com.fiap.burger.usecase.adapter.gateway.PaymentGateway;
 import com.fiap.burger.usecase.adapter.usecase.OrderUseCase;
 import com.fiap.burger.usecase.adapter.usecase.PaymentUseCase;
+import com.fiap.burger.usecase.misc.exception.InvalidAttributeException;
 import com.fiap.burger.usecase.misc.exception.OrderCannotBePaidException;
+import com.fiap.burger.usecase.misc.exception.PaymentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -36,7 +38,7 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
 
         Order order = orderUseCase.findById(orderId);
 
-        if(!orderUseCase.canBePaid(order.getStatus())) {
+        if (!orderUseCase.canBePaid(order.getStatus())) {
             throw new OrderCannotBePaidException(orderId);
         }
 
@@ -45,16 +47,17 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
 
     @Override
     public void updateStatus(Long id, PaymentStatus status) {
-        paymentGateway.updatePaymentStatus(id, status);
-
         Payment persistedPayment = findById(id);
 
-        if(PaymentStatus.APROVADO.equals(persistedPayment.getStatus())) {
-            orderUseCase.checkout(persistedPayment.getOrder().getId());
+        if (persistedPayment == null) {
+            throw new InvalidAttributeException("Payment not found", "id");
         }
 
-        if(PaymentStatus.RECUSADO.equals(persistedPayment.getStatus())) {
-            orderUseCase.updateStatus(persistedPayment.getOrder().getId(), OrderStatus.CANCELADO);
+        paymentGateway.updatePaymentStatus(id, status);
+
+        switch (status) {
+            case APROVADO -> orderUseCase.checkout(persistedPayment.getOrder().getId());
+            case RECUSADO -> orderUseCase.updateStatus(persistedPayment.getOrder().getId(), OrderStatus.CANCELADO);
         }
     }
 }
