@@ -9,4 +9,6 @@ public interface PaymentUseCase {
     Payment findById(Long id);
 
     List<Payment> findByOrderId(Long orderId);
+
+    Payment insert(Long orderId);
 }

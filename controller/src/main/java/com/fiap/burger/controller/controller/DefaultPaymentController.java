@@ -29,6 +29,6 @@ public class DefaultPaymentController implements PaymentController {
 
     @Override
     public Payment insert(Long orderId) {
-        return null;
+        return useCase.insert(orderId);
     }
 }
