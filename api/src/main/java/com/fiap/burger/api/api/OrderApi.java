@@ -47,14 +47,14 @@ public class OrderApi {
         return ListOrderResponseDto.toResponseDto(controller.updateStatus(orderId, orderDto.newStatus()));
     }
 
-    @Operation(summary = "Listar pedidos", description = "Listar pedidos", tags = {"pedido"})
+    @Operation(summary = "Listar todos os pedidos", description = "Listar todos os pedidos", tags = {"pedido"})
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Request inválida")})
     @GetMapping()
     public List<ListOrderResponseDto> findAll(@RequestParam @Nullable OrderStatus status) {
         return controller.findAllBy(status).stream().map(ListOrderResponseDto::toResponseDto).collect(Collectors.toList());
     }
 
-    @Operation(summary = "Listar pedidos em progresso", description = "Listar pedidos em progresso. Status igual a EM_PREPARAÇÂO ou PRONTO.", tags = {"pedido"})
+    @Operation(summary = "Listar pedidos em progresso", description = "Listar pedidos em progresso. Status igual a PRONTO, EM_PREPARAÇÂO ou RECEBIDO.", tags = {"pedido"})
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Request inválida")})
     @GetMapping("/in-progress")
     public List<ListOrderResponseDto> findAllInProgress() {
