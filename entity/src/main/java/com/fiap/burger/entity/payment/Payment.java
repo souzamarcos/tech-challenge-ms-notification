@@ -13,6 +13,10 @@ public class Payment extends BaseEntity {
     private String qrCode;
     private String externalId;
 
+    public static Payment createPaymentWithOrderAndOpenStatus(Order order) {
+        return new Payment(order, PaymentStatus.ABERTO);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -97,6 +101,14 @@ public class Payment extends BaseEntity {
             PaymentStatus status
     ) {
         this.id = id;
+        this.order = order;
+        this.status = status;
+    }
+
+    public Payment(
+            Order order,
+            PaymentStatus status
+    ) {
         this.order = order;
         this.status = status;
     }

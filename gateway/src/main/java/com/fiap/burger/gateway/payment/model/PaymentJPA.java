@@ -26,6 +26,10 @@ public class PaymentJPA extends BaseDomainJPA {
     @Column
     String externalId;
 
+    public PaymentJPA() {
+
+    }
+
     public PaymentJPA(
         Long id,
         OrderJPA orderJPA,
