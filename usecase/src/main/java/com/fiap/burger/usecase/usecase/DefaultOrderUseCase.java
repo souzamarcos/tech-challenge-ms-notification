@@ -100,18 +100,22 @@ public class DefaultOrderUseCase implements OrderUseCase {
         if (OrderStatus.CANCELADO.equals(oldStatus)) {
             throw new InvalidAttributeException("You can not change status of orders that are canceled.", "oldStatus");
         }
-        if (OrderStatus.AGUARDANDO_PAGAMENTO.equals(oldStatus)) {
+        if (OrderStatus.AGUARDANDO_PAGAMENTO.equals(oldStatus) && !OrderStatus.CANCELADO.equals(newStatus)) {
             throw new InvalidAttributeException("You can not change status of orders that are awaiting payment.", "oldStatus");
         }
-        if (oldStatus.ordinal() + 1 != newStatus.ordinal()) {
+        if (oldStatus.ordinal() + 1 != newStatus.ordinal() && !(OrderStatus.AGUARDANDO_PAGAMENTO.equals(oldStatus) && OrderStatus.CANCELADO.equals(newStatus)) ) {
             throw new InvalidAttributeException(String.format("Next status from '%s' should not be '%s'", oldStatus.name(), newStatus.name()), "newStatus");
         }
     }
 
     private void validateCheckout(OrderStatus oldStatus) {
-        if (!OrderStatus.AGUARDANDO_PAGAMENTO.equals(oldStatus)) {
+        if (!canBePaid(oldStatus)) {
             throw new InvalidAttributeException("You can only check out orders that are awaiting payment.", "oldStatus");
         }
+    }
+
+    public boolean canBePaid(OrderStatus status) {
+        return OrderStatus.AGUARDANDO_PAGAMENTO.equals(status);
     }
 
     private void validateProducts(Order order, List<Product> products) {
