@@ -59,7 +59,7 @@ docker-compose up --build
 ## Executando aplicação com kubernetes
 
 Os arquivos de configuração do kubernetes estão presentes na pasta [config/kubernetes](config/kubernetes/).
-Para configurar a aplicação no kubernetes local execute as etapas abaixo:
+Para configurar a aplicação no kubernetes local **execute os comandos abaixo na raiz do projeto**:
 
 1 - Iniciar base de dados através do comando
 
@@ -91,7 +91,7 @@ kubectl apply -f config/kubernetes/local/k8s-svc-burger-application.yaml
 kubectl apply -f config/kubernetes/local/k8s-hpa-burger-application.yaml
 ```
 
-A aplicação estará disponível no endereço [http://localhost/swagger](http://localhost:31000/swagger).
+A aplicação estará disponível no endereço [http://localhost/swagger](http://localhost/swagger).
 
 
 > Obs: Caso queira remover todos os recursos criados execute os comandos abaixo:
