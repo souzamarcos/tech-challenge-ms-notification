@@ -12,6 +12,7 @@ import com.fiap.burger.usecase.adapter.gateway.PaymentGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,8 +48,8 @@ public class DefaultPaymentGateway implements PaymentGateway {
     }
 
     @Override
-    public void updatePaymentStatus(Long id, PaymentStatus status) {
-        paymentDAO.updatePaymentStatus(id, status);
+    public void updatePaymentStatus(Long id, PaymentStatus status, LocalDateTime modifiedAt) {
+        paymentDAO.updatePaymentStatus(id, status, modifiedAt);
     }
 
 }

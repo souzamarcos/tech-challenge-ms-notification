@@ -35,7 +35,7 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public PaymentUseCase paymentUseCase(PaymentGateway paymentGateway) {
-        return new DefaultPaymentUseCase(paymentGateway);
+    public PaymentUseCase paymentUseCase(PaymentGateway paymentGateway, OrderGateway orderGateway, ProductGateway productGateway, ClientGateway clientGateway) {
+        return new DefaultPaymentUseCase(paymentGateway, new DefaultOrderUseCase(orderGateway, productGateway, clientGateway));
     }
 }

@@ -42,7 +42,7 @@ public class DefaultProductUseCaseTest {
 
         when(gateway.findById(id)).thenReturn(expected);
 
-        var actual = useCase.findById(gateway, id);
+        var actual = useCase.findById(id);
 
         assertEquals(expected, actual);
 
@@ -55,7 +55,7 @@ public class DefaultProductUseCaseTest {
 
         when(gateway.findAll()).thenReturn(expected);
 
-        List<Product> actual = useCase.findAll(gateway);
+        List<Product> actual = useCase.findAll();
 
         assertEquals(expected, actual);
 
@@ -69,7 +69,7 @@ public class DefaultProductUseCaseTest {
 
         when(gateway.findAllBy(category)).thenReturn(expected);
 
-        List<Product> actual = useCase.findAllBy(gateway, category);
+        List<Product> actual = useCase.findAllBy(category);
 
         assertEquals(expected, actual);
 
@@ -82,7 +82,7 @@ public class DefaultProductUseCaseTest {
 
         when(gateway.save(product)).thenReturn(product);
 
-        Product actual = useCase.insert(gateway, product);
+        Product actual = useCase.insert(product);
 
         assertEquals(product, actual);
 
@@ -93,7 +93,7 @@ public class DefaultProductUseCaseTest {
     public void shouldThrowInvalidAttributeExceptionWhenProductIdIsNotNullToInsert() {
         Product product = new ProductBuilder().withId(1L).build();
 
-        assertThrows(InvalidAttributeException.class, () -> useCase.insert(gateway, product));
+        assertThrows(InvalidAttributeException.class, () -> useCase.insert(product));
 
         verify(gateway, times(0)).save(product);
     }
@@ -102,7 +102,7 @@ public class DefaultProductUseCaseTest {
     public void shouldThrowNullAttributeExceptionWhenProductCategoryIsNullToInsert() {
         Product product = new ProductBuilder().withId(null).withCategory(null).build();
 
-        assertThrows(NullAttributeException.class, () -> useCase.insert(gateway, product));
+        assertThrows(NullAttributeException.class, () -> useCase.insert(product));
 
         verify(gateway, times(0)).save(product);
     }
@@ -111,7 +111,7 @@ public class DefaultProductUseCaseTest {
     public void shouldThrowNullAttributeExceptionWhenProductNameIsNullToInsert() {
         Product product = new ProductBuilder().withId(null).withName(null).build();
 
-        assertThrows(NullAttributeException.class, () -> useCase.insert(gateway, product));
+        assertThrows(NullAttributeException.class, () -> useCase.insert(product));
 
         verify(gateway, times(0)).save(product);
     }
@@ -120,7 +120,7 @@ public class DefaultProductUseCaseTest {
     public void shouldThrowBlankAttributeExceptionWhenProductNameIsBlankToInsert() {
         Product product = new ProductBuilder().withId(null).withName("  ").build();
 
-        assertThrows(BlankAttributeException.class, () -> useCase.insert(gateway, product));
+        assertThrows(BlankAttributeException.class, () -> useCase.insert(product));
 
         verify(gateway, times(0)).save(product);
     }
@@ -129,7 +129,7 @@ public class DefaultProductUseCaseTest {
     public void shouldThrowNullAttributeExceptionWhenProductDescriptionIsNullToInsert() {
         Product product = new ProductBuilder().withId(null).withDescription(null).build();
 
-        assertThrows(NullAttributeException.class, () -> useCase.insert(gateway, product));
+        assertThrows(NullAttributeException.class, () -> useCase.insert(product));
 
         verify(gateway, times(0)).save(product);
     }
@@ -138,7 +138,7 @@ public class DefaultProductUseCaseTest {
     public void shouldThrowBlankAttributeExceptionWhenProductDescriptionIsBlankToInsert() {
         Product product = new ProductBuilder().withId(null).withDescription("  ").build();
 
-        assertThrows(BlankAttributeException.class, () -> useCase.insert(gateway, product));
+        assertThrows(BlankAttributeException.class, () -> useCase.insert(product));
 
         verify(gateway, times(0)).save(product);
     }
@@ -147,7 +147,7 @@ public class DefaultProductUseCaseTest {
     public void shouldThrowNullAttributeExceptionWhenProductValueIsNullToInsert() {
         Product product = new ProductBuilder().withId(null).withValue(null).build();
 
-        assertThrows(NullAttributeException.class, () -> useCase.insert(gateway, product));
+        assertThrows(NullAttributeException.class, () -> useCase.insert(product));
 
         verify(gateway, times(0)).save(product);
     }
@@ -156,7 +156,7 @@ public class DefaultProductUseCaseTest {
     public void shouldThrowBlankAttributeExceptionWhenProductValueIsLessThanZeroToInsert() {
         Product product = new ProductBuilder().withId(null).withValue(-0.1).build();
 
-        assertThrows(NegativeOrZeroValueException.class, () -> useCase.insert(gateway, product));
+        assertThrows(NegativeOrZeroValueException.class, () -> useCase.insert(product));
 
         verify(gateway, times(0)).save(product);
     }
@@ -165,7 +165,7 @@ public class DefaultProductUseCaseTest {
     public void shouldThrowBlankAttributeExceptionWhenProductValueIsZeroToInsert() {
         Product product = new ProductBuilder().withId(null).withValue(0.0).build();
 
-        assertThrows(NegativeOrZeroValueException.class, () -> useCase.insert(gateway, product));
+        assertThrows(NegativeOrZeroValueException.class, () -> useCase.insert(product));
 
         verify(gateway, times(0)).save(product);
     }

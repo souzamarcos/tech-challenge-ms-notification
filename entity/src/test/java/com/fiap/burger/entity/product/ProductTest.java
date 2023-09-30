@@ -1,4 +1,4 @@
-package com.fiap.burger.entity.entity.product;
+package com.fiap.burger.entity.product;
 
 import com.fiap.burger.entity.product.Category;
 import com.fiap.burger.entity.product.Product;
@@ -29,6 +29,28 @@ public class ProductTest {
         assertEquals(description, actual.getDescription());
         assertEquals(value, actual.getValue());
     }
+    @Test
+    public void shouldCreateInstanceWithSimpleConstructorWithId() {
+        var id = 1L;
+        var category = Category.LANCHE;
+        var name = "Product Test";
+        var description = "Product description";
+        var value = 22.2;
+
+        Product actual = new Product(
+            id,
+            category,
+            name,
+            description,
+            value
+        );
+
+        assertEquals(id, actual.getId());
+        assertEquals(category, actual.getCategory());
+        assertEquals(name, actual.getName());
+        assertEquals(description, actual.getDescription());
+        assertEquals(value, actual.getValue());
+    }
 
     @Test
     public void shouldCreateInstanceWithFullConstructor() {
@@ -51,6 +73,7 @@ public class ProductTest {
             null
         );
 
+        assertEquals(id, actual.getId());
         assertEquals(category, actual.getCategory());
         assertEquals(name, actual.getName());
         assertEquals(description, actual.getDescription());

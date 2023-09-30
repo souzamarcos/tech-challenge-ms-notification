@@ -8,10 +8,7 @@ import java.util.Objects;
 public class OrderItem {
 
     Long id;
-
     Long orderId;
-
-
     Long productId;
     List<Long> additionalIds;
     String comment;
@@ -70,17 +67,17 @@ public class OrderItem {
         return orderItemAdditionals;
     }
 
+    public OrderItem(Long orderId, Long productId, String comment) {
+        this.orderId = orderId;
+        this.productId = productId;
+        this.comment = comment;
+    }
+
     public OrderItem(Long id, Long orderId, Long productId, List<Long> additionalIds, String comment) {
         this.id = id;
         this.orderId = orderId;
         this.productId = productId;
         this.additionalIds = additionalIds;
-        this.comment = comment;
-    }
-
-    public OrderItem(Long orderId, Long productId, String comment) {
-        this.orderId = orderId;
-        this.productId = productId;
         this.comment = comment;
     }
 

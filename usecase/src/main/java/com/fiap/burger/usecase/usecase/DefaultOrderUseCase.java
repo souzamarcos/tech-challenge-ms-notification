@@ -10,9 +10,7 @@ import com.fiap.burger.usecase.adapter.gateway.ClientGateway;
 import com.fiap.burger.usecase.adapter.gateway.OrderGateway;
 import com.fiap.burger.usecase.adapter.gateway.ProductGateway;
 import com.fiap.burger.usecase.adapter.usecase.OrderUseCase;
-import com.fiap.burger.usecase.misc.exception.InvalidAttributeException;
-import com.fiap.burger.usecase.misc.exception.NegativeOrZeroValueException;
-import com.fiap.burger.usecase.misc.exception.OrderNotFoundException;
+import com.fiap.burger.usecase.misc.exception.*;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -54,13 +52,14 @@ public class DefaultOrderUseCase implements OrderUseCase {
     }
 
     public Order insert(Order order) {
-        Client client = getClient(order);
-        List<Long> productsId = order.getItems().stream().map(OrderItem::getProductId).collect(Collectors.toList());
-        productsId.addAll(order.getItems().stream().flatMap(item -> Optional.ofNullable(item.getAdditionalIds()).orElse(Collections.emptyList()).stream()).toList());
-        List<Product> products = productGateway.findByIds(productsId);
-        validateProducts(order, products);
-        order.setTotal(calculateTotal(productsId, products));
         validateOrderToInsert(order);
+        Client client = getClient(order);
+        List<Long> productIds = getProductIds(order);
+        List<Product> products = productGateway.findByIds(productIds.stream().distinct().collect(Collectors.toList()));
+        validateProducts(order, products);
+        var total = calculateTotal(productIds, products);
+        validateTotal(total);
+        order.setTotal(total);
         var persistedOrder = orderGateway.save(order);
         persistedOrder.setClient(client);
         return persistedOrder;
@@ -159,7 +158,6 @@ public class DefaultOrderUseCase implements OrderUseCase {
 
     }
 
-
     private Double calculateTotal(List<Long> productIds, List<Product> products) {
         return productIds.stream().mapToDouble(id -> products.stream().filter(product -> product.getId().equals(id)).findFirst().map(Product::getValue).orElse(0.0)).sum();
     }
@@ -183,9 +181,21 @@ public class DefaultOrderUseCase implements OrderUseCase {
     }
 
     private void validateOrder(Order order) {
-        if (order.getItems() == null || order.getItems().isEmpty())
-            throw new InvalidAttributeException("Order items should not be empty", "items");
+        if (order.getItems() == null) {
+            throw new NullAttributeException("items");
+        }
+        if (order.getItems().isEmpty()) {
+            throw new EmptyAttributeException("items");
+        }
+    }
 
-        if (order.getTotal() <= 0) throw new NegativeOrZeroValueException("total");
+    private void validateTotal(Double total) {
+        if (total <= 0) throw new NegativeOrZeroValueException("total");
+    }
+
+    private List<Long> getProductIds(Order order) {
+        List<Long> productIds = order.getItems().stream().map(OrderItem::getProductId).collect(Collectors.toList());
+        productIds.addAll(order.getItems().stream().flatMap(item -> Optional.ofNullable(item.getAdditionalIds()).orElse(Collections.emptyList()).stream()).toList());
+        return productIds;
     }
 }

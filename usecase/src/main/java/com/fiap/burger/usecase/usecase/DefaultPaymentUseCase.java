@@ -12,6 +12,8 @@ import com.fiap.burger.usecase.misc.exception.OrderCannotBePaidException;
 import com.fiap.burger.usecase.misc.exception.PaymentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -19,11 +21,11 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
 
     private final PaymentGateway paymentGateway;
 
-    @Autowired
-    OrderUseCase orderUseCase;
+    private final OrderUseCase orderUseCase;
 
-    public DefaultPaymentUseCase(PaymentGateway paymentGateway) {
+    public DefaultPaymentUseCase(PaymentGateway paymentGateway, OrderUseCase orderUseCase) {
         this.paymentGateway = paymentGateway;
+        this.orderUseCase = orderUseCase;
     }
 
     public Payment findById(Long id) {
@@ -50,14 +52,35 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
         Payment persistedPayment = findById(id);
 
         if (persistedPayment == null) {
-            throw new InvalidAttributeException("Payment not found", "id");
+            throw new PaymentNotFoundException(id);
         }
 
-        paymentGateway.updatePaymentStatus(id, status);
+        validateUpdateStatus(status, persistedPayment.getStatus());
+
+        paymentGateway.updatePaymentStatus(id, status, LocalDateTime.now());
 
         switch (status) {
             case APROVADO -> orderUseCase.checkout(persistedPayment.getOrder().getId());
             case RECUSADO -> orderUseCase.updateStatus(persistedPayment.getOrder().getId(), OrderStatus.CANCELADO);
         }
+    }
+
+    private void validateUpdateStatus(PaymentStatus newStatus, PaymentStatus oldStatus) {
+        if (!canStatusBeUpdatedFrom(oldStatus)) {
+            throw new InvalidAttributeException(String.format("You can not change status from payments with status %s.", oldStatus.name()), "oldStatus");
+        }
+        if (!canStatusUpdateTo(newStatus)) {
+            throw new InvalidAttributeException(String.format("You can not change payments status to %s.", newStatus.name()), "new Status");
+        }
+    }
+
+    private boolean canStatusBeUpdatedFrom(PaymentStatus status) {
+        List<PaymentStatus> statusThatCanBeUpdatedFrom = List.of(PaymentStatus.ABERTO);
+        return statusThatCanBeUpdatedFrom.contains(status);
+    }
+
+    private boolean canStatusUpdateTo(PaymentStatus status) {
+        List<PaymentStatus> statusThatCanBeUpdatedTo = List.of(PaymentStatus.APROVADO, PaymentStatus.RECUSADO);
+        return statusThatCanBeUpdatedTo.contains(status);
     }
 }
