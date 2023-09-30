@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -36,6 +37,19 @@ public class OrderItemJPA {
 
     @OneToMany(mappedBy = "orderItem", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     List<OrderItemAdditionalJPA> orderItemAdditional;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderItemJPA that = (OrderItemJPA) o;
+        return Objects.equals(id, that.id) && Objects.equals(order, that.order) && Objects.equals(orderId, that.orderId) && Objects.equals(product, that.product) && Objects.equals(productId, that.productId) && Objects.equals(comment, that.comment) && Objects.equals(orderItemAdditional, that.orderItemAdditional);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, order, orderId, product, productId, comment, orderItemAdditional);
+    }
 
     public OrderItemJPA() {
 

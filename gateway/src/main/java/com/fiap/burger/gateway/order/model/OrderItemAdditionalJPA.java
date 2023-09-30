@@ -4,6 +4,7 @@ import com.fiap.burger.entity.order.OrderItemAdditional;
 import com.fiap.burger.gateway.product.model.ProductJPA;
 import jakarta.persistence.*;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Entity
@@ -26,6 +27,18 @@ public class OrderItemAdditionalJPA {
     @Column(name = "product_id")
     Long productId;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderItemAdditionalJPA that = (OrderItemAdditionalJPA) o;
+        return Objects.equals(id, that.id) && Objects.equals(orderItem, that.orderItem) && Objects.equals(orderItemId, that.orderItemId) && Objects.equals(product, that.product) && Objects.equals(productId, that.productId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, orderItem, orderItemId, product, productId);
+    }
 
     public OrderItemAdditionalJPA(OrderItemJPA orderItem, Long productId) {
         this.orderItem = orderItem;

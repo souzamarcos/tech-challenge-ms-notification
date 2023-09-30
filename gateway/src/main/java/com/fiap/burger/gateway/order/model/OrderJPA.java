@@ -10,6 +10,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -35,6 +36,19 @@ public class OrderJPA extends BaseDomainJPA {
 
     @Column(name = "client_id")
     Long clientId;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderJPA orderJPA = (OrderJPA) o;
+        return Objects.equals(client, orderJPA.client) && Objects.equals(items, orderJPA.items) && Objects.equals(payments, orderJPA.payments) && Objects.equals(total, orderJPA.total) && status == orderJPA.status && Objects.equals(clientId, orderJPA.clientId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(client, items, payments, total, status, clientId);
+    }
 
     public OrderJPA() {
     }
