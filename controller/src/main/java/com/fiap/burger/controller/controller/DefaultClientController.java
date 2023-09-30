@@ -16,7 +16,7 @@ public class DefaultClientController implements ClientController {
 
     public Client findById(@PathVariable Long clientId) {
         var persistedClient = useCase.findById(clientId);
-        if (persistedClient == null) throw new ClientNotFoundException();
+        if (persistedClient == null) throw new ClientNotFoundException(clientId);
         return persistedClient;
     }
 
