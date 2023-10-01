@@ -38,10 +38,6 @@ public class ClientJPA extends BaseDomainJPA {
         this.deletedAt = deletedAt;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public String getCpf() {
         return cpf;
     }

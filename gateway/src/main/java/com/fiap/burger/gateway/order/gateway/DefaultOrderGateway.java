@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Repository
 public class DefaultOrderGateway implements OrderGateway {
@@ -26,7 +25,7 @@ public class DefaultOrderGateway implements OrderGateway {
 
     @Override
     public List<Order> findAll() {
-        return orderDAO.findAllByDeletedAtNull().stream().map(OrderJPA::toEntity).collect(Collectors.toList());
+        return orderDAO.findAllByDeletedAtNull().stream().map(OrderJPA::toEntity).toList();
     }
 
     @Override
@@ -34,7 +33,7 @@ public class DefaultOrderGateway implements OrderGateway {
         return orderDAO.findAllByDeletedAtNullAndStatusEquals(status)
             .stream()
             .map(OrderJPA::toEntity)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     @Override
@@ -43,7 +42,7 @@ public class DefaultOrderGateway implements OrderGateway {
         return orderDAO.findAllInProgress(inProgressStatuses)
             .stream()
             .map(OrderJPA::toEntity)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     @Override

@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PaymentTest {
+class PaymentTest {
 
     @Test
-    public void shouldCreateInstanceWithIdAndStatus() {
+    void shouldCreateInstanceWithIdAndStatus() {
         var id = 1L;
         var status = PaymentStatus.ABERTO;
 
@@ -26,7 +26,7 @@ public class PaymentTest {
     }
 
     @Test
-    public void shouldCreateInstanceWithOrderAndStatus() {
+    void shouldCreateInstanceWithOrderAndStatus() {
         var order = new Order(1L, new Client(1L), 1.0, OrderStatus.AGUARDANDO_PAGAMENTO, LocalDateTime.now(), LocalDateTime.now(), null);
         var status = PaymentStatus.ABERTO;
 
@@ -40,7 +40,7 @@ public class PaymentTest {
     }
 
     @Test
-    public void shouldCreateInstanceWithIdOrderAndStatus() {
+    void shouldCreateInstanceWithIdOrderAndStatus() {
         var id = 1L;
         var order = new Order(1L, new Client(1L), 1.0, OrderStatus.AGUARDANDO_PAGAMENTO, LocalDateTime.now(), LocalDateTime.now(), null);
         var status = PaymentStatus.ABERTO;
@@ -57,7 +57,7 @@ public class PaymentTest {
     }
 
     @Test
-    public void shouldCreateInstanceWithAuditableFields() {
+    void shouldCreateInstanceWithAuditableFields() {
         var id = 1L;
         var order = new Order(1L, new Client(1L), 1.0, OrderStatus.AGUARDANDO_PAGAMENTO, LocalDateTime.now(), LocalDateTime.now(), null);
         var status = PaymentStatus.ABERTO;
@@ -82,7 +82,7 @@ public class PaymentTest {
     }
 
     @Test
-    public void shouldCreateInstanceWithFullConstructor() {
+    void shouldCreateInstanceWithFullConstructor() {
         var id = 1L;
         var order = new Order(1L, new Client(1L), 1.0, OrderStatus.AGUARDANDO_PAGAMENTO, LocalDateTime.now(), LocalDateTime.now(), null);
         var status = PaymentStatus.ABERTO;

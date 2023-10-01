@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class OrderItemAdditionalTest {
+class OrderItemAdditionalTest {
 
     @Test
-    public void shouldCreateInstanceWithoutId() {
+    void shouldCreateInstanceWithoutId() {
         var orderItemId = 1L;
         var productId = 1L;
 
@@ -23,7 +23,7 @@ public class OrderItemAdditionalTest {
     }
 
     @Test
-    public void shouldCreateInstanceWithId() {
+    void shouldCreateInstanceWithId() {
         var id = 1L;
         var orderItemId = 1L;
         var productId = 1L;
@@ -40,7 +40,7 @@ public class OrderItemAdditionalTest {
     }
 
     @Test
-    public void shouldCreateInstanceWithIdAndProduct() {
+    void shouldCreateInstanceWithIdAndProduct() {
         var id = 1L;
         var orderItemId = 1L;
         var product = new Product(1L, Category.LANCHE, "Nome", "Descrição", 1.0);

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class DefaultProductGateway implements ProductGateway {
@@ -23,12 +22,12 @@ public class DefaultProductGateway implements ProductGateway {
 
     @Override
     public List<Product> findByIds(List<Long> ids) {
-        return productDAO.findAllByIdInAndDeletedAtNull(ids).stream().map(ProductJPA::toEntity).collect(Collectors.toList());
+        return productDAO.findAllByIdInAndDeletedAtNull(ids).stream().map(ProductJPA::toEntity).toList();
     }
 
     @Override
     public List<Product> findAll() {
-        return productDAO.findAllByDeletedAtNull().stream().map(ProductJPA::toEntity).collect(Collectors.toList());
+        return productDAO.findAllByDeletedAtNull().stream().map(ProductJPA::toEntity).toList();
     }
 
     @Override
@@ -36,7 +35,7 @@ public class DefaultProductGateway implements ProductGateway {
         return productDAO.findAllByCategoryAndDeletedAtNull(category)
             .stream()
             .map(ProductJPA::toEntity)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     @Override

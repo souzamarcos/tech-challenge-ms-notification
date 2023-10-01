@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class ClientApiTest {
+class ClientApiTest {
 
     @InjectMocks
     ClientApi api;
@@ -23,7 +23,7 @@ public class ClientApiTest {
     ClientController controller;
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var client = new Client(id, "12345678901", "email@email.com", "Nome");
         var expected = new ClientResponseDto(id, "12345678901", "email@email.com", "Nome");
@@ -38,7 +38,7 @@ public class ClientApiTest {
     }
 
     @Test
-    public void shouldFindByCpf() {
+    void shouldFindByCpf() {
         var id = 1L;
         var cpf = "12345678901";
         var client = new Client(id, cpf, "email@email.com", "Nome");
@@ -54,7 +54,7 @@ public class ClientApiTest {
     }
 
     @Test
-    public void shouldInsert() {
+    void shouldInsert() {
         var id = 1L;
         var cpf = "12345678901";
         var request = new ClientInsertRequestDto(cpf, "email@email.com", "Nome");

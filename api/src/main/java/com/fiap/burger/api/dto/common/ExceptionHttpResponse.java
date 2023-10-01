@@ -5,6 +5,9 @@ import com.fiap.burger.usecase.misc.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 
 public class ExceptionHttpResponse {
+    private ExceptionHttpResponse() {
+        throw new IllegalStateException("Utility class");
+    }
     public static HttpStatus getHttpStatusBy(Exception exception) {
         if (exception instanceof NotFoundException) return HttpStatus.NOT_FOUND;
         if (exception instanceof DomainException) return HttpStatus.BAD_REQUEST;

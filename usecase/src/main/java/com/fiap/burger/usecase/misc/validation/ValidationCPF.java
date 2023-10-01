@@ -4,33 +4,36 @@ package com.fiap.burger.usecase.misc.validation;
 import com.fiap.burger.usecase.misc.exception.InvalidCPFException;
 
 public class ValidationCPF {
+    private ValidationCPF() {
+        throw new IllegalStateException("Utility class");
+    }
 
-    public static void validateCPF(String CPF) throws InvalidCPFException {
-        if (containsNonNumericCharacters(CPF) || isInvalid(CPF))
+    public static void validateCPF(String cpf) throws InvalidCPFException {
+        if (containsNonNumericCharacters(cpf) || isInvalid(cpf))
             throw new InvalidCPFException();
     }
 
-    private static boolean containsNonNumericCharacters(String CPF) {
-        return CPF.matches(".*[^0-9].*");
+    private static boolean containsNonNumericCharacters(String cpf) {
+        return cpf.matches(".*\\D.*");
     }
 
-    private static boolean isInvalid(String CPF) {
-        CPF = CPF.replaceAll("[^0-9]", "");
-        if (CPF.length() != 11 || hasSameDigit(CPF))
+    private static boolean isInvalid(String cpf) {
+        cpf = cpf.replaceAll("\\D", "");
+        if (cpf.length() != 11 || hasSameDigit(cpf))
             return true;
 
         int[] digits = new int[11];
         for (int i = 0; i < 11; i++) {
-            digits[i] = Character.getNumericValue(CPF.charAt(i));
+            digits[i] = Character.getNumericValue(cpf.charAt(i));
         }
 
         return !validateDigits(digits);
     }
 
-    private static boolean hasSameDigit(String CPF) {
-        char firstDigit = CPF.charAt(0);
+    private static boolean hasSameDigit(String cpf) {
+        char firstDigit = cpf.charAt(0);
         for (int i = 1; i < 11; i++) {
-            if (CPF.charAt(i) != firstDigit)
+            if (cpf.charAt(i) != firstDigit)
                 return false;
         }
         return true;

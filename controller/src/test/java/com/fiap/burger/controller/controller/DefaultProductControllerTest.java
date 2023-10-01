@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class DefaultProductControllerTest {
+class DefaultProductControllerTest {
 
     @Mock
     DefaultProductUseCase useCase;
@@ -25,12 +25,12 @@ public class DefaultProductControllerTest {
     DefaultProductController controller;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void shouldListAll() {
+    void shouldListAll() {
         List<Product> expected = List.of(new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0));
 
         when(useCase.findAll()).thenReturn(expected);
@@ -44,7 +44,7 @@ public class DefaultProductControllerTest {
     }
 
     @Test
-    public void shouldListAllByCategory() {
+    void shouldListAllByCategory() {
         List<Product> expected = List.of(new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0));
 
         when(useCase.findAllBy(Category.LANCHE)).thenReturn(expected);
@@ -58,7 +58,7 @@ public class DefaultProductControllerTest {
     }
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var expected = new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0);
 
@@ -72,7 +72,7 @@ public class DefaultProductControllerTest {
     }
 
     @Test
-    public void shouldThrownProductNotFoundExceptionWhenProductNotFoundById() {
+    void shouldThrownProductNotFoundExceptionWhenProductNotFoundById() {
         var id = 1L;
 
         when(useCase.findById(id)).thenReturn(null);
@@ -83,7 +83,7 @@ public class DefaultProductControllerTest {
     }
 
     @Test
-    public void shouldInsertProduct() {
+    void shouldInsertProduct() {
         var product = new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0);
 
         when(useCase.insert(product)).thenReturn(product);
@@ -96,7 +96,7 @@ public class DefaultProductControllerTest {
     }
 
     @Test
-    public void shouldUpdateProduct() {
+    void shouldUpdateProduct() {
         var product = new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0);
 
         when(useCase.update(product)).thenReturn(product);
@@ -109,7 +109,7 @@ public class DefaultProductControllerTest {
     }
 
     @Test
-    public void shouldDeleteProduct() {
+    void shouldDeleteProduct() {
         var id = 1L;
         var expected = "Product has been successfully deleted.";
 

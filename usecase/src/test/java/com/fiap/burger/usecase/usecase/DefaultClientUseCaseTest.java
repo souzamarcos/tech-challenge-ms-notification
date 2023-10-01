@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class DefaultClientUseCaseTest {
+class DefaultClientUseCaseTest {
 
     @Mock
     ClientGateway gateway;
@@ -23,12 +23,12 @@ public class DefaultClientUseCaseTest {
     DefaultClientUseCase useCase;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var expected = new ClientBuilder().withId(id).build();
 
@@ -42,7 +42,7 @@ public class DefaultClientUseCaseTest {
     }
 
     @Test
-    public void shouldFindByCpf() {
+    void shouldFindByCpf() {
         var cpf = "1234567901";
         var expected = new ClientBuilder().withCpf(cpf).build();
 
@@ -56,7 +56,7 @@ public class DefaultClientUseCaseTest {
     }
 
     @Test
-    public void shouldSaveClient() {
+    void shouldSaveClient() {
         Client client = new ClientBuilder().withId(null).build();
 
         when(gateway.save(client)).thenReturn(client);
@@ -70,7 +70,7 @@ public class DefaultClientUseCaseTest {
 
 
     @Test
-    public void shouldThrowClientCpfAlreadyExistsExceptionWhenClientAlreadyExistsToInsert() {
+    void shouldThrowClientCpfAlreadyExistsExceptionWhenClientAlreadyExistsToInsert() {
         var cpf = "68203895077";
         Client client = new ClientBuilder().withId(null).withCpf(cpf).build();
 
@@ -83,7 +83,7 @@ public class DefaultClientUseCaseTest {
     }
 
     @Test
-    public void shouldThrowInvalidAttributeExceptionWhenClientIdIsNotNullToInsert() {
+    void shouldThrowInvalidAttributeExceptionWhenClientIdIsNotNullToInsert() {
         Client client = new ClientBuilder().withId(1L).build();
 
         assertThrows(InvalidAttributeException.class, () -> useCase.insert(client));
@@ -92,7 +92,7 @@ public class DefaultClientUseCaseTest {
     }
 
     @Test
-    public void shouldThrowNullAttributeExceptionWhenClientCpfIsNullToInsert() {
+    void shouldThrowNullAttributeExceptionWhenClientCpfIsNullToInsert() {
         Client client = new ClientBuilder().withId(null).withCpf(null).build();
 
         assertThrows(NullAttributeException.class, () -> useCase.insert(client));
@@ -101,7 +101,7 @@ public class DefaultClientUseCaseTest {
     }
 
     @Test
-    public void shouldThrowBlankAttributeExceptionWhenClientCpfIsBlankToInsert() {
+    void shouldThrowBlankAttributeExceptionWhenClientCpfIsBlankToInsert() {
         Client client = new ClientBuilder().withId(null).withCpf("    ").build();
 
         assertThrows(BlankAttributeException.class, () -> useCase.insert(client));
@@ -110,7 +110,7 @@ public class DefaultClientUseCaseTest {
     }
 
     @Test
-    public void shouldThrowInvalidCPFExceptionExceptionWhenClientCpfHasNonNumericCharactersToInsert() {
+    void shouldThrowInvalidCPFExceptionExceptionWhenClientCpfHasNonNumericCharactersToInsert() {
         Client client = new ClientBuilder().withId(null).withCpf("12345A2345").build();
 
         assertThrows(InvalidCPFException.class, () -> useCase.insert(client));
@@ -119,7 +119,7 @@ public class DefaultClientUseCaseTest {
     }
 
     @Test
-    public void shouldThrowInvalidCPFExceptionExceptionWhenClientCpfIsInvalidToInsert() {
+    void shouldThrowInvalidCPFExceptionExceptionWhenClientCpfIsInvalidToInsert() {
         Client client = new ClientBuilder().withId(null).withCpf("000000000000").build();
 
         assertThrows(InvalidCPFException.class, () -> useCase.insert(client));
@@ -128,7 +128,7 @@ public class DefaultClientUseCaseTest {
     }
 
     @Test
-    public void shouldThrowNullAttributeExceptionWhenClientEmailIsNullToInsert() {
+    void shouldThrowNullAttributeExceptionWhenClientEmailIsNullToInsert() {
         Client client = new ClientBuilder().withId(null).withEmail(null).build();
 
         assertThrows(NullAttributeException.class, () -> useCase.insert(client));
@@ -137,7 +137,7 @@ public class DefaultClientUseCaseTest {
     }
 
     @Test
-    public void shouldThrowBlankAttributeExceptionWhenClientEmailIsBlankToInsert() {
+    void shouldThrowBlankAttributeExceptionWhenClientEmailIsBlankToInsert() {
         Client client = new ClientBuilder().withId(null).withEmail("    ").build();
 
         assertThrows(BlankAttributeException.class, () -> useCase.insert(client));
@@ -146,7 +146,7 @@ public class DefaultClientUseCaseTest {
     }
 
     @Test
-    public void shouldThrowInvalidEmailFormatExceptionWhenClientEmailHasInvalidFormatToInsert() {
+    void shouldThrowInvalidEmailFormatExceptionWhenClientEmailHasInvalidFormatToInsert() {
         Client client = new ClientBuilder().withId(null).withEmail("emailemailemail").build();
 
         assertThrows(InvalidEmailFormatException.class, () -> useCase.insert(client));
@@ -155,7 +155,7 @@ public class DefaultClientUseCaseTest {
     }
 
     @Test
-    public void shouldThrowNullAttributeExceptionWhenClientNameIsNullToInsert() {
+    void shouldThrowNullAttributeExceptionWhenClientNameIsNullToInsert() {
         Client client = new ClientBuilder().withId(null).withName(null).build();
 
         assertThrows(NullAttributeException.class, () -> useCase.insert(client));
@@ -164,7 +164,7 @@ public class DefaultClientUseCaseTest {
     }
 
     @Test
-    public void shouldThrowBlankAttributeExceptionWhenClientNameIsBlankToInsert() {
+    void shouldThrowBlankAttributeExceptionWhenClientNameIsBlankToInsert() {
         Client client = new ClientBuilder().withId(null).withName("    ").build();
 
         assertThrows(BlankAttributeException.class, () -> useCase.insert(client));

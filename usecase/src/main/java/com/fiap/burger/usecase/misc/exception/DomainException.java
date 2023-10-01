@@ -4,13 +4,14 @@ import java.util.Map;
 
 public abstract class DomainException extends RuntimeException {
 
-    protected Map<String, String> parameters = Map.of();
+    private final Map<String, String> parameters;
 
-    public DomainException(String message) {
+    protected DomainException(String message) {
         super(message);
+        this.parameters = Map.of();
     }
 
-    public DomainException(String message, Map<String, String> parameters) {
+    protected DomainException(String message, Map<String, String> parameters) {
         super(message);
         this.parameters = parameters;
     }

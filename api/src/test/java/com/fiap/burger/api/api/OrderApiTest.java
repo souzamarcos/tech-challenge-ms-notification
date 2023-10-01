@@ -3,9 +3,7 @@ package com.fiap.burger.api.api;
 import com.fiap.burger.api.dto.order.request.OrderInsertRequestDto;
 import com.fiap.burger.api.dto.order.request.OrderItemInsertRequestDto;
 import com.fiap.burger.api.dto.order.request.OrderUpdateStatusRequestDto;
-import com.fiap.burger.api.dto.order.response.ListOrderResponseDto;
-import com.fiap.burger.api.dto.order.response.OrderClientResponseDto;
-import com.fiap.burger.api.dto.order.response.OrderResponseDto;
+import com.fiap.burger.api.dto.order.response.*;
 import com.fiap.burger.controller.adapter.api.OrderController;
 import com.fiap.burger.entity.client.Client;
 import com.fiap.burger.entity.order.Order;
@@ -27,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class OrderApiTest {
+class OrderApiTest {
 
     @InjectMocks
     OrderApi api;
@@ -36,7 +34,7 @@ public class OrderApiTest {
     OrderController controller;
 
     @Test
-    public void shouldInsertOrder() {
+    void shouldInsertOrder() {
         var request = new OrderInsertRequestDto(1L, List.of(new OrderItemInsertRequestDto(1L, List.of(2L), "Comentário")));
         var order = getMockOrder();
         var expected = new ListOrderResponseDto(1L, new OrderClientResponseDto(1L, null), 30.0, OrderStatus.AGUARDANDO_PAGAMENTO, null);
@@ -51,10 +49,10 @@ public class OrderApiTest {
     }
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var order = getMockOrder();
-        var expected = new OrderResponseDto(id, new OrderClientResponseDto(1L, null), Collections.emptyList(), 30.0, OrderStatus.AGUARDANDO_PAGAMENTO);
+        var expected = new OrderResponseDto(id, new OrderClientResponseDto(1L, null), List.of(new OrderItemResponseDto(1L, "Nome", "Comentário", List.of(new OrderItemAdditionalResponseDto(2L, "Nome")))), 30.0, OrderStatus.AGUARDANDO_PAGAMENTO);
 
         when(controller.findById(id)).thenReturn(order);
 
@@ -66,7 +64,7 @@ public class OrderApiTest {
     }
 
     @Test
-    public void shouldUpdateStatus() {
+    void shouldUpdateStatus() {
         var order = getMockOrder();
         order.setStatus(OrderStatus.RECEBIDO);
 
@@ -82,7 +80,7 @@ public class OrderApiTest {
     }
 
     @Test
-    public void shouldFindAllBy() {
+    void shouldFindAllBy() {
         var id = 1L;
         var order = getMockOrder();
         var expected = List.of(new ListOrderResponseDto(id, new OrderClientResponseDto(1L, null), 30.0, OrderStatus.AGUARDANDO_PAGAMENTO, null));
@@ -97,7 +95,7 @@ public class OrderApiTest {
     }
 
     @Test
-    public void shouldFindAllInProgress() {
+    void shouldFindAllInProgress() {
         var id = 1L;
         var order = getMockOrder();
         order.setStatus(OrderStatus.RECEBIDO);

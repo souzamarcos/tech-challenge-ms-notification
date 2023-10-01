@@ -23,7 +23,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class DefaultOrderUseCaseTest {
+class DefaultOrderUseCaseTest {
     @Mock
     OrderGateway orderGateway;
 
@@ -37,12 +37,12 @@ public class DefaultOrderUseCaseTest {
     DefaultOrderUseCase useCase;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var expected = new OrderBuilder().withId(id).build();
 
@@ -56,7 +56,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldFindByAll() {
+    void shouldFindByAll() {
         var expected = Arrays.asList(new OrderBuilder().withId(1L).build(), new OrderBuilder().withId(2L).build());
 
         when(orderGateway.findAll()).thenReturn(expected);
@@ -69,7 +69,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldFindByAllWhenFindByStatusNull() {
+    void shouldFindByAllWhenFindByStatusNull() {
         var expected = Arrays.asList(new OrderBuilder().withId(1L).build(), new OrderBuilder().withId(2L).build());
 
         when(orderGateway.findAll()).thenReturn(expected);
@@ -83,7 +83,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldFindByAllWhenFindByStatus() {
+    void shouldFindByAllWhenFindByStatus() {
         var expected = Arrays.asList(new OrderBuilder().withId(1L).build(), new OrderBuilder().withId(2L).build());
 
         when(orderGateway.findAllBy(OrderStatus.AGUARDANDO_PAGAMENTO)).thenReturn(expected);
@@ -97,7 +97,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldFindAllInProgress() {
+    void shouldFindAllInProgress() {
         var expected = Arrays.asList(new OrderBuilder().withId(1L).build(), new OrderBuilder().withId(2L).build());
 
         when(orderGateway.findAllInProgress()).thenReturn(expected);
@@ -110,7 +110,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldInsertOrder() {
+    void shouldInsertOrder() {
         var orderToInsert = new OrderBuilder().toInsert();
         var order = new OrderBuilder().withTotal(40.0).build();
         var client = new ClientBuilder().build();
@@ -131,7 +131,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldInsertOrderWithoutClient() {
+    void shouldInsertOrderWithoutClient() {
         var orderToInsert = new OrderBuilder().withClient(null).toInsert();
         var order = new OrderBuilder().withClient(null).build();
         var products = List.of(new ProductBuilder().withId(1L).build(), new ProductBuilder().withId(2L).withCategory(Category.ADICIONAL).build());
@@ -150,7 +150,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldThrownInvalidAttributeExceptionWhenOrderHasInvalidStatusToInsert() {
+    void shouldThrownInvalidAttributeExceptionWhenOrderHasInvalidStatusToInsert() {
         var orderToInsert = new OrderBuilder().withStatus(OrderStatus.FINALIZADO).toInsert();
         var client = new ClientBuilder().build();
         var products = List.of(new ProductBuilder().withId(1L).build(), new ProductBuilder().withId(2L).withCategory(Category.ADICIONAL).build());
@@ -167,7 +167,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldThrownNullAttributeExceptionWhenOrderHasNullItemsToInsert() {
+    void shouldThrownNullAttributeExceptionWhenOrderHasNullItemsToInsert() {
         var orderToInsert = new OrderBuilder().withItems(null).toInsert();
 
         assertThrows(NullAttributeException.class, () -> useCase.insert(orderToInsert));
@@ -178,7 +178,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldThrownEmptyAttributeExceptionWhenOrderHasNullItemsToInsert() {
+    void shouldThrownEmptyAttributeExceptionWhenOrderHasNullItemsToInsert() {
         var orderToInsert = new OrderBuilder().withItems(Collections.emptyList()).toInsert();
 
         assertThrows(EmptyAttributeException.class, () -> useCase.insert(orderToInsert));
@@ -189,7 +189,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldThrowInvalidAttributeExceptionWhenOrderClientNotFound() {
+    void shouldThrowInvalidAttributeExceptionWhenOrderClientNotFound() {
         var orderToInsert = new OrderBuilder().toInsert();
         var client = new ClientBuilder().build();
 
@@ -203,7 +203,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldThrownInvalidAttributeExceptionWhenOrderProductNotFound() {
+    void shouldThrownInvalidAttributeExceptionWhenOrderProductNotFound() {
         var orderToInsert = new OrderBuilder().toInsert();
         var client = new ClientBuilder().build();
         var products = List.of(new ProductBuilder().withId(2L).withCategory(Category.ADICIONAL).build());
@@ -220,7 +220,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldThrownInvalidAttributeExceptionWhenOrderProductHasInvalidCategory() {
+    void shouldThrownInvalidAttributeExceptionWhenOrderProductHasInvalidCategory() {
         var orderToInsert = new OrderBuilder().toInsert();
         var client = new ClientBuilder().build();
         var products = List.of(new ProductBuilder().withId(1L).withCategory(Category.ADICIONAL).build(), new ProductBuilder().withId(2L).withCategory(Category.ADICIONAL).build());
@@ -237,7 +237,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldThrownInvalidAttributeExceptionWhenOrderAdditionalProductNotFound() {
+    void shouldThrownInvalidAttributeExceptionWhenOrderAdditionalProductNotFound() {
         var orderToInsert = new OrderBuilder().toInsert();
         var client = new ClientBuilder().build();
         var products = List.of(new ProductBuilder().withId(1L).build());
@@ -254,7 +254,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldThrownInvalidAttributeExceptionWhenOrderAdditionalProductHasInvalidCategory() {
+    void shouldThrownInvalidAttributeExceptionWhenOrderAdditionalProductHasInvalidCategory() {
         var orderToInsert = new OrderBuilder().toInsert();
         var client = new ClientBuilder().build();
         var products = List.of(new ProductBuilder().withId(1L).build(), new ProductBuilder().withId(2L).withCategory(Category.LANCHE).build());
@@ -271,7 +271,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldThrowNegativeOrZeroValueExceptionWhenOrderTotalIsInvalidToInsert() {
+    void shouldThrowNegativeOrZeroValueExceptionWhenOrderTotalIsInvalidToInsert() {
         var orderToInsert = new OrderBuilder().toInsert();
         var client = new ClientBuilder().build();
         var products = List.of(new ProductBuilder().withId(1L).withValue(-10.0).build(), new ProductBuilder().withId(2L).withValue(-10.0).withCategory(Category.ADICIONAL).build());
@@ -288,7 +288,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldCheckOutOrder() {
+    void shouldCheckOutOrder() {
         var id = 1L;
         var order = new OrderBuilder().withId(id).withModifiedAt(LocalDateTime.of(2023, 9, 30, 0, 0, 0)).build();
         var modifiedAtBefore = order.getModifiedAt();
@@ -304,7 +304,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldThrownOrderNotFoundExceptionWhenOrderNotFoundToCheckout() {
+    void shouldThrownOrderNotFoundExceptionWhenOrderNotFoundToCheckout() {
         var id = 1L;
 
         when(orderGateway.findById(id)).thenReturn(null);
@@ -315,7 +315,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldThrownAttributeExceptionWhenOrderStatusIsInvalidToCheckout() {
+    void shouldThrownAttributeExceptionWhenOrderStatusIsInvalidToCheckout() {
         var id = 1L;
         var order = new OrderBuilder().withId(id).withStatus(OrderStatus.FINALIZADO).build();
 
@@ -327,7 +327,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldUpdateStatusOrder() {
+    void shouldUpdateStatusOrder() {
         var id = 1L;
         var order = new OrderBuilder().withId(id).withStatus(OrderStatus.RECEBIDO).withModifiedAt(LocalDateTime.of(2023, 9, 30, 0, 0, 0)).build();
         var modifiedAtBefore = order.getModifiedAt();
@@ -343,7 +343,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldUpdateStatusOrderToCancelled() {
+    void shouldUpdateStatusOrderToCancelled() {
         var id = 1L;
         var order = new OrderBuilder().withId(id).withStatus(OrderStatus.AGUARDANDO_PAGAMENTO).withModifiedAt(LocalDateTime.of(2023, 9, 30, 0, 0, 0)).build();
         var modifiedAtBefore = order.getModifiedAt();
@@ -359,7 +359,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldThrownOrderNotFoundExceptionWhenOrderNotFoundToUpdateStatus() {
+    void shouldThrownOrderNotFoundExceptionWhenOrderNotFoundToUpdateStatus() {
         var id = 1L;
 
         when(orderGateway.findById(id)).thenReturn(null);
@@ -370,7 +370,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldThrownAttributeExceptionWhenOrderCancelledUpdateStatus() {
+    void shouldThrownAttributeExceptionWhenOrderCancelledUpdateStatus() {
         var id = 1L;
         var order = new OrderBuilder().withId(id).withStatus(OrderStatus.CANCELADO).build();
 
@@ -382,7 +382,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldThrownAttributeExceptionWhenOrderUpdateStatusToNotExpectedStep() {
+    void shouldThrownAttributeExceptionWhenOrderUpdateStatusToNotExpectedStep() {
         var id = 1L;
         var order = new OrderBuilder().withId(id).withStatus(OrderStatus.RECEBIDO).build();
 
@@ -394,7 +394,7 @@ public class DefaultOrderUseCaseTest {
     }
 
     @Test
-    public void shouldThrownAttributeExceptionWhenOrderUpdateStatusToAwaitingPayment() {
+    void shouldThrownAttributeExceptionWhenOrderUpdateStatusToAwaitingPayment() {
         var id = 1L;
         var order = new OrderBuilder().withId(id).withStatus(OrderStatus.AGUARDANDO_PAGAMENTO).build();
 

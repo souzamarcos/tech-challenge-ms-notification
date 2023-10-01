@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class PaymentApiTest {
+class PaymentApiTest {
     @InjectMocks
     PaymentApi api;
 
@@ -29,7 +29,7 @@ public class PaymentApiTest {
     PaymentController controller;
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var payment = new Payment(1L, new Order(1L, new Client(1L), 30.0, OrderStatus.AGUARDANDO_PAGAMENTO, null, null, null), PaymentStatus.ABERTO, "QR-CODE", "external-id", null, null, null);
         var expected = new PaymentResponseDto(id, 1L, PaymentStatus.ABERTO, "QR-CODE", "external-id");
@@ -44,7 +44,7 @@ public class PaymentApiTest {
     }
 
     @Test
-    public void shouldFindByOrderId() {
+    void shouldFindByOrderId() {
         var orderId = 1L;
         var payment = List.of(new Payment(1L, new Order(orderId, new Client(1L), 30.0, OrderStatus.AGUARDANDO_PAGAMENTO, null, null, null), PaymentStatus.ABERTO, "QR-CODE", "external-id", null, null, null));
         var expected = List.of(new PaymentResponseDto(1L, orderId, PaymentStatus.ABERTO, "QR-CODE", "external-id"));
@@ -59,7 +59,7 @@ public class PaymentApiTest {
     }
 
     @Test
-    public void shouldInsert() {
+    void shouldInsert() {
         var orderId = 1L;
         var request = new PaymentInsertRequestDto(orderId);
         var payment = new Payment(1L, new Order(1L, new Client(1L), 30.0, OrderStatus.AGUARDANDO_PAGAMENTO, null, null, null), PaymentStatus.ABERTO, "QR-CODE", "external-id", null, null, null);
@@ -75,7 +75,7 @@ public class PaymentApiTest {
     }
 
     @Test
-    public void shouldPaymentResponse() {
+    void shouldPaymentResponse() {
         var orderId = 1L;
         var request = new PaymentWebhookRequestDto(1L, PaymentStatus.APROVADO);
 

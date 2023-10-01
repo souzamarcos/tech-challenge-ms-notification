@@ -14,7 +14,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class DefaultClientGatewayTest {
+class DefaultClientGatewayTest {
 
     @Mock
     ClientDAO clientDAO;
@@ -23,12 +23,12 @@ public class DefaultClientGatewayTest {
     DefaultClientGateway gateway;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var clientJPA = new ClientJPABuilder().withId(1L).build();
         var expected = clientJPA.toEntity();
@@ -43,7 +43,7 @@ public class DefaultClientGatewayTest {
     }
 
     @Test
-    public void shouldFindByCpf() {
+    void shouldFindByCpf() {
         var cpf = "12345678909";
         var clientJPA = new ClientJPABuilder().withId(1L).build();
         var expected = clientJPA.toEntity();
@@ -58,7 +58,7 @@ public class DefaultClientGatewayTest {
     }
 
     @Test
-    public void shouldSaveClient() {
+    void shouldSaveClient() {
         var clientJPA = new ClientJPABuilder().withId(1L).build();
         var client = new ClientBuilder().withId(null).build();
         var expected = new ClientBuilder().withId(1L).build();

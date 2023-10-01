@@ -6,10 +6,10 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ClientTest {
+class ClientTest {
 
     @Test
-    public void shouldCreateInstanceWithOnlyIdConstructor() {
+    void shouldCreateInstanceWithOnlyIdConstructor() {
         var id = 1L;
 
         Client actual = new Client(id);
@@ -18,7 +18,7 @@ public class ClientTest {
     }
 
     @Test
-    public void shouldCreateInstanceWithSimpleConstructor() {
+    void shouldCreateInstanceWithSimpleConstructor() {
         var cpf = "12345678909";
         var email = "email@email.com";
         var name = "Cliente Exemplo";
@@ -32,7 +32,7 @@ public class ClientTest {
     }
 
     @Test
-    public void shouldCreateInstanceWithSimpleConstructorWithId() {
+    void shouldCreateInstanceWithSimpleConstructorWithId() {
         var id = 1L;
         var cpf = "12345678909";
         var email = "email@email.com";
@@ -48,7 +48,7 @@ public class ClientTest {
     }
 
     @Test
-    public void shouldCreateInstanceWithFullConstructor() {
+    void shouldCreateInstanceWithFullConstructor() {
         var id = 1L;
         var cpf = "12345678909";
         var email = "email@email.com";

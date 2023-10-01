@@ -50,10 +50,6 @@ public class PaymentJPA extends BaseDomainJPA {
         this.deletedAt = deletedAt;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public OrderJPA getOrderJPA() {
         return orderJPA;
     }

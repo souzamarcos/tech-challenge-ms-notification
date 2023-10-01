@@ -8,10 +8,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class OrderItemTest {
+class OrderItemTest {
 
     @Test
-    public void shouldCreateInstanceWithSimpleConstructor() {
+    void shouldCreateInstanceWithSimpleConstructor() {
         var orderId = 1L;
         var productId = 1L;
         var comment = "Comentário";
@@ -28,7 +28,7 @@ public class OrderItemTest {
     }
 
     @Test
-    public void shouldCreateInstanceToCheckOut() {
+    void shouldCreateInstanceToCheckOut() {
         var id = 1L;
         var orderId = 1L;
         var productId = 1L;
@@ -51,7 +51,7 @@ public class OrderItemTest {
     }
 
     @Test
-    public void shouldCreateInstanceWithFullConstructor() {
+    void shouldCreateInstanceWithFullConstructor() {
         var id = 1L;
         var orderId = 1L;
         var orderItemAdditionals = List.of(new OrderItemAdditional(1L, 1L, 1L));

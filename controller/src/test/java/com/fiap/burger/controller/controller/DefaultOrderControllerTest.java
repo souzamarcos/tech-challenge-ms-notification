@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class DefaultOrderControllerTest {
+class DefaultOrderControllerTest {
 
     @Mock
     DefaultOrderUseCase useCase;
@@ -26,12 +26,12 @@ public class DefaultOrderControllerTest {
     DefaultOrderController controller;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var expected = new Order(1L, Collections.emptyList(), OrderStatus.FINALIZADO);
 
@@ -45,7 +45,7 @@ public class DefaultOrderControllerTest {
     }
 
     @Test
-    public void shouldThrownOrderNotFoundExceptionWhenOrderNotFoundById() {
+    void shouldThrownOrderNotFoundExceptionWhenOrderNotFoundById() {
         var id = 1L;
 
         when(useCase.findById(id)).thenReturn(null);
@@ -56,7 +56,7 @@ public class DefaultOrderControllerTest {
     }
 
     @Test
-    public void shouldFindAllBy() {
+    void shouldFindAllBy() {
         var expected = List.of(new Order(1L, Collections.emptyList(), OrderStatus.FINALIZADO));
 
         when(useCase.findAllBy(OrderStatus.FINALIZADO)).thenReturn(expected);
@@ -69,7 +69,7 @@ public class DefaultOrderControllerTest {
     }
 
     @Test
-    public void shouldFindAllInProgress() {
+    void shouldFindAllInProgress() {
         var expected = List.of(new Order(1L, Collections.emptyList(), OrderStatus.RECEBIDO));
 
         when(useCase.findAllInProgress()).thenReturn(expected);
@@ -82,7 +82,7 @@ public class DefaultOrderControllerTest {
     }
 
     @Test
-    public void shouldInsertOrder() {
+    void shouldInsertOrder() {
         var order = new Order(1L, Collections.emptyList(), OrderStatus.RECEBIDO);
 
         when(useCase.insert(order)).thenReturn(order);
@@ -95,7 +95,7 @@ public class DefaultOrderControllerTest {
     }
 
     @Test
-    public void shouldUpdateStatusOrder() {
+    void shouldUpdateStatusOrder() {
         var order = new Order(1L, Collections.emptyList(), OrderStatus.EM_PREPARACAO);
 
         when(useCase.updateStatus(1L, OrderStatus.EM_PREPARACAO)).thenReturn(order);

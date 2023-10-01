@@ -10,10 +10,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class OrderTest {
+class OrderTest {
 
     @Test
-    public void shouldCreateInstanceToCheckout() {
+    void shouldCreateInstanceToCheckout() {
         var clientId = 1L;
         var items = List.of(new OrderItem(1L, 1L, ""));
         var status = OrderStatus.AGUARDANDO_PAGAMENTO;
@@ -30,7 +30,7 @@ public class OrderTest {
     }
 
     @Test
-    public void shouldCreateInstanceWithSimpleConstructor() {
+    void shouldCreateInstanceWithSimpleConstructor() {
         var id = 1L;
         var client = new Client(1L);
         var total = 10.0;
@@ -58,7 +58,7 @@ public class OrderTest {
     }
 
     @Test
-    public void shouldCreateInstanceWithItems() {
+    void shouldCreateInstanceWithItems() {
         var id = 1L;
         var client = new Client(1L);
         var items = List.of(new OrderItem(1L, 1L, ""));
@@ -89,7 +89,7 @@ public class OrderTest {
     }
 
     @Test
-    public void shouldCreateInstanceWithItemsAndPayments() {
+    void shouldCreateInstanceWithItemsAndPayments() {
         var id = 1L;
         var client = new Client(1L);
         var items = List.of(new OrderItem(1L, 1L, ""));

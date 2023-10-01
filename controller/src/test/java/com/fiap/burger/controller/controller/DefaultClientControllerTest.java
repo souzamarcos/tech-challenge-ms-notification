@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class DefaultClientControllerTest {
+class DefaultClientControllerTest {
 
     @Mock
     DefaultClientUseCase useCase;
@@ -22,12 +22,12 @@ public class DefaultClientControllerTest {
     DefaultClientController controller;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var expected = new Client(id);
 
@@ -41,7 +41,7 @@ public class DefaultClientControllerTest {
     }
 
     @Test
-    public void shouldThrownClientNotFoundExceptionWhenClientNotFoundById() {
+    void shouldThrownClientNotFoundExceptionWhenClientNotFoundById() {
         var id = 1L;
 
         when(useCase.findById(id)).thenReturn(null);
@@ -52,7 +52,7 @@ public class DefaultClientControllerTest {
     }
 
     @Test
-    public void shouldFindByCpf() {
+    void shouldFindByCpf() {
         var cpf = "12345678909";
         var expected = new Client(1L);
 
@@ -66,7 +66,7 @@ public class DefaultClientControllerTest {
     }
 
     @Test
-    public void shouldThrownClientNotFoundExceptionWhenClientNotFoundByCpf() {
+    void shouldThrownClientNotFoundExceptionWhenClientNotFoundByCpf() {
         var cpf = "12345678901";
 
         when(useCase.findByCpf(cpf)).thenReturn(null);
@@ -77,7 +77,7 @@ public class DefaultClientControllerTest {
     }
 
     @Test
-    public void shouldInsertClient() {
+    void shouldInsertClient() {
         var client = new Client(1L);
 
         when(useCase.insert(client)).thenReturn(client);

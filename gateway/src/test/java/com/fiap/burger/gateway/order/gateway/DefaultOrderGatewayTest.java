@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class DefaultOrderGatewayTest {
+class DefaultOrderGatewayTest {
 
     @Mock
     OrderDAO orderDAO;
@@ -29,12 +29,12 @@ public class DefaultOrderGatewayTest {
     DefaultOrderGateway gateway;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var orderJPA = new OrderJPABuilder().withId(1L).build();
         var expected = orderJPA.toEntityWithItems();
@@ -49,7 +49,7 @@ public class DefaultOrderGatewayTest {
     }
 
     @Test
-    public void shouldFindAll() {
+    void shouldFindAll() {
         var ordersJPA = List.of(new OrderJPABuilder().withId(1L).build());
         var expected = ordersJPA.stream().map(OrderJPA::toEntity).collect(Collectors.toList());
 
@@ -63,7 +63,7 @@ public class DefaultOrderGatewayTest {
     }
 
     @Test
-    public void shouldFindAllInProgress() {
+    void shouldFindAllInProgress() {
         var ordersJPA = List.of(new OrderJPABuilder().withId(1L).build());
         var expected = ordersJPA.stream().map(OrderJPA::toEntity).collect(Collectors.toList());
 
@@ -77,7 +77,7 @@ public class DefaultOrderGatewayTest {
     }
 
     @Test
-    public void shouldSaveClient() {
+    void shouldSaveClient() {
         var orderJPA = new OrderJPABuilder().withId(1L).build();
         var order = new OrderBuilder().withId(null).build();
         var expected = new OrderBuilder().withId(1L).build();
@@ -92,7 +92,7 @@ public class DefaultOrderGatewayTest {
     }
 
     @Test
-    public void shouldUpdateStatus() {
+    void shouldUpdateStatus() {
         gateway.updateStatus(1L, OrderStatus.RECEBIDO, LocalDateTime.now());
         verify(orderDAO, times(1)).updateStatus(eq(1L), eq(OrderStatus.RECEBIDO), any());
     }

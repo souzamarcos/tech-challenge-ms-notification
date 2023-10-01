@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class DefaultProductUseCaseTest {
+class DefaultProductUseCaseTest {
 
     @Mock
     ProductGateway gateway;
@@ -31,12 +31,12 @@ public class DefaultProductUseCaseTest {
     DefaultProductUseCase useCase;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var expected = new ProductBuilder().withId(1L).build();
 
@@ -50,7 +50,7 @@ public class DefaultProductUseCaseTest {
     }
 
     @Test
-    public void shouldFindAllProducts() {
+    void shouldFindAllProducts() {
         List<Product> expected = Arrays.asList(new ProductBuilder().withId(1L).build(), new ProductBuilder().withId(2L).build());
 
         when(gateway.findAll()).thenReturn(expected);
@@ -63,7 +63,7 @@ public class DefaultProductUseCaseTest {
     }
 
     @Test
-    public void shouldFindAllProductsByCategory() {
+    void shouldFindAllProductsByCategory() {
         List<Product> expected = Collections.singletonList(new ProductBuilder().build());
         Category category = Category.BEBIDA;
 
@@ -77,7 +77,7 @@ public class DefaultProductUseCaseTest {
     }
 
     @Test
-    public void shouldSaveProduct() {
+    void shouldSaveProduct() {
         Product product = new ProductBuilder().withId(null).build();
 
         when(gateway.save(product)).thenReturn(product);
@@ -90,7 +90,7 @@ public class DefaultProductUseCaseTest {
     }
 
     @Test
-    public void shouldThrowInvalidAttributeExceptionWhenProductIdIsNotNullToInsert() {
+    void shouldThrowInvalidAttributeExceptionWhenProductIdIsNotNullToInsert() {
         Product product = new ProductBuilder().withId(1L).build();
 
         assertThrows(InvalidAttributeException.class, () -> useCase.insert(product));
@@ -99,7 +99,7 @@ public class DefaultProductUseCaseTest {
     }
 
     @Test
-    public void shouldThrowNullAttributeExceptionWhenProductCategoryIsNullToInsert() {
+    void shouldThrowNullAttributeExceptionWhenProductCategoryIsNullToInsert() {
         Product product = new ProductBuilder().withId(null).withCategory(null).build();
 
         assertThrows(NullAttributeException.class, () -> useCase.insert(product));
@@ -108,7 +108,7 @@ public class DefaultProductUseCaseTest {
     }
 
     @Test
-    public void shouldThrowNullAttributeExceptionWhenProductNameIsNullToInsert() {
+    void shouldThrowNullAttributeExceptionWhenProductNameIsNullToInsert() {
         Product product = new ProductBuilder().withId(null).withName(null).build();
 
         assertThrows(NullAttributeException.class, () -> useCase.insert(product));
@@ -117,7 +117,7 @@ public class DefaultProductUseCaseTest {
     }
 
     @Test
-    public void shouldThrowBlankAttributeExceptionWhenProductNameIsBlankToInsert() {
+    void shouldThrowBlankAttributeExceptionWhenProductNameIsBlankToInsert() {
         Product product = new ProductBuilder().withId(null).withName("  ").build();
 
         assertThrows(BlankAttributeException.class, () -> useCase.insert(product));
@@ -126,7 +126,7 @@ public class DefaultProductUseCaseTest {
     }
 
     @Test
-    public void shouldThrowNullAttributeExceptionWhenProductDescriptionIsNullToInsert() {
+    void shouldThrowNullAttributeExceptionWhenProductDescriptionIsNullToInsert() {
         Product product = new ProductBuilder().withId(null).withDescription(null).build();
 
         assertThrows(NullAttributeException.class, () -> useCase.insert(product));
@@ -135,7 +135,7 @@ public class DefaultProductUseCaseTest {
     }
 
     @Test
-    public void shouldThrowBlankAttributeExceptionWhenProductDescriptionIsBlankToInsert() {
+    void shouldThrowBlankAttributeExceptionWhenProductDescriptionIsBlankToInsert() {
         Product product = new ProductBuilder().withId(null).withDescription("  ").build();
 
         assertThrows(BlankAttributeException.class, () -> useCase.insert(product));
@@ -144,7 +144,7 @@ public class DefaultProductUseCaseTest {
     }
 
     @Test
-    public void shouldThrowNullAttributeExceptionWhenProductValueIsNullToInsert() {
+    void shouldThrowNullAttributeExceptionWhenProductValueIsNullToInsert() {
         Product product = new ProductBuilder().withId(null).withValue(null).build();
 
         assertThrows(NullAttributeException.class, () -> useCase.insert(product));
@@ -153,7 +153,7 @@ public class DefaultProductUseCaseTest {
     }
 
     @Test
-    public void shouldThrowBlankAttributeExceptionWhenProductValueIsLessThanZeroToInsert() {
+    void shouldThrowBlankAttributeExceptionWhenProductValueIsLessThanZeroToInsert() {
         Product product = new ProductBuilder().withId(null).withValue(-0.1).build();
 
         assertThrows(NegativeOrZeroValueException.class, () -> useCase.insert(product));
@@ -162,7 +162,7 @@ public class DefaultProductUseCaseTest {
     }
 
     @Test
-    public void shouldThrowBlankAttributeExceptionWhenProductValueIsZeroToInsert() {
+    void shouldThrowBlankAttributeExceptionWhenProductValueIsZeroToInsert() {
         Product product = new ProductBuilder().withId(null).withValue(0.0).build();
 
         assertThrows(NegativeOrZeroValueException.class, () -> useCase.insert(product));

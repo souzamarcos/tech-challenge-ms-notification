@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/products")
@@ -31,7 +30,7 @@ public class ProductApi {
             .list(category)
             .stream()
             .map(ProductResponseDto::toResponseDto)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     @Operation(summary = "Consultar produto", description = "Consultar um produto", tags = {"produto"})

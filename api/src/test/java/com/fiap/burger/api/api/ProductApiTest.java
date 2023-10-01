@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class ProductApiTest {
+class ProductApiTest {
 
     @InjectMocks
     ProductApi api;
@@ -28,7 +28,7 @@ public class ProductApiTest {
     ProductController controller;
 
     @Test
-    public void shouldList() {
+    void shouldList() {
         var products = List.of(new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0));
         var expected = List.of(new ProductResponseDto(1L, Category.LANCHE, "Nome", "Descrição", 10.0));
 
@@ -42,7 +42,7 @@ public class ProductApiTest {
     }
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var product = new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0);
         var expected = new ProductResponseByIdDto(1L, Category.LANCHE, "Nome", "Descrição", 10.0, null, null, null);
@@ -57,7 +57,7 @@ public class ProductApiTest {
     }
 
     @Test
-    public void shouldInsert() {
+    void shouldInsert() {
         var request = new ProductInsertRequestDto(Category.LANCHE, "Nome", "Descrição", 10.0);
         var product = new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0);
         var expected = new ProductResponseDto(1L, Category.LANCHE, "Nome", "Descrição", 10.0);
@@ -72,7 +72,7 @@ public class ProductApiTest {
     }
 
     @Test
-    public void shouldUpdate() {
+    void shouldUpdate() {
         var request = new ProductUpdateRequestDto(1L, Category.LANCHE, "Nome", "Descrição", 10.0);
         var product = new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0);
         var expected = new ProductResponseDto(1L, Category.LANCHE, "Nome", "Descrição", 10.0);
@@ -87,7 +87,7 @@ public class ProductApiTest {
     }
 
     @Test
-    public void shouldDelete() {
+    void shouldDelete() {
         var id = 1L;
         var expected = "Product has been successfully deleted.";
 

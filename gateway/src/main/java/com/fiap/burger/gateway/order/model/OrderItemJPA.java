@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "order_item")
@@ -79,7 +78,7 @@ public class OrderItemJPA {
         return new OrderItem(
             id,
             orderId,
-            Optional.ofNullable(orderItemAdditional).map(items -> items.stream().map(OrderItemAdditionalJPA::toEntity).collect(Collectors.toList())).orElse(null),
+            Optional.ofNullable(orderItemAdditional).map(items -> items.stream().map(OrderItemAdditionalJPA::toEntity).toList()).orElse(null),
             comment,
             Optional.ofNullable(product).map(ProductJPA::toEntity).orElse(null)
         );
@@ -93,7 +92,7 @@ public class OrderItemJPA {
         );
 
         if (!Optional.ofNullable(orderItem.getAdditionalIds()).orElse(Collections.emptyList()).isEmpty()) {
-            List<OrderItemAdditionalJPA> itemAdditionals = orderItem.getAdditionalIds().stream().map(itemAdditional -> OrderItemAdditionalJPA.toJPA(itemAdditional, newOrderItem)).collect(Collectors.toList());
+            List<OrderItemAdditionalJPA> itemAdditionals = orderItem.getAdditionalIds().stream().map(itemAdditional -> OrderItemAdditionalJPA.toJPA(itemAdditional, newOrderItem)).toList();
             newOrderItem.setOrderItemAdditional(itemAdditionals);
         }
         return newOrderItem;

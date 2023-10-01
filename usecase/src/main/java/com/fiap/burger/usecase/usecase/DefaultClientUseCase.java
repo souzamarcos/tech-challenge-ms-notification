@@ -45,7 +45,7 @@ public class DefaultClientUseCase implements ClientUseCase {
         validateCPF(client.getCpf());
         validateNotNull(client.getEmail(), "email");
         validateNotBlank(client.getEmail(), "email");
-        validateEmailFormat(client.getEmail(), "email");
+        validateEmailFormat(client.getEmail());
         validateNotNull(client.getName(), "name");
         validateNotBlank(client.getName(), "name");
     }

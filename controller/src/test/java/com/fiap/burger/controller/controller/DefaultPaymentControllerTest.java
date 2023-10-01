@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class DefaultPaymentControllerTest {
+class DefaultPaymentControllerTest {
 
     @Mock
     DefaultPaymentUseCase useCase;
@@ -25,12 +25,12 @@ public class DefaultPaymentControllerTest {
     DefaultPaymentController controller;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var expected = new Payment(1L, PaymentStatus.ABERTO);
 
@@ -44,7 +44,7 @@ public class DefaultPaymentControllerTest {
     }
 
     @Test
-    public void shouldThrownPaymentNotFoundExceptionWhenPaymentNotFoundById() {
+    void shouldThrownPaymentNotFoundExceptionWhenPaymentNotFoundById() {
         var id = 1L;
 
         when(useCase.findById(id)).thenReturn(null);
@@ -55,7 +55,7 @@ public class DefaultPaymentControllerTest {
     }
 
     @Test
-    public void shouldFindByOrderId() {
+    void shouldFindByOrderId() {
         var orderId = 1L;
         var expected = List.of(new Payment(1L, PaymentStatus.ABERTO));
 
@@ -69,7 +69,7 @@ public class DefaultPaymentControllerTest {
     }
 
     @Test
-    public void shouldThrownPaymentNotFoundExceptionWhenPaymentNotFoundByOrderId() {
+    void shouldThrownPaymentNotFoundExceptionWhenPaymentNotFoundByOrderId() {
         var orderId = 1L;
 
         when(useCase.findByOrderId(orderId)).thenReturn(null);
@@ -80,7 +80,7 @@ public class DefaultPaymentControllerTest {
     }
 
     @Test
-    public void shouldInsertPayment() {
+    void shouldInsertPayment() {
         var orderId = 1L;
         var payment = new Payment(1L, PaymentStatus.ABERTO);
 
@@ -94,7 +94,7 @@ public class DefaultPaymentControllerTest {
     }
 
     @Test
-    public void shouldUpdateStatusPayment() {
+    void shouldUpdateStatusPayment() {
         var id = 1L;
 
         controller.updateStatus(id, PaymentStatus.APROVADO);

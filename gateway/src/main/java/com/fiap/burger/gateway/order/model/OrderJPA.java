@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "`order`")
@@ -22,7 +21,6 @@ public class OrderJPA extends BaseDomainJPA {
     @ManyToOne(fetch = FetchType.LAZY)
     ClientJPA client;
 
-    // TODO melhorar perfomance do fetch
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     List<OrderItemJPA> items;
 
@@ -92,7 +90,7 @@ public class OrderJPA extends BaseDomainJPA {
         return new Order(
             id,
             Optional.ofNullable(client).map(ClientJPA::toEntity).orElse(null),
-            items.stream().map(OrderItemJPA::toEntityWithAdditional).collect(Collectors.toList()),
+            items.stream().map(OrderItemJPA::toEntityWithAdditional).toList(),
             total,
             status,
             createdAt,
@@ -105,8 +103,8 @@ public class OrderJPA extends BaseDomainJPA {
         return new Order(
             id,
             Optional.ofNullable(client).map(ClientJPA::toEntity).orElse(null),
-            items.stream().map(OrderItemJPA::toEntityWithAdditional).collect(Collectors.toList()),
-            payments.stream().map(PaymentJPA::toEntity).collect(Collectors.toList()),
+            items.stream().map(OrderItemJPA::toEntityWithAdditional).toList(),
+            payments.stream().map(PaymentJPA::toEntity).toList(),
             total,
             status,
             createdAt,
@@ -129,7 +127,7 @@ public class OrderJPA extends BaseDomainJPA {
         );
 
         if (!Optional.ofNullable(order.getItems()).orElse(Collections.emptyList()).isEmpty()) {
-            List<OrderItemJPA> items = order.getItems().stream().map(orderItem -> OrderItemJPA.toJPA(orderItem, newOrder)).collect(Collectors.toList());
+            List<OrderItemJPA> items = order.getItems().stream().map(orderItem -> OrderItemJPA.toJPA(orderItem, newOrder)).toList();
             newOrder.setItems(items);
         }
         return newOrder;

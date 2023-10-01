@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class DefaultPaymentGatewayTest {
+class DefaultPaymentGatewayTest {
 
     @Mock
     OrderDAO orderDAO;
@@ -34,12 +34,12 @@ public class DefaultPaymentGatewayTest {
     DefaultPaymentGateway gateway;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var paymentJPA = new PaymentJPABuilder().withId(1L).build();
         var expected = paymentJPA.toEntity();
@@ -54,7 +54,7 @@ public class DefaultPaymentGatewayTest {
     }
 
     @Test
-    public void shouldFindPaymentsByOrderId() {
+    void shouldFindPaymentsByOrderId() {
         var id = 1L;
         var orderJPA = new OrderJPABuilder().build();
         var paymentsJPA = List.of(new PaymentJPABuilder().withId(1L).build());
@@ -71,7 +71,7 @@ public class DefaultPaymentGatewayTest {
     }
 
     @Test
-    public void shouldReturnEmptyPaymentsWhenOrderNotFound() {
+    void shouldReturnEmptyPaymentsWhenOrderNotFound() {
         var id = 1L;
         var expected = Collections.emptyList();
 
@@ -85,7 +85,7 @@ public class DefaultPaymentGatewayTest {
     }
 
     @Test
-    public void shouldSavePayment() {
+    void shouldSavePayment() {
         var paymentJPA = new PaymentJPABuilder().withId(1L).build();
         var payment = new PaymentBuilder().withId(null).build();
         var expected = new PaymentBuilder().withId(1L).build();
@@ -100,7 +100,7 @@ public class DefaultPaymentGatewayTest {
     }
 
     @Test
-    public void shouldUpdateStatus() {
+    void shouldUpdateStatus() {
         gateway.updatePaymentStatus(1L, PaymentStatus.APROVADO, LocalDateTime.now());
         verify(paymentDAO, times(1)).updatePaymentStatus(eq(1L), eq(PaymentStatus.APROVADO), any());
     }

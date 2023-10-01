@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class DefaultPaymentUseCaseTest {
+class DefaultPaymentUseCaseTest {
 
     @Mock
     PaymentGateway gateway;
@@ -34,12 +34,12 @@ public class DefaultPaymentUseCaseTest {
     DefaultPaymentUseCase useCase;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var expected = new PaymentBuilder().withId(id).build();
 
@@ -53,7 +53,7 @@ public class DefaultPaymentUseCaseTest {
     }
 
     @Test
-    public void shouldFindByOrderId() {
+    void shouldFindByOrderId() {
         var orderId = 1L;
         var expected = List.of(new PaymentBuilder().build());
 
@@ -67,7 +67,7 @@ public class DefaultPaymentUseCaseTest {
     }
 
     @Test
-    public void shouldInsertPayment() {
+    void shouldInsertPayment() {
         var orderId = 1L;
         var order = new OrderBuilder().build();
         var expected = new Payment(order, PaymentStatus.ABERTO);
@@ -84,7 +84,7 @@ public class DefaultPaymentUseCaseTest {
     }
 
     @Test
-    public void shouldThrowOrderCannotBePaidExceptionWhenPaymentOrderCantBePaid() {
+    void shouldThrowOrderCannotBePaidExceptionWhenPaymentOrderCantBePaid() {
         var orderId = 1L;
         var order = new OrderBuilder().build();
         var expected = new Payment(order, PaymentStatus.ABERTO);
@@ -98,7 +98,7 @@ public class DefaultPaymentUseCaseTest {
     }
 
     @Test
-    public void shouldUpdateStatusPaymentToApproved() {
+    void shouldUpdateStatusPaymentToApproved() {
         var id = 1L;
         var payment = new PaymentBuilder().build();
 
@@ -112,7 +112,7 @@ public class DefaultPaymentUseCaseTest {
     }
 
     @Test
-    public void shouldUpdateStatusPaymentToRefused() {
+    void shouldUpdateStatusPaymentToRefused() {
         var id = 1L;
         var payment = new PaymentBuilder().build();
 
@@ -126,7 +126,7 @@ public class DefaultPaymentUseCaseTest {
     }
 
     @Test
-    public void shouldThrownPaymentNotFoundExceptionWhenPaymentNotFoundToUpdateStatus() {
+    void shouldThrownPaymentNotFoundExceptionWhenPaymentNotFoundToUpdateStatus() {
         var id = 1L;
 
         when(gateway.findById(id)).thenReturn(null);
@@ -139,7 +139,7 @@ public class DefaultPaymentUseCaseTest {
     }
 
     @Test
-    public void shouldThrownInvalidAttributeExceptionWhenPaymentStatusDoNotAllowUpdate() {
+    void shouldThrownInvalidAttributeExceptionWhenPaymentStatusDoNotAllowUpdate() {
         var id = 1L;
         var payment = new PaymentBuilder().withStatus(PaymentStatus.APROVADO).build();
 
@@ -153,7 +153,7 @@ public class DefaultPaymentUseCaseTest {
     }
 
     @Test
-    public void shouldThrownInvalidAttributeExceptionWhenNewPaymentStatusIsInvalid() {
+    void shouldThrownInvalidAttributeExceptionWhenNewPaymentStatusIsInvalid() {
         var id = 1L;
         var payment = new PaymentBuilder().withStatus(PaymentStatus.ABERTO).build();
 
