@@ -1,7 +1,5 @@
 package com.fiap.burger.entity.product;
 
-import com.fiap.burger.entity.product.Category;
-import com.fiap.burger.entity.product.Product;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -29,6 +27,7 @@ public class ProductTest {
         assertEquals(description, actual.getDescription());
         assertEquals(value, actual.getValue());
     }
+
     @Test
     public void shouldCreateInstanceWithSimpleConstructorWithId() {
         var id = 1L;

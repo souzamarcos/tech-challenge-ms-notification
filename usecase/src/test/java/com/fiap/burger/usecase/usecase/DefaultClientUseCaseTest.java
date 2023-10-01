@@ -1,11 +1,8 @@
 package com.fiap.burger.usecase.usecase;
 
 import com.fiap.burger.entity.client.Client;
-import com.fiap.burger.entity.product.Product;
 import com.fiap.burger.usecase.adapter.gateway.ClientGateway;
-import com.fiap.burger.usecase.adapter.gateway.ProductGateway;
 import com.fiap.burger.usecase.misc.ClientBuilder;
-import com.fiap.burger.usecase.misc.ProductBuilder;
 import com.fiap.burger.usecase.misc.exception.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

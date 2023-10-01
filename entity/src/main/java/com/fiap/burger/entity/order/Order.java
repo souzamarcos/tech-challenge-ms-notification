@@ -123,15 +123,15 @@ public class Order extends BaseEntity {
     }
 
     public Order(
-            Long id,
-            Client client,
-            List<OrderItem> items,
-            List<Payment> payments,
-            Double total,
-            OrderStatus status,
-            LocalDateTime createdAt,
-            LocalDateTime modifiedAt,
-            LocalDateTime deletedAt
+        Long id,
+        Client client,
+        List<OrderItem> items,
+        List<Payment> payments,
+        Double total,
+        OrderStatus status,
+        LocalDateTime createdAt,
+        LocalDateTime modifiedAt,
+        LocalDateTime deletedAt
     ) {
         this.id = id;
         this.client = client;

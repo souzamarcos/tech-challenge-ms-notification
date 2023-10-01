@@ -7,9 +7,7 @@ import com.fiap.burger.entity.order.OrderItem;
 import com.fiap.burger.entity.order.OrderItemAdditional;
 import com.fiap.burger.entity.order.OrderStatus;
 import com.fiap.burger.entity.payment.Payment;
-import com.fiap.burger.entity.payment.PaymentStatus;
 import com.fiap.burger.entity.product.Category;
-import org.mockito.internal.matchers.Or;
 
 import java.time.LocalDateTime;
 import java.util.Collections;

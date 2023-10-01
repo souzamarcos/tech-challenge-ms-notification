@@ -1,11 +1,8 @@
 package com.fiap.burger.controller.controller;
 
-import com.fiap.burger.entity.client.Client;
 import com.fiap.burger.entity.product.Category;
 import com.fiap.burger.entity.product.Product;
-import com.fiap.burger.usecase.misc.exception.ClientNotFoundException;
 import com.fiap.burger.usecase.misc.exception.ProductNotFoundException;
-import com.fiap.burger.usecase.usecase.DefaultClientUseCase;
 import com.fiap.burger.usecase.usecase.DefaultProductUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,6 +42,7 @@ public class DefaultProductControllerTest {
         verify(useCase, times(1)).findAll();
         verify(useCase, times(0)).findAllBy(any());
     }
+
     @Test
     public void shouldListAllByCategory() {
         List<Product> expected = List.of(new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0));

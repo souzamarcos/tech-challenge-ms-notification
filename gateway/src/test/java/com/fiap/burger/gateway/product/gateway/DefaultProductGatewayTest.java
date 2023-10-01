@@ -92,4 +92,13 @@ public class DefaultProductGatewayTest {
 
         verify(productDAO, times(1)).save(any());
     }
+
+    @Test
+    public void shouldDeleteProduct() {
+        var id = 1L;
+
+        gateway.deleteBy(id);
+
+        verify(productDAO, times(1)).deleteById(1L);
+    }
 }

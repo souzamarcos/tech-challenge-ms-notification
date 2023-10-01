@@ -1,10 +1,6 @@
 package com.fiap.burger.gateway.order.gateway;
 
 import com.fiap.burger.entity.order.OrderStatus;
-import com.fiap.burger.gateway.client.dao.ClientDAO;
-import com.fiap.burger.gateway.client.gateway.DefaultClientGateway;
-import com.fiap.burger.gateway.misc.ClientBuilder;
-import com.fiap.burger.gateway.misc.ClientJPABuilder;
 import com.fiap.burger.gateway.misc.OrderBuilder;
 import com.fiap.burger.gateway.misc.OrderJPABuilder;
 import com.fiap.burger.gateway.order.dao.OrderDAO;

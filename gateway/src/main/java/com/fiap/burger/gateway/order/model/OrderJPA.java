@@ -103,15 +103,15 @@ public class OrderJPA extends BaseDomainJPA {
 
     public Order toEntityWithItemsAndPayments() {
         return new Order(
-                id,
-                Optional.ofNullable(client).map(ClientJPA::toEntity).orElse(null),
-                items.stream().map(OrderItemJPA::toEntityWithAdditional).collect(Collectors.toList()),
-                payments.stream().map(PaymentJPA::toEntity).collect(Collectors.toList()),
-                total,
-                status,
-                createdAt,
-                modifiedAt,
-                deletedAt
+            id,
+            Optional.ofNullable(client).map(ClientJPA::toEntity).orElse(null),
+            items.stream().map(OrderItemJPA::toEntityWithAdditional).collect(Collectors.toList()),
+            payments.stream().map(PaymentJPA::toEntity).collect(Collectors.toList()),
+            total,
+            status,
+            createdAt,
+            modifiedAt,
+            deletedAt
         );
     }
 

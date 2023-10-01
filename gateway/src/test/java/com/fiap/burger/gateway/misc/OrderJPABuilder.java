@@ -1,14 +1,7 @@
 package com.fiap.burger.gateway.misc;
 
 import com.fiap.burger.entity.client.Client;
-import com.fiap.burger.entity.common.BaseEntity;
-import com.fiap.burger.entity.order.Order;
-import com.fiap.burger.entity.order.OrderItem;
-import com.fiap.burger.entity.order.OrderItemAdditional;
 import com.fiap.burger.entity.order.OrderStatus;
-import com.fiap.burger.entity.payment.Payment;
-import com.fiap.burger.entity.product.Category;
-import com.fiap.burger.gateway.order.model.OrderItemAdditionalJPA;
 import com.fiap.burger.gateway.order.model.OrderItemJPA;
 import com.fiap.burger.gateway.order.model.OrderJPA;
 import com.fiap.burger.gateway.payment.model.PaymentJPA;
@@ -16,8 +9,6 @@ import com.fiap.burger.gateway.payment.model.PaymentJPA;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class OrderJPABuilder {
 

@@ -2,9 +2,6 @@ package com.fiap.burger.usecase.adapter.usecase;
 
 import com.fiap.burger.entity.order.Order;
 import com.fiap.burger.entity.order.OrderStatus;
-import com.fiap.burger.usecase.adapter.gateway.ClientGateway;
-import com.fiap.burger.usecase.adapter.gateway.OrderGateway;
-import com.fiap.burger.usecase.adapter.gateway.ProductGateway;
 
 import java.util.List;
 

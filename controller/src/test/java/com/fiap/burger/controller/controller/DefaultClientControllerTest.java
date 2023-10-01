@@ -1,7 +1,6 @@
 package com.fiap.burger.controller.controller;
 
 import com.fiap.burger.entity.client.Client;
-import com.fiap.burger.usecase.misc.exception.ClientCpfAlreadyExistsException;
 import com.fiap.burger.usecase.misc.exception.ClientNotFoundException;
 import com.fiap.burger.usecase.usecase.DefaultClientUseCase;
 import org.junit.jupiter.api.BeforeEach;

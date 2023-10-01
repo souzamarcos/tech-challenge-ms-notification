@@ -290,7 +290,7 @@ public class DefaultOrderUseCaseTest {
     @Test
     public void shouldCheckOutOrder() {
         var id = 1L;
-        var order = new OrderBuilder().withId(id).withModifiedAt(LocalDateTime.of(2023, 9, 30, 0, 0 ,0)).build();
+        var order = new OrderBuilder().withId(id).withModifiedAt(LocalDateTime.of(2023, 9, 30, 0, 0, 0)).build();
         var modifiedAtBefore = order.getModifiedAt();
 
         when(orderGateway.findById(id)).thenReturn(order);
@@ -329,7 +329,7 @@ public class DefaultOrderUseCaseTest {
     @Test
     public void shouldUpdateStatusOrder() {
         var id = 1L;
-        var order = new OrderBuilder().withId(id).withStatus(OrderStatus.RECEBIDO).withModifiedAt(LocalDateTime.of(2023, 9, 30, 0, 0 ,0)).build();
+        var order = new OrderBuilder().withId(id).withStatus(OrderStatus.RECEBIDO).withModifiedAt(LocalDateTime.of(2023, 9, 30, 0, 0, 0)).build();
         var modifiedAtBefore = order.getModifiedAt();
 
         when(orderGateway.findById(id)).thenReturn(order);
@@ -345,7 +345,7 @@ public class DefaultOrderUseCaseTest {
     @Test
     public void shouldUpdateStatusOrderToCancelled() {
         var id = 1L;
-        var order = new OrderBuilder().withId(id).withStatus(OrderStatus.AGUARDANDO_PAGAMENTO).withModifiedAt(LocalDateTime.of(2023, 9, 30, 0, 0 ,0)).build();
+        var order = new OrderBuilder().withId(id).withStatus(OrderStatus.AGUARDANDO_PAGAMENTO).withModifiedAt(LocalDateTime.of(2023, 9, 30, 0, 0, 0)).build();
         var modifiedAtBefore = order.getModifiedAt();
 
         when(orderGateway.findById(id)).thenReturn(order);

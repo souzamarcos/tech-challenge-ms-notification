@@ -13,7 +13,6 @@ import com.fiap.burger.usecase.usecase.DefaultOrderUseCase;
 import com.fiap.burger.usecase.usecase.DefaultPaymentUseCase;
 import com.fiap.burger.usecase.usecase.DefaultProductUseCase;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration

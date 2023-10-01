@@ -1,10 +1,9 @@
 package com.fiap.burger.gateway.payment.gateway;
 
-import com.fiap.burger.entity.order.OrderStatus;
 import com.fiap.burger.entity.payment.PaymentStatus;
-import com.fiap.burger.gateway.client.dao.ClientDAO;
-import com.fiap.burger.gateway.client.gateway.DefaultClientGateway;
-import com.fiap.burger.gateway.misc.*;
+import com.fiap.burger.gateway.misc.OrderJPABuilder;
+import com.fiap.burger.gateway.misc.PaymentBuilder;
+import com.fiap.burger.gateway.misc.PaymentJPABuilder;
 import com.fiap.burger.gateway.order.dao.OrderDAO;
 import com.fiap.burger.gateway.payment.dao.PaymentDAO;
 import com.fiap.burger.gateway.payment.model.PaymentJPA;
@@ -70,6 +69,7 @@ public class DefaultPaymentGatewayTest {
 
         verify(paymentDAO, times(1)).findAllByDeletedAtNullAndOrderJPA(orderJPA);
     }
+
     @Test
     public void shouldReturnEmptyPaymentsWhenOrderNotFound() {
         var id = 1L;

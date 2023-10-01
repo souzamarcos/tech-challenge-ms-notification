@@ -1,7 +1,5 @@
 package com.fiap.burger.gateway.misc;
 
-import com.fiap.burger.entity.order.Order;
-import com.fiap.burger.entity.payment.Payment;
 import com.fiap.burger.entity.payment.PaymentStatus;
 import com.fiap.burger.gateway.order.model.OrderJPA;
 import com.fiap.burger.gateway.payment.model.PaymentJPA;
@@ -38,6 +36,8 @@ public class PaymentJPABuilder {
 
     public PaymentJPA build() {
         return new PaymentJPA(id, order, paymentStatus, qrCode, externalId, createdAt, modifiedAt, deletedAt);
-    };
+    }
+
+    ;
 
 }

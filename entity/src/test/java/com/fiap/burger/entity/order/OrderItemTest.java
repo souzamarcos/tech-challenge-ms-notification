@@ -4,7 +4,6 @@ import com.fiap.burger.entity.product.Category;
 import com.fiap.burger.entity.product.Product;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

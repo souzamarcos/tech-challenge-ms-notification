@@ -2,7 +2,6 @@ package com.fiap.burger.usecase.adapter.usecase;
 
 import com.fiap.burger.entity.product.Category;
 import com.fiap.burger.entity.product.Product;
-import com.fiap.burger.usecase.adapter.gateway.ProductGateway;
 
 import java.util.List;
 

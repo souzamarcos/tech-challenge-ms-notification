@@ -1,11 +1,8 @@
 package com.fiap.burger.gateway.client.gateway;
 
 import com.fiap.burger.gateway.client.dao.ClientDAO;
-import com.fiap.burger.gateway.client.model.ClientJPA;
 import com.fiap.burger.gateway.misc.ClientBuilder;
 import com.fiap.burger.gateway.misc.ClientJPABuilder;
-import com.fiap.burger.gateway.misc.ProductBuilder;
-import com.fiap.burger.gateway.misc.ProductJPABuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

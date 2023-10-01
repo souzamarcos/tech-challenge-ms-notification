@@ -7,28 +7,28 @@ import jakarta.validation.constraints.Null;
 
 public record PaymentResponseDto(
 
-        @NotNull
-        Long id,
-        @NotNull
-        Long orderId,
+    @NotNull
+    Long id,
+    @NotNull
+    Long orderId,
 
-        @NotNull
-        PaymentStatus status,
+    @NotNull
+    PaymentStatus status,
 
-        @Null
-        String qrCode,
+    @Null
+    String qrCode,
 
-        @Null
-        String externalId
+    @Null
+    String externalId
 ) {
 
     public static PaymentResponseDto toResponseDto(Payment payment) {
         return new PaymentResponseDto(
-                payment.getId(),
-                payment.getOrder().getId(),
-                payment.getStatus(),
-                payment.getQrCode(),
-                payment.getExternalId()
+            payment.getId(),
+            payment.getOrder().getId(),
+            payment.getStatus(),
+            payment.getQrCode(),
+            payment.getExternalId()
         );
     }
 

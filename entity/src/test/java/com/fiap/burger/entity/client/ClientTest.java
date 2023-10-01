@@ -1,6 +1,5 @@
 package com.fiap.burger.entity.client;
 
-import com.fiap.burger.entity.client.Client;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

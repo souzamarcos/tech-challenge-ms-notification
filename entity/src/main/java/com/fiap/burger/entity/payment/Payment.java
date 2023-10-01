@@ -60,14 +60,14 @@ public class Payment extends BaseEntity {
     }
 
     public Payment(
-            Long id,
-            Order order,
-            PaymentStatus status,
-            String qrCode,
-            String externalId,
-            LocalDateTime createdAt,
-            LocalDateTime modifiedAt,
-            LocalDateTime deletedAt
+        Long id,
+        Order order,
+        PaymentStatus status,
+        String qrCode,
+        String externalId,
+        LocalDateTime createdAt,
+        LocalDateTime modifiedAt,
+        LocalDateTime deletedAt
     ) {
         this.id = id;
         this.order = order;
@@ -80,12 +80,12 @@ public class Payment extends BaseEntity {
     }
 
     public Payment(
-            Long id,
-            Order order,
-            PaymentStatus status,
-            LocalDateTime createdAt,
-            LocalDateTime modifiedAt,
-            LocalDateTime deletedAt
+        Long id,
+        Order order,
+        PaymentStatus status,
+        LocalDateTime createdAt,
+        LocalDateTime modifiedAt,
+        LocalDateTime deletedAt
     ) {
         this.id = id;
         this.order = order;
@@ -96,9 +96,9 @@ public class Payment extends BaseEntity {
     }
 
     public Payment(
-            Long id,
-            Order order,
-            PaymentStatus status
+        Long id,
+        Order order,
+        PaymentStatus status
     ) {
         this.id = id;
         this.order = order;
@@ -106,16 +106,16 @@ public class Payment extends BaseEntity {
     }
 
     public Payment(
-            Long id,
-            PaymentStatus status
+        Long id,
+        PaymentStatus status
     ) {
         this.id = id;
         this.status = status;
     }
 
     public Payment(
-            Order order,
-            PaymentStatus status
+        Order order,
+        PaymentStatus status
     ) {
         this.order = order;
         this.status = status;

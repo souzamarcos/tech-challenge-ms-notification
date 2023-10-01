@@ -36,6 +36,8 @@ public class PaymentBuilder {
 
     public Payment build() {
         return new Payment(id, order, paymentStatus, qrCode, externalId, createdAt, modifiedAt, deletedAt);
-    };
+    }
+
+    ;
 
 }

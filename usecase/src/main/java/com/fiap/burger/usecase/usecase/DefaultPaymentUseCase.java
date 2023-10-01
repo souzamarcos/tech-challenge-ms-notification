@@ -10,10 +10,8 @@ import com.fiap.burger.usecase.adapter.usecase.PaymentUseCase;
 import com.fiap.burger.usecase.misc.exception.InvalidAttributeException;
 import com.fiap.burger.usecase.misc.exception.OrderCannotBePaidException;
 import com.fiap.burger.usecase.misc.exception.PaymentNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 

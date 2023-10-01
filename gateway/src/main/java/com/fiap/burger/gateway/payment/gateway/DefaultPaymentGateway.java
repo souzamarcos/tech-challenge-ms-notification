@@ -2,12 +2,10 @@ package com.fiap.burger.gateway.payment.gateway;
 
 import com.fiap.burger.entity.payment.Payment;
 import com.fiap.burger.entity.payment.PaymentStatus;
-import com.fiap.burger.entity.product.Product;
 import com.fiap.burger.gateway.order.dao.OrderDAO;
 import com.fiap.burger.gateway.order.model.OrderJPA;
 import com.fiap.burger.gateway.payment.dao.PaymentDAO;
 import com.fiap.burger.gateway.payment.model.PaymentJPA;
-import com.fiap.burger.gateway.product.model.ProductJPA;
 import com.fiap.burger.usecase.adapter.gateway.PaymentGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

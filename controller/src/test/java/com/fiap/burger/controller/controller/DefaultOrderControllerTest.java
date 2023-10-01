@@ -1,14 +1,9 @@
 package com.fiap.burger.controller.controller;
 
-import com.fiap.burger.entity.client.Client;
 import com.fiap.burger.entity.order.Order;
 import com.fiap.burger.entity.order.OrderStatus;
-import com.fiap.burger.entity.payment.Payment;
-import com.fiap.burger.entity.payment.PaymentStatus;
 import com.fiap.burger.usecase.misc.exception.OrderNotFoundException;
-import com.fiap.burger.usecase.misc.exception.PaymentNotFoundException;
 import com.fiap.burger.usecase.usecase.DefaultOrderUseCase;
-import com.fiap.burger.usecase.usecase.DefaultPaymentUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,7 +16,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 public class DefaultOrderControllerTest {
 

@@ -10,9 +10,7 @@ import com.fiap.burger.usecase.misc.exception.ProductNotFoundException;
 
 import java.util.List;
 
-import static com.fiap.burger.usecase.misc.validation.ValidationUtils.validateNotBlank;
-import static com.fiap.burger.usecase.misc.validation.ValidationUtils.validateNotNull;
-import static com.fiap.burger.usecase.misc.validation.ValidationUtils.validatePositiveNotZero;
+import static com.fiap.burger.usecase.misc.validation.ValidationUtils.*;
 
 public class DefaultProductUseCase implements ProductUseCase {
 
