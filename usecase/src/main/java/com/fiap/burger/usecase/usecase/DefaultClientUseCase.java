@@ -7,15 +7,13 @@ import com.fiap.burger.usecase.misc.exception.ClientCpfAlreadyExistsException;
 import com.fiap.burger.usecase.misc.exception.InvalidAttributeException;
 
 import static com.fiap.burger.usecase.misc.validation.ValidationCPF.validateCPF;
-import static com.fiap.burger.usecase.misc.validation.ValidationUtils.validateEmailFormat;
-import static com.fiap.burger.usecase.misc.validation.ValidationUtils.validateNotBlank;
-import static com.fiap.burger.usecase.misc.validation.ValidationUtils.validateNotNull;
+import static com.fiap.burger.usecase.misc.validation.ValidationUtils.*;
 
 public class DefaultClientUseCase implements ClientUseCase {
 
     private final ClientGateway repository;
 
-    public DefaultClientUseCase(ClientGateway repository){
+    public DefaultClientUseCase(ClientGateway repository) {
         this.repository = repository;
     }
 
@@ -47,7 +45,7 @@ public class DefaultClientUseCase implements ClientUseCase {
         validateCPF(client.getCpf());
         validateNotNull(client.getEmail(), "email");
         validateNotBlank(client.getEmail(), "email");
-        validateEmailFormat(client.getEmail(), "email");
+        validateEmailFormat(client.getEmail());
         validateNotNull(client.getName(), "name");
         validateNotBlank(client.getName(), "name");
     }

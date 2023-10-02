@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public record OrderInsertRequestDto(
     @Null
@@ -17,7 +16,7 @@ public record OrderInsertRequestDto(
     public Order toEntity() {
         return new Order(
             clientId,
-            items().stream().map(OrderItemInsertRequestDto::toEntity).collect(Collectors.toList()),
+            items().stream().map(OrderItemInsertRequestDto::toEntity).toList(),
             OrderStatus.AGUARDANDO_PAGAMENTO
         );
     }

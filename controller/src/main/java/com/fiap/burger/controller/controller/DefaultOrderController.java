@@ -32,6 +32,7 @@ public class DefaultOrderController implements OrderController {
     @Override
     public Order findById(Long orderId) {
         var persistedOrder = useCase.findById(orderId);
+        if (persistedOrder == null) throw new OrderNotFoundException();
         return persistedOrder;
     }
 

@@ -8,9 +8,9 @@ import java.util.Map;
 
 public record ErrorResponseDto(@NotNull List<ErrorResponseDataDto> errors) {
     public static ErrorResponseDto toErrorResponseDto(Exception exception) {
-        if (exception instanceof DomainException) {
+        if (exception instanceof DomainException domainException) {
             return new ErrorResponseDto(
-                List.of(new ErrorResponseDataDto(exception.getMessage(), ((DomainException) exception).getParameters()))
+                List.of(new ErrorResponseDataDto(exception.getMessage(), domainException.getParameters()))
             );
         } else return defaultError();
     }

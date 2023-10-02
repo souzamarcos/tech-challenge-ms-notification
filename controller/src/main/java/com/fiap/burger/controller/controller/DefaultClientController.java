@@ -2,7 +2,6 @@ package com.fiap.burger.controller.controller;
 
 import com.fiap.burger.controller.adapter.api.ClientController;
 import com.fiap.burger.entity.client.Client;
-import com.fiap.burger.usecase.adapter.gateway.ClientGateway;
 import com.fiap.burger.usecase.adapter.usecase.ClientUseCase;
 import com.fiap.burger.usecase.misc.exception.ClientNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ public class DefaultClientController implements ClientController {
 
     public Client findById(@PathVariable Long clientId) {
         var persistedClient = useCase.findById(clientId);
-        if (persistedClient == null) throw new ClientNotFoundException();
+        if (persistedClient == null) throw new ClientNotFoundException(clientId);
         return persistedClient;
     }
 

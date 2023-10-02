@@ -50,10 +50,6 @@ public class PaymentJPA extends BaseDomainJPA {
         this.deletedAt = deletedAt;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public OrderJPA getOrderJPA() {
         return orderJPA;
     }
@@ -80,27 +76,27 @@ public class PaymentJPA extends BaseDomainJPA {
     @Override
     public int hashCode() {
         return Objects.hash(
-                getId(),
-                getOrderJPA(),
-                getStatus(),
-                getQrCode(),
-                getExternalId(),
-                getCreatedAt(),
-                getModifiedAt(),
-                getDeletedAt()
+            getId(),
+            getOrderJPA(),
+            getStatus(),
+            getQrCode(),
+            getExternalId(),
+            getCreatedAt(),
+            getModifiedAt(),
+            getDeletedAt()
         );
     }
 
     public static PaymentJPA toJPA(Payment payment) {
         return new PaymentJPA(
-                payment.getId(),
-                OrderJPA.toJPA(payment.getOrder()),
-                payment.getStatus(),
-                payment.getQrCode(),
-                payment.getExternalId(),
-                payment.getCreatedAt(),
-                payment.getModifiedAt(),
-                payment.getDeletedAt()
+            payment.getId(),
+            OrderJPA.toJPA(payment.getOrder()),
+            payment.getStatus(),
+            payment.getQrCode(),
+            payment.getExternalId(),
+            payment.getCreatedAt(),
+            payment.getModifiedAt(),
+            payment.getDeletedAt()
         );
     }
 

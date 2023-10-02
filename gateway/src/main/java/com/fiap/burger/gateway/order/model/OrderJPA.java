@@ -10,8 +10,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "`order`")
@@ -21,7 +21,6 @@ public class OrderJPA extends BaseDomainJPA {
     @ManyToOne(fetch = FetchType.LAZY)
     ClientJPA client;
 
-    // TODO melhorar perfomance do fetch
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     List<OrderItemJPA> items;
 
@@ -35,6 +34,19 @@ public class OrderJPA extends BaseDomainJPA {
 
     @Column(name = "client_id")
     Long clientId;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderJPA orderJPA = (OrderJPA) o;
+        return Objects.equals(client, orderJPA.client) && Objects.equals(items, orderJPA.items) && Objects.equals(payments, orderJPA.payments) && Objects.equals(total, orderJPA.total) && status == orderJPA.status && Objects.equals(clientId, orderJPA.clientId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(client, items, payments, total, status, clientId);
+    }
 
     public OrderJPA() {
     }
@@ -78,7 +90,7 @@ public class OrderJPA extends BaseDomainJPA {
         return new Order(
             id,
             Optional.ofNullable(client).map(ClientJPA::toEntity).orElse(null),
-            items.stream().map(OrderItemJPA::toEntityWithAdditional).collect(Collectors.toList()),
+            items.stream().map(OrderItemJPA::toEntityWithAdditional).toList(),
             total,
             status,
             createdAt,
@@ -89,15 +101,15 @@ public class OrderJPA extends BaseDomainJPA {
 
     public Order toEntityWithItemsAndPayments() {
         return new Order(
-                id,
-                Optional.ofNullable(client).map(ClientJPA::toEntity).orElse(null),
-                items.stream().map(OrderItemJPA::toEntityWithAdditional).collect(Collectors.toList()),
-                payments.stream().map(PaymentJPA::toEntity).collect(Collectors.toList()),
-                total,
-                status,
-                createdAt,
-                modifiedAt,
-                deletedAt
+            id,
+            Optional.ofNullable(client).map(ClientJPA::toEntity).orElse(null),
+            items.stream().map(OrderItemJPA::toEntityWithAdditional).toList(),
+            payments.stream().map(PaymentJPA::toEntity).toList(),
+            total,
+            status,
+            createdAt,
+            modifiedAt,
+            deletedAt
         );
     }
 
@@ -115,7 +127,7 @@ public class OrderJPA extends BaseDomainJPA {
         );
 
         if (!Optional.ofNullable(order.getItems()).orElse(Collections.emptyList()).isEmpty()) {
-            List<OrderItemJPA> items = order.getItems().stream().map(orderItem -> OrderItemJPA.toJPA(orderItem, newOrder)).collect(Collectors.toList());
+            List<OrderItemJPA> items = order.getItems().stream().map(orderItem -> OrderItemJPA.toJPA(orderItem, newOrder)).toList();
             newOrder.setItems(items);
         }
         return newOrder;

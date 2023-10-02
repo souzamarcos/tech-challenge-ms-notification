@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public record OrderItemResponseDto(
     @NotNull
@@ -23,7 +22,7 @@ public record OrderItemResponseDto(
             order.getProduct().getId(),
             order.getProduct().getName(),
             order.getComment(),
-            order.getOrderItemAdditionals().stream().map(OrderItemAdditionalResponseDto::toResponseDto).collect(Collectors.toList())
+            order.getOrderItemAdditionals().stream().map(OrderItemAdditionalResponseDto::toResponseDto).toList()
         );
     }
 }

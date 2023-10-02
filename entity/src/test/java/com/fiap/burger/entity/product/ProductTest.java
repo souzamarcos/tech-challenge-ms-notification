@@ -1,17 +1,15 @@
-package com.fiap.burger.entity.entity.product;
+package com.fiap.burger.entity.product;
 
-import com.fiap.burger.entity.product.Category;
-import com.fiap.burger.entity.product.Product;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ProductTest {
+class ProductTest {
 
     @Test
-    public void shouldCreateInstanceWithSimpleConstructor() {
+    void shouldCreateInstanceWithSimpleConstructor() {
         var category = Category.LANCHE;
         var name = "Product Test";
         var description = "Product description";
@@ -31,7 +29,30 @@ public class ProductTest {
     }
 
     @Test
-    public void shouldCreateInstanceWithFullConstructor() {
+    void shouldCreateInstanceWithSimpleConstructorWithId() {
+        var id = 1L;
+        var category = Category.LANCHE;
+        var name = "Product Test";
+        var description = "Product description";
+        var value = 22.2;
+
+        Product actual = new Product(
+            id,
+            category,
+            name,
+            description,
+            value
+        );
+
+        assertEquals(id, actual.getId());
+        assertEquals(category, actual.getCategory());
+        assertEquals(name, actual.getName());
+        assertEquals(description, actual.getDescription());
+        assertEquals(value, actual.getValue());
+    }
+
+    @Test
+    void shouldCreateInstanceWithFullConstructor() {
         var id = 1L;
         var category = Category.LANCHE;
         var name = "Product Test";
@@ -51,6 +72,7 @@ public class ProductTest {
             null
         );
 
+        assertEquals(id, actual.getId());
         assertEquals(category, actual.getCategory());
         assertEquals(name, actual.getName());
         assertEquals(description, actual.getDescription());

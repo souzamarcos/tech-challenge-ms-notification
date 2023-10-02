@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/orders")
@@ -29,7 +28,6 @@ public class OrderApi {
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Pedido inválido")})
     @PostMapping()
     public ListOrderResponseDto insert(@RequestBody OrderInsertRequestDto orderDto) {
-        // TODO retornar items do pedido inserido
         return ListOrderResponseDto.toResponseDto(controller.insert(orderDto.toEntity()));
     }
 
@@ -51,13 +49,13 @@ public class OrderApi {
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Request inválida")})
     @GetMapping()
     public List<ListOrderResponseDto> findAll(@RequestParam @Nullable OrderStatus status) {
-        return controller.findAllBy(status).stream().map(ListOrderResponseDto::toResponseDto).collect(Collectors.toList());
+        return controller.findAllBy(status).stream().map(ListOrderResponseDto::toResponseDto).toList();
     }
 
     @Operation(summary = "Listar pedidos em progresso", description = "Listar pedidos em progresso. Status igual a PRONTO, EM_PREPARAÇÂO ou RECEBIDO.", tags = {"pedido"})
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Request inválida")})
     @GetMapping("/in-progress")
     public List<ListOrderResponseDto> findAllInProgress() {
-        return controller.findAllInProgress().stream().map(ListOrderResponseDto::toResponseDto).collect(Collectors.toList());
+        return controller.findAllInProgress().stream().map(ListOrderResponseDto::toResponseDto).toList();
     }
 }

@@ -4,13 +4,11 @@ import com.fiap.burger.api.dto.payment.request.PaymentInsertRequestDto;
 import com.fiap.burger.api.dto.payment.request.PaymentWebhookRequestDto;
 import com.fiap.burger.api.dto.payment.response.PaymentResponseDto;
 import com.fiap.burger.controller.adapter.api.PaymentController;
-import com.fiap.burger.entity.payment.PaymentStatus;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,10 +33,10 @@ public class PaymentApi {
     @GetMapping("/byOrderId/{orderId}")
     public List<PaymentResponseDto> findByOrderId(@PathVariable Long orderId) {
         return paymentController
-                .findByOrderId(orderId)
-                .stream()
-                .map(PaymentResponseDto::toResponseDto)
-                .toList();
+            .findByOrderId(orderId)
+            .stream()
+            .map(PaymentResponseDto::toResponseDto)
+            .toList();
     }
 
     @Operation(summary = "Criar pagamento", description = "Criar pagamento de pedido", tags = {"pagamento"})

@@ -10,9 +10,7 @@ import com.fiap.burger.usecase.adapter.gateway.ClientGateway;
 import com.fiap.burger.usecase.adapter.gateway.OrderGateway;
 import com.fiap.burger.usecase.adapter.gateway.ProductGateway;
 import com.fiap.burger.usecase.adapter.usecase.OrderUseCase;
-import com.fiap.burger.usecase.misc.exception.InvalidAttributeException;
-import com.fiap.burger.usecase.misc.exception.NegativeOrZeroValueException;
-import com.fiap.burger.usecase.misc.exception.OrderNotFoundException;
+import com.fiap.burger.usecase.misc.exception.*;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -22,6 +20,8 @@ import java.util.stream.Collectors;
 
 public class DefaultOrderUseCase implements OrderUseCase {
 
+    private static final String OLD_STATUS_FIELD = "oldStatus";
+    private static final String NEW_STATUS_FIELD = "newStatus";
     private final OrderGateway orderGateway;
     private final ProductGateway productGateway;
     private final ClientGateway clientGateway;
@@ -33,11 +33,7 @@ public class DefaultOrderUseCase implements OrderUseCase {
     }
 
     public Order findById(Long id) {
-        var order = orderGateway.findById(id);
-        if (order == null) {
-            throw new OrderNotFoundException(id);
-        }
-        return order;
+        return orderGateway.findById(id);
     }
 
     public List<Order> findAll() {
@@ -54,13 +50,14 @@ public class DefaultOrderUseCase implements OrderUseCase {
     }
 
     public Order insert(Order order) {
-        Client client = getClient(order);
-        List<Long> productsId = order.getItems().stream().map(OrderItem::getProductId).collect(Collectors.toList());
-        productsId.addAll(order.getItems().stream().flatMap(item -> Optional.ofNullable(item.getAdditionalIds()).orElse(Collections.emptyList()).stream()).toList());
-        List<Product> products = productGateway.findByIds(productsId);
-        validateProducts(order, products);
-        order.setTotal(calculateTotal(productsId, products));
         validateOrderToInsert(order);
+        Client client = getClient(order);
+        List<Long> productIds = getProductIds(order);
+        List<Product> products = productGateway.findByIds(productIds.stream().distinct().toList());
+        validateProducts(order, products);
+        var total = calculateTotal(productIds, products);
+        validateTotal(total);
+        order.setTotal(total);
         var persistedOrder = orderGateway.save(order);
         persistedOrder.setClient(client);
         return persistedOrder;
@@ -98,19 +95,19 @@ public class DefaultOrderUseCase implements OrderUseCase {
 
     private void validateUpdateStatus(OrderStatus newStatus, OrderStatus oldStatus) {
         if (OrderStatus.CANCELADO.equals(oldStatus)) {
-            throw new InvalidAttributeException("You can not change status of orders that are canceled.", "oldStatus");
+            throw new InvalidAttributeException("You can not change status of orders that are canceled.", OLD_STATUS_FIELD);
         }
         if (OrderStatus.AGUARDANDO_PAGAMENTO.equals(oldStatus) && !OrderStatus.CANCELADO.equals(newStatus)) {
-            throw new InvalidAttributeException("You can not change status of orders that are awaiting payment.", "oldStatus");
+            throw new InvalidAttributeException("You can not change status of orders that are awaiting payment.", OLD_STATUS_FIELD);
         }
-        if (oldStatus.ordinal() + 1 != newStatus.ordinal() && !(OrderStatus.AGUARDANDO_PAGAMENTO.equals(oldStatus) && OrderStatus.CANCELADO.equals(newStatus)) ) {
-            throw new InvalidAttributeException(String.format("Next status from '%s' should not be '%s'", oldStatus.name(), newStatus.name()), "newStatus");
+        if (oldStatus.ordinal() + 1 != newStatus.ordinal() && !(OrderStatus.AGUARDANDO_PAGAMENTO.equals(oldStatus) && OrderStatus.CANCELADO.equals(newStatus))) {
+            throw new InvalidAttributeException(String.format("Next status from '%s' should not be '%s'", oldStatus.name(), newStatus.name()), NEW_STATUS_FIELD);
         }
     }
 
     private void validateCheckout(OrderStatus oldStatus) {
         if (!canBePaid(oldStatus)) {
-            throw new InvalidAttributeException("You can only check out orders that are awaiting payment.", "oldStatus");
+            throw new InvalidAttributeException("You can only check out orders that are awaiting payment.", OLD_STATUS_FIELD);
         }
     }
 
@@ -122,28 +119,28 @@ public class DefaultOrderUseCase implements OrderUseCase {
         order.getItems().forEach(item -> {
             Optional<Product> itemProduct = products.stream().filter(product -> product.getId().equals(item.getProductId())).findFirst();
             if (itemProduct.isEmpty()) {
-                throw new InvalidAttributeException("Product '" + item.getProductId() + "' not found.", "items.productId");
+                throw new InvalidAttributeException(String.format("Product '%s' not found.", item.getProductId()), "items.productId");
             }
 
             if (!validateCategory(itemProduct.get().getCategory(), false, !Optional.ofNullable(item.getAdditionalIds()).orElse(Collections.emptyList()).isEmpty())) {
-                throw new InvalidAttributeException("Product '" + item.getProductId() + "' has invalid category for an item.'", "items.productId");
+                throw new InvalidAttributeException(String.format("Product '%s' has invalid category for an item.'", item.getProductId()), "items.productId");
             }
 
             Optional.ofNullable(item.getAdditionalIds()).orElse(Collections.emptyList()).forEach(additional -> {
                 Optional<Product> additionalProduct = products.stream().filter(product -> product.getId().equals(additional)).findFirst();
                 if (additionalProduct.isEmpty()) {
-                    throw new InvalidAttributeException("Product '" + additional + "' not found.", "items.additionalIds");
+                    throw new InvalidAttributeException(String.format("Product '%s' not found.", additional), "items.additionalIds");
                 }
 
                 if (!validateCategory(additionalProduct.get().getCategory(), true, false)) {
-                    throw new InvalidAttributeException("Product '" + additional + "' has invalid category for an additional.'", "items.additionalIds");
+                    throw new InvalidAttributeException(String.format("Product '%s' has invalid category for an additional.'", additional), "items.additionalIds");
                 }
             });
 
         });
     }
 
-    private Boolean validateCategory(Category category, Boolean isAdditional, Boolean hasAdditional) {
+    private boolean validateCategory(Category category, boolean isAdditional, boolean hasAdditional) {
         List<Category> itemCategories = List.of(Category.LANCHE, Category.ACOMPANHAMENTO, Category.BEBIDA, Category.SOBREMESA);
         List<Category> additionalCategories = List.of(Category.ADICIONAL);
         List<Category> itemWithAdditionalsCategories = List.of(Category.LANCHE);
@@ -158,7 +155,6 @@ public class DefaultOrderUseCase implements OrderUseCase {
 
 
     }
-
 
     private Double calculateTotal(List<Long> productIds, List<Product> products) {
         return productIds.stream().mapToDouble(id -> products.stream().filter(product -> product.getId().equals(id)).findFirst().map(Product::getValue).orElse(0.0)).sum();
@@ -183,9 +179,21 @@ public class DefaultOrderUseCase implements OrderUseCase {
     }
 
     private void validateOrder(Order order) {
-        if (order.getItems() == null || order.getItems().isEmpty())
-            throw new InvalidAttributeException("Order items should not be empty", "items");
+        if (order.getItems() == null) {
+            throw new NullAttributeException("items");
+        }
+        if (order.getItems().isEmpty()) {
+            throw new EmptyAttributeException("items");
+        }
+    }
 
-        if (order.getTotal() <= 0) throw new NegativeOrZeroValueException("total");
+    private void validateTotal(Double total) {
+        if (total <= 0) throw new NegativeOrZeroValueException("total");
+    }
+
+    private List<Long> getProductIds(Order order) {
+        List<Long> productIds = order.getItems().stream().map(OrderItem::getProductId).collect(Collectors.toList());
+        productIds.addAll(order.getItems().stream().flatMap(item -> Optional.ofNullable(item.getAdditionalIds()).orElse(Collections.emptyList()).stream()).toList());
+        return productIds;
     }
 }

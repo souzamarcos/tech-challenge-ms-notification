@@ -78,6 +78,12 @@ public class Order extends BaseEntity {
         this.client = client;
     }
 
+    public Order(Long clientId, List<OrderItem> items, OrderStatus status) {
+        this.clientId = clientId;
+        this.items = items;
+        this.status = status;
+    }
+
     public Order(
         Long id,
         Client client,
@@ -117,15 +123,15 @@ public class Order extends BaseEntity {
     }
 
     public Order(
-            Long id,
-            Client client,
-            List<OrderItem> items,
-            List<Payment> payments,
-            Double total,
-            OrderStatus status,
-            LocalDateTime createdAt,
-            LocalDateTime modifiedAt,
-            LocalDateTime deletedAt
+        Long id,
+        Client client,
+        List<OrderItem> items,
+        List<Payment> payments,
+        Double total,
+        OrderStatus status,
+        LocalDateTime createdAt,
+        LocalDateTime modifiedAt,
+        LocalDateTime deletedAt
     ) {
         this.id = id;
         this.client = client;
@@ -136,11 +142,5 @@ public class Order extends BaseEntity {
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
         this.deletedAt = deletedAt;
-    }
-
-    public Order(Long clientId, List<OrderItem> items, OrderStatus status) {
-        this.clientId = clientId;
-        this.items = items;
-        this.status = status;
     }
 }

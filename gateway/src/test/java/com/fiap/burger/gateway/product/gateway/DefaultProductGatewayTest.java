@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class DefaultProductGatewayTest {
+class DefaultProductGatewayTest {
 
     @Mock
     ProductDAO productDAO;
@@ -29,13 +29,13 @@ public class DefaultProductGatewayTest {
     DefaultProductGateway gateway;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
 
     @Test
-    public void shouldFindById() {
+    void shouldFindById() {
         var id = 1L;
         var productJPA = new ProductJPABuilder().withId(1L).build();
         var expected = productJPA.toEntity();
@@ -50,7 +50,7 @@ public class DefaultProductGatewayTest {
     }
 
     @Test
-    public void shouldFindAllProducts() {
+    void shouldFindAllProducts() {
         var productsJPA = Arrays.asList(new ProductJPABuilder().withId(1L).build(), new ProductJPABuilder().withId(2L).build());
         var expected = productsJPA.stream().map(ProductJPA::toEntity).toList();
 
@@ -64,7 +64,7 @@ public class DefaultProductGatewayTest {
     }
 
     @Test
-    public void shouldFindAllProductsByCategory() {
+    void shouldFindAllProductsByCategory() {
         var category = Category.LANCHE;
         var productsJPA = Collections.singletonList(new ProductJPABuilder().withId(2L).build());
         var expected = productsJPA.stream().map(ProductJPA::toEntity).toList();
@@ -79,7 +79,7 @@ public class DefaultProductGatewayTest {
     }
 
     @Test
-    public void shouldSaveProduct() {
+    void shouldSaveProduct() {
         var productJPA = new ProductJPABuilder().withId(1L).build();
         var product = new ProductBuilder().withId(null).build();
         var expected = new ProductBuilder().withId(1L).build();
@@ -91,5 +91,14 @@ public class DefaultProductGatewayTest {
         assertEquals(expected.getId(), actual.getId());
 
         verify(productDAO, times(1)).save(any());
+    }
+
+    @Test
+    void shouldDeleteProduct() {
+        var id = 1L;
+
+        gateway.deleteBy(id);
+
+        verify(productDAO, times(1)).deleteById(1L);
     }
 }

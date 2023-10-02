@@ -46,10 +46,6 @@ public class ProductJPA extends BaseDomainJPA {
         this.deletedAt = deletedAt;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public Category getCategory() {
         return category;
     }

@@ -6,8 +6,8 @@ import jakarta.persistence.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "order_item")
@@ -37,6 +37,19 @@ public class OrderItemJPA {
     @OneToMany(mappedBy = "orderItem", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     List<OrderItemAdditionalJPA> orderItemAdditional;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderItemJPA that = (OrderItemJPA) o;
+        return Objects.equals(id, that.id) && Objects.equals(order, that.order) && Objects.equals(orderId, that.orderId) && Objects.equals(product, that.product) && Objects.equals(productId, that.productId) && Objects.equals(comment, that.comment) && Objects.equals(orderItemAdditional, that.orderItemAdditional);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, order, orderId, product, productId, comment, orderItemAdditional);
+    }
+
     public OrderItemJPA() {
 
     }
@@ -65,7 +78,7 @@ public class OrderItemJPA {
         return new OrderItem(
             id,
             orderId,
-            Optional.ofNullable(orderItemAdditional).map(items -> items.stream().map(OrderItemAdditionalJPA::toEntity).collect(Collectors.toList())).orElse(null),
+            Optional.ofNullable(orderItemAdditional).map(items -> items.stream().map(OrderItemAdditionalJPA::toEntity).toList()).orElse(null),
             comment,
             Optional.ofNullable(product).map(ProductJPA::toEntity).orElse(null)
         );
@@ -79,7 +92,7 @@ public class OrderItemJPA {
         );
 
         if (!Optional.ofNullable(orderItem.getAdditionalIds()).orElse(Collections.emptyList()).isEmpty()) {
-            List<OrderItemAdditionalJPA> itemAdditionals = orderItem.getAdditionalIds().stream().map(itemAdditional -> OrderItemAdditionalJPA.toJPA(itemAdditional, newOrderItem)).collect(Collectors.toList());
+            List<OrderItemAdditionalJPA> itemAdditionals = orderItem.getAdditionalIds().stream().map(itemAdditional -> OrderItemAdditionalJPA.toJPA(itemAdditional, newOrderItem)).toList();
             newOrderItem.setOrderItemAdditional(itemAdditionals);
         }
         return newOrderItem;

@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PaymentDAO extends JpaRepository<PaymentJPA, Long> {
@@ -18,6 +19,6 @@ public interface PaymentDAO extends JpaRepository<PaymentJPA, Long> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE PaymentJPA p SET p.status = :newStatus WHERE p.id = :paymentId")
-    void updatePaymentStatus(@Param("paymentId") Long paymentId, @Param("newStatus") PaymentStatus newStatus);
+    @Query("UPDATE PaymentJPA p SET p.status = :newStatus and p.modifiedAt = :modifiedAt WHERE p.id = :paymentId")
+    void updatePaymentStatus(@Param("paymentId") Long paymentId, @Param("newStatus") PaymentStatus newStatus, @Param("modifiedAt") LocalDateTime modifiedAt);
 }
