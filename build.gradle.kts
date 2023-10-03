@@ -86,3 +86,10 @@ tasks.register<JacocoReport>("codeCoverageReport") {
 tasks.test {
 	dependsOn(tasks.named("codeCoverageReport"))
 }
+
+sonar {
+	properties {
+		property("sonar.sources", "src/main")
+		property("sonar.tests", "src/test")
+	}
+}
