@@ -12,7 +12,6 @@ subprojects {
 
 	apply {
 		plugin("java")
-		plugin("org.sonarqube")
 		plugin("jacoco")
 	}
 
@@ -29,12 +28,6 @@ subprojects {
 
 		//Test
 		testImplementation(rootProject.libs.spring.boot.starter.test)
-	}
-
-	sonarqube {
-		properties {
-			property("sonar.sources", "src")
-		}
 	}
 
 	tasks.withType<Test> {
@@ -89,7 +82,6 @@ tasks.test {
 
 sonar {
 	properties {
-		property("sonar.sources", "src/main")
-		property("sonar.tests", "src/test")
+		property("sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/codeCoverageReport/codeCoverageReport.xml")
 	}
 }
