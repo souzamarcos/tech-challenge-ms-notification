@@ -79,10 +79,3 @@ tasks.register<JacocoReport>("codeCoverageReport") {
 tasks.test {
 	dependsOn(tasks.named("codeCoverageReport"))
 }
-
-sonar {
-	properties {
-		property("sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/codeCoverageReport/codeCoverageReport.xml")
-		property("sonar.organization", "souzamarcos")
-	}
-}
