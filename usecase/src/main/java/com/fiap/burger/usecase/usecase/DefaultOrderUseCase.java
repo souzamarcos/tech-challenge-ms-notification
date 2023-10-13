@@ -106,11 +106,12 @@ public class DefaultOrderUseCase implements OrderUseCase {
     }
 
     private void validateCheckout(OrderStatus oldStatus) {
-        if (!canBePaid(oldStatus)) {
+        if (!orderGateway.canBePaid(oldStatus)) {
             throw new InvalidAttributeException("You can only check out orders that are awaiting payment.", OLD_STATUS_FIELD);
         }
     }
 
+    // TODO: Remove this method
     public boolean canBePaid(OrderStatus status) {
         return OrderStatus.AGUARDANDO_PAGAMENTO.equals(status);
     }

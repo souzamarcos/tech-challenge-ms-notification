@@ -4,6 +4,7 @@ import com.fiap.burger.entity.order.Order;
 import com.fiap.burger.entity.order.OrderStatus;
 import com.fiap.burger.entity.payment.Payment;
 import com.fiap.burger.entity.payment.PaymentStatus;
+import com.fiap.burger.usecase.adapter.gateway.OrderGateway;
 import com.fiap.burger.usecase.adapter.gateway.PaymentGateway;
 import com.fiap.burger.usecase.adapter.usecase.OrderUseCase;
 import com.fiap.burger.usecase.adapter.usecase.PaymentUseCase;
@@ -19,11 +20,11 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
 
     private final PaymentGateway paymentGateway;
 
-    private final OrderUseCase orderUseCase;
+    private final OrderGateway orderGateway;
 
-    public DefaultPaymentUseCase(PaymentGateway paymentGateway, OrderUseCase orderUseCase) {
+    public DefaultPaymentUseCase(PaymentGateway paymentGateway, OrderGateway orderGateway) {
         this.paymentGateway = paymentGateway;
-        this.orderUseCase = orderUseCase;
+        this.orderGateway = orderGateway;
     }
 
     public Payment findById(Long id) {
@@ -36,9 +37,9 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
 
     public Payment insert(Long orderId) {
 
-        Order order = orderUseCase.findById(orderId);
+        Order order = orderGateway.findById(orderId);
 
-        if (!orderUseCase.canBePaid(order.getStatus())) {
+        if (!orderGateway.canBePaid(order.getStatus())) {
             throw new OrderCannotBePaidException(orderId);
         }
 
@@ -57,10 +58,13 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
 
         paymentGateway.updatePaymentStatus(id, status, LocalDateTime.now());
 
+        /*
         switch (status) {
             case APROVADO -> orderUseCase.checkout(persistedPayment.getOrder().getId());
             case RECUSADO -> orderUseCase.updateStatus(persistedPayment.getOrder().getId(), OrderStatus.CANCELADO);
         }
+
+         */
     }
 
     private void validateUpdateStatus(PaymentStatus newStatus, PaymentStatus oldStatus) {

@@ -55,4 +55,9 @@ public class DefaultOrderGateway implements OrderGateway {
     public void updateStatus(Long id, OrderStatus newStatus, LocalDateTime modifiedAt) {
         orderDAO.updateStatus(id, newStatus, modifiedAt);
     }
+
+    @Override
+    public boolean canBePaid(OrderStatus status) {
+        return Order.canBePaid(status);
+    }
 }

@@ -1,5 +1,6 @@
 package com.fiap.burger.application.config;
 
+import com.fiap.burger.gateway.order.gateway.DefaultOrderGateway;
 import com.fiap.burger.usecase.adapter.gateway.ClientGateway;
 import com.fiap.burger.usecase.adapter.gateway.OrderGateway;
 import com.fiap.burger.usecase.adapter.gateway.PaymentGateway;
@@ -34,7 +35,7 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public PaymentUseCase paymentUseCase(PaymentGateway paymentGateway, OrderGateway orderGateway, ProductGateway productGateway, ClientGateway clientGateway) {
-        return new DefaultPaymentUseCase(paymentGateway, new DefaultOrderUseCase(orderGateway, productGateway, clientGateway));
+    public PaymentUseCase paymentUseCase(PaymentGateway paymentGateway) {
+        return new DefaultPaymentUseCase(paymentGateway, new DefaultOrderGateway());
     }
 }

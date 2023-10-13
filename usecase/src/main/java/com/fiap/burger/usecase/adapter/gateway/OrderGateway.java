@@ -18,4 +18,6 @@ public interface OrderGateway {
     Order save(Order order);
 
     void updateStatus(Long id, OrderStatus newStatus, LocalDateTime modifiedAt);
+
+    boolean canBePaid(OrderStatus status);
 }
