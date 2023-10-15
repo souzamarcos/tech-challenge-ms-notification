@@ -54,5 +54,5 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/username/package:latest
-            ghcr.io/username/package:${{ github.sha }}
+            ghcr.io/souzamarcos/tech-challenge-fast-food:latest
+            ghcr.io/souzamarcos/tech-challenge-fast-food:${{ github.sha }}
