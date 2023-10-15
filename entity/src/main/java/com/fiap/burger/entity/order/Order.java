@@ -144,7 +144,7 @@ public class Order extends BaseEntity {
         this.deletedAt = deletedAt;
     }
 
-    public static boolean canBePaid(OrderStatus status) {
-        return OrderStatus.AGUARDANDO_PAGAMENTO.equals(status);
+    public boolean canBePaid() {
+        return OrderStatus.AGUARDANDO_PAGAMENTO.equals(this.status);
     }
 }

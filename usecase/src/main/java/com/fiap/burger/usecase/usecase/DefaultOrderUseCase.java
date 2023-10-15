@@ -70,7 +70,7 @@ public class DefaultOrderUseCase implements OrderUseCase {
             throw new OrderNotFoundException(orderId);
         }
 
-        validateCheckout(order.getStatus());
+        validateCheckout(order);
         LocalDateTime now = LocalDateTime.now();
         orderGateway.updateStatus(order.getId(), OrderStatus.RECEBIDO, now);
         order.setStatus(OrderStatus.RECEBIDO);
@@ -105,8 +105,8 @@ public class DefaultOrderUseCase implements OrderUseCase {
         }
     }
 
-    private void validateCheckout(OrderStatus oldStatus) {
-        if (!orderGateway.canBePaid(oldStatus)) {
+    private void validateCheckout(Order order) {
+        if (!order.canBePaid()) {
             throw new InvalidAttributeException("You can only check out orders that are awaiting payment.", OLD_STATUS_FIELD);
         }
     }

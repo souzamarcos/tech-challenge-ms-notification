@@ -39,7 +39,7 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
 
         Order order = orderGateway.findById(orderId);
 
-        if (!orderGateway.canBePaid(order.getStatus())) {
+        if (!order.canBePaid()) {
             throw new OrderCannotBePaidException(orderId);
         }
 
@@ -58,6 +58,7 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
 
         paymentGateway.updatePaymentStatus(id, status, LocalDateTime.now());
 
+        // TODO: Implementar esses métodos no OrderGateway em vez do orderUseCase
         /*
         switch (status) {
             case APROVADO -> orderUseCase.checkout(persistedPayment.getOrder().getId());
