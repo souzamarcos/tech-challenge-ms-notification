@@ -1,12 +1,10 @@
 package com.fiap.burger.usecase.usecase;
 
 import com.fiap.burger.entity.order.Order;
-import com.fiap.burger.entity.order.OrderStatus;
 import com.fiap.burger.entity.payment.Payment;
 import com.fiap.burger.entity.payment.PaymentStatus;
 import com.fiap.burger.usecase.adapter.gateway.OrderGateway;
 import com.fiap.burger.usecase.adapter.gateway.PaymentGateway;
-import com.fiap.burger.usecase.adapter.usecase.OrderUseCase;
 import com.fiap.burger.usecase.adapter.usecase.PaymentUseCase;
 import com.fiap.burger.usecase.misc.exception.InvalidAttributeException;
 import com.fiap.burger.usecase.misc.exception.OrderCannotBePaidException;
@@ -47,7 +45,7 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
     }
 
     @Override
-    public void updateStatus(Long id, PaymentStatus status) {
+    public Payment updateStatus(Long id, PaymentStatus status) {
         Payment persistedPayment = findById(id);
 
         if (persistedPayment == null) {
@@ -57,15 +55,8 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
         validateUpdateStatus(status, persistedPayment.getStatus());
 
         paymentGateway.updatePaymentStatus(id, status, LocalDateTime.now());
-
-        // TODO: Implementar esses métodos no OrderGateway em vez do orderUseCase
-        /*
-        switch (status) {
-            case APROVADO -> orderUseCase.checkout(persistedPayment.getOrder().getId());
-            case RECUSADO -> orderUseCase.updateStatus(persistedPayment.getOrder().getId(), OrderStatus.CANCELADO);
-        }
-
-         */
+        persistedPayment.setStatus(status);
+        return persistedPayment;
     }
 
     private void validateUpdateStatus(PaymentStatus newStatus, PaymentStatus oldStatus) {
