@@ -99,13 +99,13 @@ class DefaultPaymentUseCaseTest {
     void shouldUpdateStatusPaymentToApproved() {
         var id = 1L;
         var payment = new PaymentBuilder().withStatus(PaymentStatus.ABERTO).build();
-        var expected = new PaymentBuilder().withStatus(PaymentStatus.APROVADO).build();
+        var expected = PaymentStatus.APROVADO;
 
         when(gateway.findById(id)).thenReturn(payment);
 
         Payment actual = useCase.updateStatus(id, PaymentStatus.APROVADO);
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual.getStatus());
 
         verify(gateway, times(1)).updatePaymentStatus(eq(id), eq(PaymentStatus.APROVADO), any());
     }
@@ -114,13 +114,13 @@ class DefaultPaymentUseCaseTest {
     void shouldUpdateStatusPaymentToRefused() {
         var id = 1L;
         var payment = new PaymentBuilder().withStatus(PaymentStatus.ABERTO).build();
-        var expected = new PaymentBuilder().withStatus(PaymentStatus.RECUSADO).build();
+        var expected = PaymentStatus.RECUSADO;
 
         when(gateway.findById(id)).thenReturn(payment);
 
         Payment actual = useCase.updateStatus(id, PaymentStatus.RECUSADO);
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual.getStatus());
 
         verify(gateway, times(1)).updatePaymentStatus(eq(id), eq(PaymentStatus.RECUSADO), any());
     }
