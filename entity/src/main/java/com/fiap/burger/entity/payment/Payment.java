@@ -22,12 +22,20 @@ public class Payment extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return getOrder().equals(payment.getOrder()) && getStatus() == payment.getStatus() && Objects.equals(getQrCode(), payment.getQrCode()) && Objects.equals(getExternalId(), payment.getExternalId());
+        return Objects.equals(hashCode(), payment.hashCode());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getOrder(), getStatus(), getQrCode(), getExternalId());
+        return Objects.hash(
+            getId(),
+            getOrder(),
+            getStatus(),
+            getQrCode(),
+            getExternalId(),
+            getCreatedAt(),
+            getModifiedAt(),
+            getDeletedAt());
     }
 
     public Order getOrder() {
