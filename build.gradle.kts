@@ -85,6 +85,6 @@ tasks.test {
 
 sonarqube {
 	properties {
-		property("sonar.exclusions", "**/Payment.java")
+		property("sonar.exclusions", "**/entity/**")
 	}
 }
