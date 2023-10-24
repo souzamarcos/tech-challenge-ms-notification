@@ -19,6 +19,6 @@ public interface PaymentDAO extends JpaRepository<PaymentJPA, Long> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE PaymentJPA p SET p.status = :newStatus and p.modifiedAt = :modifiedAt WHERE p.id = :paymentId")
+    @Query("UPDATE PaymentJPA p SET p.status = :newStatus, p.modifiedAt = :modifiedAt WHERE p.id = :paymentId")
     void updatePaymentStatus(@Param("paymentId") Long paymentId, @Param("newStatus") PaymentStatus newStatus, @Param("modifiedAt") LocalDateTime modifiedAt);
 }
