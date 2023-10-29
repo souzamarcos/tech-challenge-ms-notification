@@ -82,3 +82,9 @@ tasks.register<JacocoReport>("codeCoverageReport") {
 tasks.test {
 	dependsOn(tasks.named("codeCoverageReport"))
 }
+
+sonarqube {
+	properties {
+		property("sonar.exclusions", "**/entity/**")
+	}
+}
