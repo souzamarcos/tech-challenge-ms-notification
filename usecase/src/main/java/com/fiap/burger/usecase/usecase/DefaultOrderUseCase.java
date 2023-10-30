@@ -1,5 +1,6 @@
 package com.fiap.burger.usecase.usecase;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fiap.burger.entity.client.Client;
 import com.fiap.burger.entity.order.Order;
 import com.fiap.burger.entity.order.OrderItem;
@@ -11,6 +12,7 @@ import com.fiap.burger.usecase.adapter.gateway.OrderGateway;
 import com.fiap.burger.usecase.adapter.gateway.ProductGateway;
 import com.fiap.burger.usecase.adapter.usecase.OrderUseCase;
 import com.fiap.burger.usecase.misc.exception.*;
+import com.fiap.burger.usecase.misc.token.TokenJwtUtils;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -111,11 +113,6 @@ public class DefaultOrderUseCase implements OrderUseCase {
         }
     }
 
-    // TODO: Remove this method
-    public boolean canBePaid(OrderStatus status) {
-        return OrderStatus.AGUARDANDO_PAGAMENTO.equals(status);
-    }
-
     private void validateProducts(Order order, List<Product> products) {
         order.getItems().forEach(item -> {
             Optional<Product> itemProduct = products.stream().filter(product -> product.getId().equals(item.getProductId())).findFirst();
@@ -162,14 +159,20 @@ public class DefaultOrderUseCase implements OrderUseCase {
     }
 
     private Client getClient(Order order) {
-        if (order.getClientId() != null) {
-            Client client = clientGateway.findById(order.getClientId());
+        if (!Optional.ofNullable(order.getClientToken()).isEmpty()) {
+            Long clientId = extractIdFromToken(order.getClientToken());
+            Client client = clientGateway.findById(clientId);
             if (client == null) {
-                throw new InvalidAttributeException("Client '" + order.getClientId() + "' not found.", "clientId");
+                throw new InvalidAttributeException("Client '" + order.getClientToken() + "' not found.", "clientId");
             }
             return client;
         }
         return null;
+    }
+
+    protected Long extractIdFromToken(String token) {
+        DecodedJWT decodedJwt = TokenJwtUtils.readToken(token);
+        return Optional.ofNullable(decodedJwt.getClaim("clientId").asLong()).orElseThrow(() -> new TokenJwtException("Malformed token."));
     }
 
     private void validateOrderToInsert(Order order) {

@@ -1,5 +1,6 @@
 package com.fiap.burger.gateway.order.model;
 
+import com.fiap.burger.entity.client.Client;
 import com.fiap.burger.entity.order.Order;
 import com.fiap.burger.entity.order.OrderStatus;
 import com.fiap.burger.gateway.client.model.ClientJPA;
@@ -116,7 +117,7 @@ public class OrderJPA extends BaseDomainJPA {
     public static OrderJPA toJPA(Order order) {
         OrderJPA newOrder = new OrderJPA(
             order.getId(),
-            order.getClientId(),
+            Optional.ofNullable(order.getClient()).map(Client::getId).orElse(null),
             null,
             null,
             order.getTotal(),

@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class OrderBuilder {
+    private static final String CLIENT_TOKEN_ID_1L = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBdWRpZW5jZSIsImNsaWVudElkIjoxLCJpc3MiOiJQb3MtVGVjaCBGSUFQIC0gQnVyZ2VyIiwiY3BmIjoiMTY1NjU4MjQ3MzgiLCJpYXQiOjE2OTg2MDI2NzEsImp0aSI6ImE5MTYzZTBjLWM1NzgtNDYxNC04ZWZjLTYwMzNiNTg0Y2FlOCJ9.kX5zh2vyqsYuyqz1Yf-lJtYnDt9jRVyMuls3qC-hBD8";
 
     private Long id = 1L;
 
@@ -71,7 +72,7 @@ public class OrderBuilder {
 
     public Order toInsert() {
         return new Order(
-            Optional.ofNullable(client).map(BaseEntity::getId).orElse(null),
+            Optional.ofNullable(client).map((Client client) -> CLIENT_TOKEN_ID_1L).orElse(null),
             Optional.ofNullable(items).map(this::toInsertOrderItems).orElse(null),
             status);
     }

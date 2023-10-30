@@ -103,7 +103,7 @@ class DefaultPaymentControllerTest {
     @Test
     void shouldUpdateStatusPaymentToApproved() {
         var id = 1L;
-        var order = new Order(1L, Collections.emptyList(), OrderStatus.AGUARDANDO_PAGAMENTO);
+        var order = new Order(null, Collections.emptyList(), OrderStatus.AGUARDANDO_PAGAMENTO);
         var persistedPayment = new Payment(1L, order, PaymentStatus.APROVADO);
 
         when(useCase.updateStatus(id, PaymentStatus.APROVADO)).thenReturn(persistedPayment);
@@ -118,7 +118,7 @@ class DefaultPaymentControllerTest {
     @Test
     void shouldUpdateStatusPaymentToRefused() {
         var id = 1L;
-        var order = new Order(1L, Collections.emptyList(), OrderStatus.AGUARDANDO_PAGAMENTO);
+        var order = new Order(null, Collections.emptyList(), OrderStatus.AGUARDANDO_PAGAMENTO);
         var persistedPayment = new Payment(1L, order, PaymentStatus.RECUSADO);
 
         when(useCase.updateStatus(id, PaymentStatus.RECUSADO)).thenReturn(persistedPayment);

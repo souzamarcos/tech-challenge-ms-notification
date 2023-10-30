@@ -33,7 +33,7 @@ class DefaultOrderControllerTest {
     @Test
     void shouldFindById() {
         var id = 1L;
-        var expected = new Order(1L, Collections.emptyList(), OrderStatus.FINALIZADO);
+        var expected = new Order(null, Collections.emptyList(), OrderStatus.FINALIZADO);
 
         when(useCase.findById(id)).thenReturn(expected);
 
@@ -57,7 +57,7 @@ class DefaultOrderControllerTest {
 
     @Test
     void shouldFindAllBy() {
-        var expected = List.of(new Order(1L, Collections.emptyList(), OrderStatus.FINALIZADO));
+        var expected = List.of(new Order(null, Collections.emptyList(), OrderStatus.FINALIZADO));
 
         when(useCase.findAllBy(OrderStatus.FINALIZADO)).thenReturn(expected);
 
@@ -70,7 +70,7 @@ class DefaultOrderControllerTest {
 
     @Test
     void shouldFindAllInProgress() {
-        var expected = List.of(new Order(1L, Collections.emptyList(), OrderStatus.RECEBIDO));
+        var expected = List.of(new Order(null, Collections.emptyList(), OrderStatus.RECEBIDO));
 
         when(useCase.findAllInProgress()).thenReturn(expected);
 
@@ -83,7 +83,7 @@ class DefaultOrderControllerTest {
 
     @Test
     void shouldInsertOrder() {
-        var order = new Order(1L, Collections.emptyList(), OrderStatus.RECEBIDO);
+        var order = new Order(null, Collections.emptyList(), OrderStatus.RECEBIDO);
 
         when(useCase.insert(order)).thenReturn(order);
 
@@ -96,7 +96,7 @@ class DefaultOrderControllerTest {
 
     @Test
     void shouldUpdateStatusOrder() {
-        var order = new Order(1L, Collections.emptyList(), OrderStatus.EM_PREPARACAO);
+        var order = new Order(null, Collections.emptyList(), OrderStatus.EM_PREPARACAO);
 
         when(useCase.updateStatus(1L, OrderStatus.EM_PREPARACAO)).thenReturn(order);
 

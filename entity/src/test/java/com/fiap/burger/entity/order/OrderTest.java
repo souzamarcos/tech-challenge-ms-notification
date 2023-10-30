@@ -14,17 +14,17 @@ class OrderTest {
 
     @Test
     void shouldCreateInstanceToCheckout() {
-        var clientId = 1L;
+        var clientToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBdWRpZW5jZSIsImNsaWVudElkIjoxLCJpc3MiOiJQb3MtVGVjaCBGSUFQIC0gQnVyZ2VyIiwiY3BmIjoiMTY1NjU4MjQ3MzgiLCJpYXQiOjE2OTg2MDI2NzEsImp0aSI6ImE5MTYzZTBjLWM1NzgtNDYxNC04ZWZjLTYwMzNiNTg0Y2FlOCJ9.kX5zh2vyqsYuyqz1Yf-lJtYnDt9jRVyMuls3qC-hBD8";
         var items = List.of(new OrderItem(1L, 1L, ""));
         var status = OrderStatus.AGUARDANDO_PAGAMENTO;
 
         Order actual = new Order(
-            clientId,
+            clientToken,
             items,
             status
         );
 
-        assertEquals(clientId, actual.getClientId());
+        assertEquals(clientToken, actual.getClientToken());
         assertEquals(items, actual.getItems());
         assertEquals(status, actual.getStatus());
     }

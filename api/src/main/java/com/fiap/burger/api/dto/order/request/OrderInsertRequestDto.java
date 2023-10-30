@@ -9,13 +9,13 @@ import java.util.List;
 
 public record OrderInsertRequestDto(
     @Null
-    Long clientId,
+    String clientToken,
     @NotNull
     List<OrderItemInsertRequestDto> items
 ) {
     public Order toEntity() {
         return new Order(
-            clientId,
+            clientToken,
             items().stream().map(OrderItemInsertRequestDto::toEntity).toList(),
             OrderStatus.AGUARDANDO_PAGAMENTO
         );
