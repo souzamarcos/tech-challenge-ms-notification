@@ -13,8 +13,9 @@ import com.fiap.burger.usecase.misc.exception.InvalidAttributeException;
 import com.fiap.burger.usecase.misc.exception.NegativeOrZeroValueException;
 import com.fiap.burger.usecase.misc.exception.NullAttributeException;
 import com.fiap.burger.usecase.misc.exception.OrderNotFoundException;
+import com.fiap.burger.usecase.misc.exception.TokenJwtException;
+import com.fiap.burger.usecase.misc.token.TokenJwtSecret;
 import com.fiap.burger.usecase.misc.secret.SecretUtils;
-import com.fiap.burger.usecase.misc.secret.TokenJwtSecret;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -133,7 +134,7 @@ class DefaultOrderUseCaseTest {
         when(orderGateway.save(orderToInsert)).thenReturn(order);
 
         try (MockedStatic<SecretUtils> utilities = Mockito.mockStatic(SecretUtils.class)) {
-            utilities.when(SecretUtils::getTotalJwtSecret).thenReturn(new TokenJwtSecret(TOKEN_SECRET, TOKEN_ISSUER));
+            utilities.when(SecretUtils::getTokenJwtSecret).thenReturn(new TokenJwtSecret(TOKEN_SECRET, TOKEN_ISSUER));
             var actual = useCase.insert(orderToInsert);
             assertEquals(order, actual);
         }
@@ -209,7 +210,7 @@ class DefaultOrderUseCaseTest {
         when(clientGateway.findById(client.getId())).thenReturn(null);
 
         try (MockedStatic<SecretUtils> utilities = Mockito.mockStatic(SecretUtils.class)) {
-            utilities.when(SecretUtils::getTotalJwtSecret).thenReturn(new TokenJwtSecret(TOKEN_SECRET, TOKEN_ISSUER));
+            utilities.when(SecretUtils::getTokenJwtSecret).thenReturn(new TokenJwtSecret(TOKEN_SECRET, TOKEN_ISSUER));
             assertThrows(InvalidAttributeException.class, () -> useCase.insert(orderToInsert));
         }
 
@@ -229,7 +230,7 @@ class DefaultOrderUseCaseTest {
         when(productGateway.findByIds(productIds)).thenReturn(products);
 
         try (MockedStatic<SecretUtils> utilities = Mockito.mockStatic(SecretUtils.class)) {
-            utilities.when(SecretUtils::getTotalJwtSecret).thenReturn(new TokenJwtSecret(TOKEN_SECRET, TOKEN_ISSUER));
+            utilities.when(SecretUtils::getTokenJwtSecret).thenReturn(new TokenJwtSecret(TOKEN_SECRET, TOKEN_ISSUER));
             assertThrows(InvalidAttributeException.class, () -> useCase.insert(orderToInsert));
         }
 
@@ -249,7 +250,7 @@ class DefaultOrderUseCaseTest {
         when(productGateway.findByIds(productIds)).thenReturn(products);
 
         try (MockedStatic<SecretUtils> utilities = Mockito.mockStatic(SecretUtils.class)) {
-            utilities.when(SecretUtils::getTotalJwtSecret).thenReturn(new TokenJwtSecret(TOKEN_SECRET, TOKEN_ISSUER));
+            utilities.when(SecretUtils::getTokenJwtSecret).thenReturn(new TokenJwtSecret(TOKEN_SECRET, TOKEN_ISSUER));
             assertThrows(InvalidAttributeException.class, () -> useCase.insert(orderToInsert));
         }
 
@@ -269,7 +270,7 @@ class DefaultOrderUseCaseTest {
         when(productGateway.findByIds(productIds)).thenReturn(products);
 
         try (MockedStatic<SecretUtils> utilities = Mockito.mockStatic(SecretUtils.class)) {
-            utilities.when(SecretUtils::getTotalJwtSecret).thenReturn(new TokenJwtSecret(TOKEN_SECRET, TOKEN_ISSUER));
+            utilities.when(SecretUtils::getTokenJwtSecret).thenReturn(new TokenJwtSecret(TOKEN_SECRET, TOKEN_ISSUER));
             assertThrows(InvalidAttributeException.class, () -> useCase.insert(orderToInsert));
         }
 
@@ -289,7 +290,7 @@ class DefaultOrderUseCaseTest {
         when(productGateway.findByIds(productIds)).thenReturn(products);
 
         try (MockedStatic<SecretUtils> utilities = Mockito.mockStatic(SecretUtils.class)) {
-            utilities.when(SecretUtils::getTotalJwtSecret).thenReturn(new TokenJwtSecret(TOKEN_SECRET, TOKEN_ISSUER));
+            utilities.when(SecretUtils::getTokenJwtSecret).thenReturn(new TokenJwtSecret(TOKEN_SECRET, TOKEN_ISSUER));
             assertThrows(InvalidAttributeException.class, () -> useCase.insert(orderToInsert));
         }
 
@@ -309,7 +310,7 @@ class DefaultOrderUseCaseTest {
         when(productGateway.findByIds(productIds)).thenReturn(products);
 
         try (MockedStatic<SecretUtils> utilities = Mockito.mockStatic(SecretUtils.class)) {
-            utilities.when(SecretUtils::getTotalJwtSecret).thenReturn(new TokenJwtSecret(TOKEN_SECRET, TOKEN_ISSUER));
+            utilities.when(SecretUtils::getTokenJwtSecret).thenReturn(new TokenJwtSecret(TOKEN_SECRET, TOKEN_ISSUER));
             assertThrows(NegativeOrZeroValueException.class, () -> useCase.insert(orderToInsert));
         }
 
@@ -434,5 +435,28 @@ class DefaultOrderUseCaseTest {
         assertThrows(InvalidAttributeException.class, () -> useCase.updateStatus(id, OrderStatus.RECEBIDO));
 
         verify(orderGateway, times(0)).updateStatus(any(), any(), any());
+    }
+
+    @Test
+    void shouldThrownTokenJwtExceptionWhenTokenNotReturningClientId() {
+        var tokenWithoutClientId = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBdWRpZW5jZSIsImlzcyI6IlRFU1QtSVNTVUVSIiwiY3BmIjoiMTY1NjU4MjQ3MzgiLCJpYXQiOjE2OTg2Mjg2NTksImp0aSI6Ijg5NjY2YTA2LTdkODgtNDBmNC1hYjBhLTI1ZTgyMGQ5N2FjNCJ9.LTAFfVwh0tNJtNLdBWHwvkUZIgbtO6x5UvPdwXEhz60";
+        var orderToInsert = new OrderBuilder().withClientToken(tokenWithoutClientId).toInsert();
+        var order = new OrderBuilder().withTotal(40.0).build();
+        var client = new ClientBuilder().build();
+        var products = List.of(new ProductBuilder().withId(1L).withValue(30.0).build(), new ProductBuilder().withId(2L).withValue(10.0).withCategory(Category.ADICIONAL).build());
+        var productIds = List.of(1L, 2L);
+
+        when(clientGateway.findById(client.getId())).thenReturn(client);
+        when(productGateway.findByIds(productIds)).thenReturn(products);
+        when(orderGateway.save(orderToInsert)).thenReturn(order);
+
+        try (MockedStatic<SecretUtils> utilities = Mockito.mockStatic(SecretUtils.class)) {
+            utilities.when(SecretUtils::getTokenJwtSecret).thenReturn(new TokenJwtSecret(TOKEN_SECRET, TOKEN_ISSUER));
+            assertThrows(TokenJwtException.class, () -> useCase.insert(orderToInsert));
+        }
+
+        verify(clientGateway, never()).findById(client.getId());
+        verify(productGateway, never()).findByIds(productIds);
+        verify(orderGateway, never()).save(orderToInsert);
     }
 }

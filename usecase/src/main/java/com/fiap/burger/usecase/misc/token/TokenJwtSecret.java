@@ -1,9 +1,8 @@
-package com.fiap.burger.usecase.misc.secret;
+package com.fiap.burger.usecase.misc.token;
 
 import com.fiap.burger.usecase.misc.exception.SecretAwsException;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Objects;
 import java.util.Optional;
 
 public class TokenJwtSecret {
@@ -23,19 +22,6 @@ public class TokenJwtSecret {
     public TokenJwtSecret(String secret, String issuer) {
         this.secret = secret;
         this.issuer = issuer;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TokenJwtSecret that = (TokenJwtSecret) o;
-        return Objects.equals(secret, that.secret) && Objects.equals(issuer, that.issuer);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(secret, issuer);
     }
 
     public void isValid() {

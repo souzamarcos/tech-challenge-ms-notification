@@ -37,6 +37,8 @@ public class OrderBuilder {
 
     private LocalDateTime deletedAt = null;
 
+    private String clientToken = CLIENT_TOKEN_ID_1L;
+
     public OrderBuilder withId(Long id) {
         this.id = id;
         return this;
@@ -67,13 +69,18 @@ public class OrderBuilder {
         return this;
     }
 
+    public OrderBuilder withClientToken(String clientToken) {
+        this.clientToken = clientToken;
+        return this;
+    }
+
     public Order build() {
         return new Order(id, client, items, payments, total, status, createdAt, modifiedAt, deletedAt);
     }
 
     public Order toInsert() {
         return new Order(
-            Optional.ofNullable(client).map((Client client) -> CLIENT_TOKEN_ID_1L).orElse(null),
+            Optional.ofNullable(client).map((Client client) -> clientToken).orElse(null),
             Optional.ofNullable(items).map(this::toInsertOrderItems).orElse(null),
             status);
     }

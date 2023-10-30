@@ -7,7 +7,6 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fiap.burger.usecase.misc.exception.TokenJwtException;
 import com.fiap.burger.usecase.misc.secret.SecretUtils;
-import com.fiap.burger.usecase.misc.secret.TokenJwtSecret;
 
 
 public class TokenJwtUtils {
@@ -27,7 +26,7 @@ public class TokenJwtUtils {
     }
 
     private static JWTVerifier buildJwtVerifier() {
-        TokenJwtSecret jwtSecret = SecretUtils.getTotalJwtSecret();
+        TokenJwtSecret jwtSecret = SecretUtils.getTokenJwtSecret();
         return JWT.require(buildAlgorithm(jwtSecret.getSecret()))
             .withIssuer(jwtSecret.getIssuer())
             .build();

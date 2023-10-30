@@ -2,6 +2,7 @@ package com.fiap.burger.usecase.misc.secret;
 
 
 import com.fiap.burger.usecase.misc.exception.SecretAwsException;
+import com.fiap.burger.usecase.misc.token.TokenJwtSecret;
 import com.google.gson.Gson;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
@@ -16,8 +17,8 @@ public class SecretUtils {
 
     }
 
-    public static TokenJwtSecret getTotalJwtSecret() {
-        TokenJwtSecret token = new Gson().fromJson(getSecret("token-jwt-secret"), TokenJwtSecret.class);
+    public static TokenJwtSecret getTokenJwtSecret() {
+        TokenJwtSecret token = new Gson().fromJson(SecretUtils.getSecret("token-jwt-secret"), TokenJwtSecret.class);
         token.isValid();
         return token;
     }
