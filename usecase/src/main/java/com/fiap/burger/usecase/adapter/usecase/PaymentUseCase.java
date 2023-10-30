@@ -13,5 +13,5 @@ public interface PaymentUseCase {
 
     Payment insert(Long orderId);
 
-    void updateStatus(Long id, PaymentStatus status);
+    Payment updateStatus(Long id, PaymentStatus status);
 }
