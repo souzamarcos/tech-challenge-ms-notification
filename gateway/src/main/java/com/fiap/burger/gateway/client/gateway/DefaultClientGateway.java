@@ -35,7 +35,7 @@ public class DefaultClientGateway implements ClientGateway {
     @Transactional
     public Client save(Client client) {
         Client persisted = clientDAO.save(ClientJPA.toJPA(client)).toEntity();
-        clientCpfGateway.save(client.getCpf(), client.getId());
+        clientCpfGateway.save(persisted.getCpf(), persisted.getId());
         return persisted;
     }
 
