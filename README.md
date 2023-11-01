@@ -68,6 +68,7 @@ Para acessar esse relatório gerado acesse o caminho `build/reports/jacoco/codeC
 
 ![img.png](static/jacoco_report_example.png)
 
+
 ### Executando aplicação completa com docker
 
 Execute o comando abaixo para iniciar os containers com a base de dados e executar a aplicação localmente.
