@@ -30,6 +30,10 @@ Para visualizar os endpoints disponíveis na aplicação basta acessar o swagger
 
 
 ## Desenvolvimento
+
+Para executar a aplicação localmente sem depender de recursos externos à máquina a aplicação deve rodar com a variável de ambiente `SPRING_PROFILES_ACTIVE` com valor **diferente** de `production` ou **vazia**.
+
+
 ### Executando somente dependências
 
 Para executar somente dependências externas (Mysql, RabbitMQ, etc) da aplicação para o ambiente de desevolvimento local basta executar o comando abaixo:
@@ -39,6 +43,16 @@ docker-compose -f docker-compose-without-application.yml up --build
 ```
 
 A aplicação será exposta na porta 8080.
+
+### Localstack
+A aplicação está com o dynamodb configurado no localstack para simular a AWS localmente.
+Os recursos estão sendo criados ao iniciar a imagem do localstack através do arquivo [init-aws.sh](config/localstack/init-aws.sh).
+
+Para listar recursos do localstack use o comando `aws` com o parâmetro `--endpoint-url=http://localhost:4566`, como no exemplo abaixo:
+
+```bash
+aws --endpoint-url=http://localhost:4566 dynamodb list-tables
+```
 
 ### Versionamento de libs gradle
 
@@ -54,7 +68,8 @@ Para acessar esse relatório gerado acesse o caminho `build/reports/jacoco/codeC
 
 ![img.png](static/jacoco_report_example.png)
 
-## Executando aplicação completa com docker
+
+### Executando aplicação completa com docker
 
 Execute o comando abaixo para iniciar os containers com a base de dados e executar a aplicação localmente.
 

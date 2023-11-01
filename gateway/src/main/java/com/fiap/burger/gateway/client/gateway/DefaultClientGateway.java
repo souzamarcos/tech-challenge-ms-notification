@@ -3,7 +3,9 @@ package com.fiap.burger.gateway.client.gateway;
 import com.fiap.burger.entity.client.Client;
 import com.fiap.burger.gateway.client.dao.ClientDAO;
 import com.fiap.burger.gateway.client.model.ClientJPA;
+import com.fiap.burger.usecase.adapter.gateway.ClientCpfGateway;
 import com.fiap.burger.usecase.adapter.gateway.ClientGateway;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,9 @@ public class DefaultClientGateway implements ClientGateway {
 
     @Autowired
     private ClientDAO clientDAO;
+
+    @Autowired
+    private ClientCpfGateway clientCpfGateway;
 
     @Override
     public Client findById(Long id) {
@@ -27,8 +32,11 @@ public class DefaultClientGateway implements ClientGateway {
     }
 
     @Override
+    @Transactional
     public Client save(Client client) {
-        return clientDAO.save(ClientJPA.toJPA(client)).toEntity();
+        Client persisted = clientDAO.save(ClientJPA.toJPA(client)).toEntity();
+        clientCpfGateway.save(persisted.getCpf(), persisted.getId());
+        return persisted;
     }
 
 }
