@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class Order extends BaseEntity {
 
-    private Long clientId;
+    private String clientToken;
     private Client client;
     private List<OrderItem> items;
 
@@ -31,7 +31,7 @@ public class Order extends BaseEntity {
     public int hashCode() {
         return Objects.hash(
             getId(),
-            getClientId(),
+            getClientToken(),
             getItems(),
             getPayments(),
             getTotal(),
@@ -42,8 +42,8 @@ public class Order extends BaseEntity {
         );
     }
 
-    public Long getClientId() {
-        return clientId;
+    public String getClientToken() {
+        return clientToken;
     }
 
     public Client getClient() {
@@ -78,8 +78,8 @@ public class Order extends BaseEntity {
         this.client = client;
     }
 
-    public Order(Long clientId, List<OrderItem> items, OrderStatus status) {
-        this.clientId = clientId;
+    public Order(String clientId, List<OrderItem> items, OrderStatus status) {
+        this.clientToken = clientId;
         this.items = items;
         this.status = status;
     }

@@ -19,6 +19,4 @@ public interface OrderUseCase {
     Order updateStatus(Long orderId, OrderStatus newStatus);
 
     Order checkout(Long orderId);
-
-    boolean canBePaid(OrderStatus status);
 }

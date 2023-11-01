@@ -35,9 +35,9 @@ class OrderApiTest {
 
     @Test
     void shouldInsertOrder() {
-        var request = new OrderInsertRequestDto(1L, List.of(new OrderItemInsertRequestDto(1L, List.of(2L), "Comentário")));
+        var request = new OrderInsertRequestDto(null, List.of(new OrderItemInsertRequestDto(1L, List.of(2L), "Comentário")));
         var order = getMockOrder();
-        var expected = new ListOrderResponseDto(1L, new OrderClientResponseDto(1L, null), 30.0, OrderStatus.AGUARDANDO_PAGAMENTO, null);
+        var expected = new ListOrderResponseDto(1L, null, 30.0, OrderStatus.AGUARDANDO_PAGAMENTO, null);
 
         when(controller.insert(request.toEntity())).thenReturn(order);
 
@@ -52,7 +52,7 @@ class OrderApiTest {
     void shouldFindById() {
         var id = 1L;
         var order = getMockOrder();
-        var expected = new OrderResponseDto(id, new OrderClientResponseDto(1L, null), List.of(new OrderItemResponseDto(1L, "Nome", "Comentário", List.of(new OrderItemAdditionalResponseDto(2L, "Nome")))), 30.0, OrderStatus.AGUARDANDO_PAGAMENTO);
+        var expected = new OrderResponseDto(id, null, List.of(new OrderItemResponseDto(1L, "Nome", "Comentário", List.of(new OrderItemAdditionalResponseDto(2L, "Nome")))), 30.0, OrderStatus.AGUARDANDO_PAGAMENTO);
 
         when(controller.findById(id)).thenReturn(order);
 
@@ -68,7 +68,7 @@ class OrderApiTest {
         var order = getMockOrder();
         order.setStatus(OrderStatus.RECEBIDO);
 
-        var expected = new ListOrderResponseDto(1L, new OrderClientResponseDto(1L, null), 30.0, OrderStatus.RECEBIDO, null);
+        var expected = new ListOrderResponseDto(1L, null, 30.0, OrderStatus.RECEBIDO, null);
 
         when(controller.updateStatus(1L, OrderStatus.RECEBIDO)).thenReturn(order);
 
@@ -83,7 +83,7 @@ class OrderApiTest {
     void shouldFindAllBy() {
         var id = 1L;
         var order = getMockOrder();
-        var expected = List.of(new ListOrderResponseDto(id, new OrderClientResponseDto(1L, null), 30.0, OrderStatus.AGUARDANDO_PAGAMENTO, null));
+        var expected = List.of(new ListOrderResponseDto(id, null, 30.0, OrderStatus.AGUARDANDO_PAGAMENTO, null));
 
         when(controller.findAllBy(OrderStatus.AGUARDANDO_PAGAMENTO)).thenReturn(List.of(order));
 
@@ -99,7 +99,7 @@ class OrderApiTest {
         var id = 1L;
         var order = getMockOrder();
         order.setStatus(OrderStatus.RECEBIDO);
-        var expected = List.of(new ListOrderResponseDto(id, new OrderClientResponseDto(1L, null), 30.0, OrderStatus.RECEBIDO, null));
+        var expected = List.of(new ListOrderResponseDto(id, null, 30.0, OrderStatus.RECEBIDO, null));
 
         when(controller.findAllInProgress()).thenReturn(List.of(order));
 
@@ -112,7 +112,7 @@ class OrderApiTest {
 
     private Order getMockOrder() {
         return new Order(1L,
-            new Client(1L),
+            null,
             List.of(new OrderItem(
                 1L,
                 1L,
