@@ -23,7 +23,6 @@ public class DynamoDbConfiguration {
         DynamoDbClient dynamoDbClient =
             DynamoDbClient.builder()
                 .region(Region.US_EAST_1)
-                .credentialsProvider(ProfileCredentialsProvider.create())
                 .build();
         return DynamoDbEnhancedClient.builder()
                 .dynamoDbClient(dynamoDbClient)
