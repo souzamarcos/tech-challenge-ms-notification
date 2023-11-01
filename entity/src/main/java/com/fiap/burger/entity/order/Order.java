@@ -143,4 +143,8 @@ public class Order extends BaseEntity {
         this.modifiedAt = modifiedAt;
         this.deletedAt = deletedAt;
     }
+
+    public boolean canBePaid() {
+        return OrderStatus.AGUARDANDO_PAGAMENTO.equals(this.status);
+    }
 }
