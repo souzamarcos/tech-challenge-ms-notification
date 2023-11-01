@@ -85,6 +85,6 @@ tasks.test {
 
 sonarqube {
 	properties {
-		property("sonar.exclusions", "**/entity/**")
+		property("sonar.exclusions", "**/entity/**, **/*Configuration.java")
 	}
 }
