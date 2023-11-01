@@ -6,6 +6,7 @@ mysql-connector = "8.0.33"
 hibernate = "6.2.4.Final"
 hibernate-validator = "8.0.0.Final"
 openapi = "2.1.0"
+aws = "2.21.10"
 
 [libraries]
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
@@ -18,3 +19,6 @@ mysql-connector = { module = "com.mysql:mysql-connector-j", version.ref = "mysql
 hibernate = { module = "org.hibernate.orm:hibernate-core", version.ref = "hibernate" }
 hibernate-validator = { module = "org.hibernate.validator:hibernate-validator", version.ref = "hibernate" }
 openapi = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "openapi" }
+aws-dynamodb = { module = "software.amazon.awssdk:dynamodb", version.ref = "aws" }
+aws-dynamodb-enhanced = { module = "software.amazon.awssdk:dynamodb-enhanced", version.ref = "aws" }
+

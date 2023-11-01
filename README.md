@@ -1,7 +1,7 @@
 # Tech Challenge FIAP - Burger
 Projeto da pós graduação da FIAP de Arquitetura de Software
 
-# Repositórios
+# Repositórios relacionados
 * [Aplicação](https://github.com/souzamarcos/tech-challenge-fast-food)
 * [Infraestrutura Terraform](https://github.com/souzamarcos/tech-challenge-terraform)
 * [Configuração do Kubernetes](https://github.com/souzamarcos/tech-challenge-kubernetes)
@@ -30,6 +30,10 @@ Para visualizar os endpoints disponíveis na aplicação basta acessar o swagger
 
 
 ## Desenvolvimento
+
+Para executar a aplicação localmente sem depender de recursos externos à máquina a aplicação deve rodar com a variável de ambiente `SPRING_PROFILES_ACTIVE` com valor **diferente** de `production` ou **vazia**.
+
+
 ### Executando somente dependências
 
 Para executar somente dependências externas (Mysql, RabbitMQ, etc) da aplicação para o ambiente de desevolvimento local basta executar o comando abaixo:
@@ -39,6 +43,16 @@ docker-compose -f docker-compose-without-application.yml up --build
 ```
 
 A aplicação será exposta na porta 8080.
+
+### Localstack
+A aplicação está com o dynamodb configurado no localstack para simular a AWS localmente.
+Os recursos estão sendo criados ao iniciar a imagem do localstack através do arquivo [init-aws.sh](config/localstack/init-aws.sh).
+
+Para listar recursos do localstack use o comando `aws` com o parâmetro `--endpoint-url=http://localhost:4566`, como no exemplo abaixo:
+
+```bash
+aws --endpoint-url=http://localhost:4566 dynamodb list-tables
+```
 
 ### Versionamento de libs gradle
 
@@ -54,56 +68,11 @@ Para acessar esse relatório gerado acesse o caminho `build/reports/jacoco/codeC
 
 ![img.png](static/jacoco_report_example.png)
 
-## Executando aplicação sem kubernetes
+
+### Executando aplicação completa com docker
 
 Execute o comando abaixo para iniciar os containers com a base de dados e executar a aplicação localmente.
 
 ```bash
 docker-compose up --build
 ```
-
-## Executando aplicação com kubernetes
-
-Os arquivos de configuração do kubernetes estão presentes na pasta [config/kubernetes](config/kubernetes/).
-Para configurar a aplicação no kubernetes local **execute os comandos abaixo na raiz do projeto**:
-
-1 - Iniciar base de dados através do comando
-
-``` bash
-docker-compose -f docker-compose-without-application.yml up --build
-```
-
-2 - Procurar o IP da máquina através do comando:
-
-Windows
-```bash
-ipconfig
-```
-Linux | Mac
-```bash
-ifconfig
-```
-
-
-3 - Crie as as secrets e defina a URL da base de dados. **No comando abaixo substitua o texto `<HOST>` pelo ip da máquina consultado na etapa acima**. Caso decida usar uma base MySql em outro local, coloque o endereço da mesma.
-```bash
-kubectl create secret generic mysql-secret --from-literal=url='jdbc:mysql://<HOST>:3306/burger' --from-literal=username='user' --from-literal=password='password'
-```
-
-4 - Aplique os outros recursos do kubernetes
-```bash
-kubectl apply -f config/kubernetes/local/k8s-deployment-burger-application.yaml
-kubectl apply -f config/kubernetes/local/k8s-svc-burger-application.yaml
-kubectl apply -f config/kubernetes/local/k8s-hpa-burger-application.yaml
-```
-
-A aplicação estará disponível no endereço [http://localhost/swagger](http://localhost/swagger).
-
-
-> Obs: Caso queira remover todos os recursos criados execute os comandos abaixo:
->```bash
->kubectl delete -f config/kubernetes/local/k8s-hpa-burger-application.yaml
->kubectl delete -f config/kubernetes/local/k8s-svc-burger-application.yaml
->kubectl delete -f config/kubernetes/local/k8s-deployment-burger-application.yaml
->kubectl delete secret mysql-secret 
->```
