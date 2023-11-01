@@ -3,6 +3,7 @@ package com.fiap.burger.gateway.client.gateway;
 import com.fiap.burger.gateway.client.dao.ClientDAO;
 import com.fiap.burger.gateway.misc.ClientBuilder;
 import com.fiap.burger.gateway.misc.ClientJPABuilder;
+import com.fiap.burger.usecase.adapter.gateway.ClientCpfGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,6 +19,9 @@ class DefaultClientGatewayTest {
 
     @Mock
     ClientDAO clientDAO;
+
+    @Mock
+    ClientCpfGateway clientCpfGateway;
 
     @InjectMocks
     DefaultClientGateway gateway;
@@ -64,6 +68,7 @@ class DefaultClientGatewayTest {
         var expected = new ClientBuilder().withId(1L).build();
 
         when(clientDAO.save(any())).thenReturn(clientJPA);
+        doNothing().when(clientCpfGateway).save(expected.getCpf(), expected.getId());
 
         var actual = gateway.save(client);
 

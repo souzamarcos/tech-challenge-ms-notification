@@ -1,6 +1,7 @@
 package com.fiap.burger.gateway.clientcpf.model;
 
 
+import java.util.Objects;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
@@ -18,6 +19,8 @@ public class ClientCpfModel {
         this.id = id;
     }
 
+
+
     @DynamoDbPartitionKey
     @DynamoDbAttribute("cpf")
     public String getCpf() { return this.cpf; }
@@ -27,6 +30,18 @@ public class ClientCpfModel {
     public void setCpf(String cpf) { this.cpf = cpf;  }
 
     public void setId(Long id) { this.id = id; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ClientCpfModel that)) return false;
+        return Objects.equals(getCpf(), that.getCpf()) && Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCpf(), getId());
+    }
 
     @Override
     public String toString() {

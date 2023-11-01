@@ -2,16 +2,12 @@ package com.fiap.burger.gateway.clientcpf.gateway;
 
 import com.fiap.burger.gateway.clientcpf.model.ClientCpfModel;
 import com.fiap.burger.usecase.adapter.gateway.ClientCpfGateway;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
-import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 @Repository
 public class DefaultClientCpfGateway implements ClientCpfGateway {
