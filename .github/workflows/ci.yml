@@ -73,6 +73,8 @@ jobs:
           docker image push --all-tags $ECR_REGISTRY/$ECR_REPOSITORY
 
   deploy:
+    name: Deploy to kubernetes
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
