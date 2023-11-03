@@ -18,10 +18,10 @@ public class TokenJwtUtils {
         try {
             JWTVerifier verifier = buildJwtVerifier();
             return verifier.verify(token);
-        } catch (TokenExpiredException tokenExpiredException) {
-            throw new TokenJwtException("Token JWT expired at " + tokenExpiredException.getExpiredOn());
-        } catch (Exception e) {
-            throw new TokenJwtException("Token JWT Error: " + e.getMessage());
+        } catch (TokenExpiredException exception) {
+            throw new TokenJwtException("Token JWT expired at " + exception.getExpiredOn(), exception);
+        } catch (Exception exception) {
+            throw new TokenJwtException("Token JWT Error: " + exception.getMessage(), exception);
         }
     }
 
