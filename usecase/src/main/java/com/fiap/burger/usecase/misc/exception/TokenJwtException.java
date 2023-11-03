@@ -6,5 +6,8 @@ public class TokenJwtException extends DomainException {
         super(message);
     }
 
+    public TokenJwtException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
 
