@@ -1,14 +1,10 @@
 package com.fiap.burger.usecase.usecase;
 
-import com.fiap.burger.entity.order.OrderStatus;
 import com.fiap.burger.entity.payment.Payment;
 import com.fiap.burger.entity.payment.PaymentStatus;
-import com.fiap.burger.usecase.adapter.gateway.OrderGateway;
 import com.fiap.burger.usecase.adapter.gateway.PaymentGateway;
-import com.fiap.burger.usecase.misc.OrderBuilder;
 import com.fiap.burger.usecase.misc.PaymentBuilder;
 import com.fiap.burger.usecase.misc.exception.InvalidAttributeException;
-import com.fiap.burger.usecase.misc.exception.OrderCannotBePaidException;
 import com.fiap.burger.usecase.misc.exception.PaymentNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,9 +22,6 @@ class DefaultPaymentUseCaseTest {
 
     @Mock
     PaymentGateway gateway;
-
-    @Mock
-    OrderGateway orderGateway;
 
     @InjectMocks
     DefaultPaymentUseCase useCase;
@@ -69,10 +62,9 @@ class DefaultPaymentUseCaseTest {
     @Test
     void shouldInsertPayment() {
         var orderId = 1L;
-        var order = new OrderBuilder().build();
+        var order = 1L;
         var expected = new Payment(order, PaymentStatus.ABERTO);
 
-        when(orderGateway.findById(orderId)).thenReturn(order);
         when(gateway.save(expected)).thenReturn(expected);
 
         Payment actual = useCase.insert(orderId);
@@ -80,19 +72,6 @@ class DefaultPaymentUseCaseTest {
         assertEquals(expected, actual);
 
         verify(gateway, times(1)).save(expected);
-    }
-
-    @Test
-    void shouldThrowOrderCannotBePaidExceptionWhenPaymentOrderCantBePaid() {
-        var orderId = 1L;
-        var order = new OrderBuilder().withStatus(OrderStatus.FINALIZADO).build();
-        var expected = new Payment(order, PaymentStatus.ABERTO);
-
-        when(orderGateway.findById(orderId)).thenReturn(order);
-
-        assertThrows(OrderCannotBePaidException.class, () -> useCase.insert(orderId));
-
-        verify(gateway, times(0)).save(expected);
     }
 
     @Test

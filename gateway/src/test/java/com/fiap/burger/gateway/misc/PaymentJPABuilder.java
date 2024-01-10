@@ -1,7 +1,6 @@
 package com.fiap.burger.gateway.misc;
 
 import com.fiap.burger.entity.payment.PaymentStatus;
-import com.fiap.burger.gateway.order.model.OrderJPA;
 import com.fiap.burger.gateway.payment.model.PaymentJPA;
 
 import java.time.LocalDateTime;
@@ -10,7 +9,7 @@ public class PaymentJPABuilder {
 
     private Long id = 1L;
 
-    private OrderJPA order = new OrderJPABuilder().build();
+    private Long orderId = 1L;
 
     private PaymentStatus paymentStatus = PaymentStatus.ABERTO;
 
@@ -35,7 +34,7 @@ public class PaymentJPABuilder {
     }
 
     public PaymentJPA build() {
-        return new PaymentJPA(id, order, paymentStatus, qrCode, externalId, createdAt, modifiedAt, deletedAt);
+        return new PaymentJPA(id, orderId, paymentStatus, qrCode, externalId, createdAt, modifiedAt, deletedAt);
     }
 
     ;

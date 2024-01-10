@@ -2,7 +2,6 @@ package com.fiap.burger.gateway.payment.dao;
 
 
 import com.fiap.burger.entity.payment.PaymentStatus;
-import com.fiap.burger.gateway.order.model.OrderJPA;
 import com.fiap.burger.gateway.payment.model.PaymentJPA;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,7 +14,7 @@ import java.util.List;
 
 public interface PaymentDAO extends JpaRepository<PaymentJPA, Long> {
 
-    List<PaymentJPA> findAllByDeletedAtNullAndOrderJPA(OrderJPA orderJPA);
+    List<PaymentJPA> findAllByDeletedAtNullAndOrderId(Long orderId);
 
     @Transactional
     @Modifying

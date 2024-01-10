@@ -1,13 +1,10 @@
 package com.fiap.burger.usecase.usecase;
 
-import com.fiap.burger.entity.order.Order;
 import com.fiap.burger.entity.payment.Payment;
 import com.fiap.burger.entity.payment.PaymentStatus;
-import com.fiap.burger.usecase.adapter.gateway.OrderGateway;
 import com.fiap.burger.usecase.adapter.gateway.PaymentGateway;
 import com.fiap.burger.usecase.adapter.usecase.PaymentUseCase;
 import com.fiap.burger.usecase.misc.exception.InvalidAttributeException;
-import com.fiap.burger.usecase.misc.exception.OrderCannotBePaidException;
 import com.fiap.burger.usecase.misc.exception.PaymentNotFoundException;
 
 import java.time.LocalDateTime;
@@ -18,11 +15,8 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
 
     private final PaymentGateway paymentGateway;
 
-    private final OrderGateway orderGateway;
-
-    public DefaultPaymentUseCase(PaymentGateway paymentGateway, OrderGateway orderGateway) {
+    public DefaultPaymentUseCase(PaymentGateway paymentGateway) {
         this.paymentGateway = paymentGateway;
-        this.orderGateway = orderGateway;
     }
 
     public Payment findById(Long id) {
@@ -34,14 +28,7 @@ public class DefaultPaymentUseCase implements PaymentUseCase {
     }
 
     public Payment insert(Long orderId) {
-
-        Order order = orderGateway.findById(orderId);
-
-        if (!order.canBePaid()) {
-            throw new OrderCannotBePaidException(orderId);
-        }
-
-        return paymentGateway.save(Payment.createPaymentWithOrderAndOpenStatus(order));
+        return paymentGateway.save(Payment.createPaymentWithOrderAndOpenStatus(orderId));
     }
 
     @Override

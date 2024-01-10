@@ -25,7 +25,7 @@ public record PaymentResponseDto(
     public static PaymentResponseDto toResponseDto(Payment payment) {
         return new PaymentResponseDto(
             payment.getId(),
-            payment.getOrder().getId(),
+            payment.getOrderId(),
             payment.getStatus(),
             payment.getQrCode(),
             payment.getExternalId()
