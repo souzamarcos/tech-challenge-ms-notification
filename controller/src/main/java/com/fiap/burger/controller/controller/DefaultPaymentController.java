@@ -3,6 +3,7 @@ package com.fiap.burger.controller.controller;
 import com.fiap.burger.controller.adapter.api.PaymentController;
 import com.fiap.burger.entity.payment.Payment;
 import com.fiap.burger.entity.payment.PaymentStatus;
+import com.fiap.burger.messenger.adapter.PaymentMessenger;
 import com.fiap.burger.usecase.adapter.gateway.PaymentGateway;
 import com.fiap.burger.usecase.adapter.usecase.PaymentUseCase;
 import com.fiap.burger.usecase.misc.exception.PaymentNotFoundException;
@@ -18,6 +19,8 @@ public class DefaultPaymentController implements PaymentController {
     private PaymentUseCase useCase;
     @Autowired
     private PaymentGateway gateway;
+    @Autowired
+    private PaymentMessenger messenger;
     @Override
     public Payment findById(Long id) {
         var persistedPayment = useCase.findById(id);
@@ -34,11 +37,14 @@ public class DefaultPaymentController implements PaymentController {
 
     @Override
     public Payment insert(Long orderId) {
-        return useCase.insert(orderId);
+        var persistedPayment = useCase.insert(orderId);
+        messenger.sendMessage(persistedPayment);
+        return persistedPayment;
     }
 
     @Override
     public void updateStatus(Long id, PaymentStatus status) {
         var persistedPayment = useCase.updateStatus(id, status);
+        messenger.sendMessage(persistedPayment);
     }
 }

@@ -25,6 +25,9 @@ subprojects {
 
 	dependencies {
 		implementation("org.jacoco:org.jacoco.ant:0.8.10")
+		implementation("org.springframework:spring-messaging:5.3.25")
+		implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
+		implementation("org.springframework.cloud:spring-cloud-starter-aws-messaging:2.2.6.RELEASE")
 
 		//Test
 		testImplementation(rootProject.libs.spring.boot.starter.test)

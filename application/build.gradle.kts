@@ -17,6 +17,7 @@ dependencies {
     implementation(project(":controller"))
     implementation(project(":api"))
     implementation(project(":gateway"))
+    implementation(project(":listener"))
 
     implementation(rootProject.libs.spring.boot.starter.web)
 }

@@ -1,6 +1,5 @@
 package com.fiap.burger.api.api;
 
-import com.fiap.burger.api.dto.payment.request.PaymentInsertRequestDto;
 import com.fiap.burger.api.dto.payment.request.PaymentWebhookRequestDto;
 import com.fiap.burger.api.dto.payment.response.PaymentResponseDto;
 import com.fiap.burger.controller.adapter.api.PaymentController;
@@ -56,23 +55,6 @@ class PaymentApiTest {
 
         verify(controller, times(1)).findByOrderId(orderId);
     }
-
-    @Test
-    void shouldInsert() {
-        var orderId = 1L;
-        var request = new PaymentInsertRequestDto(orderId);
-        var payment = new Payment(1L, 1L, PaymentStatus.ABERTO, "QR-CODE", "external-id", null, null, null);
-        var expected = new PaymentResponseDto(1L, orderId, PaymentStatus.ABERTO, "QR-CODE", "external-id");
-
-        when(controller.insert(orderId)).thenReturn(payment);
-
-        PaymentResponseDto actual = api.insert(request);
-
-        assertEquals(expected, actual);
-
-        verify(controller, times(1)).insert(orderId);
-    }
-
     @Test
     void shouldPaymentResponse() {
         var orderId = 1L;

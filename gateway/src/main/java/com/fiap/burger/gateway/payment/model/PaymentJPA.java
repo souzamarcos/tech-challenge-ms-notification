@@ -16,7 +16,6 @@ import java.util.Objects;
 @Entity
 public class PaymentJPA extends BaseDomainJPA {
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "order_id")
     Long orderId;
 

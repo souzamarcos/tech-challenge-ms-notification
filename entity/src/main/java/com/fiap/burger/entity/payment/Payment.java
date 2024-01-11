@@ -112,10 +112,10 @@ public class Payment extends BaseEntity {
     }
 
     public Payment(
-        Long id,
+        Long orderId,
         PaymentStatus status
     ) {
-        this.id = id;
+        this.orderId = orderId;
         this.status = status;
     }
 }
