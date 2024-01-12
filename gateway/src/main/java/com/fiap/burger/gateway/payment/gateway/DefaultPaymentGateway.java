@@ -2,8 +2,6 @@ package com.fiap.burger.gateway.payment.gateway;
 
 import com.fiap.burger.entity.payment.Payment;
 import com.fiap.burger.entity.payment.PaymentStatus;
-import com.fiap.burger.gateway.order.dao.OrderDAO;
-import com.fiap.burger.gateway.order.model.OrderJPA;
 import com.fiap.burger.gateway.payment.dao.PaymentDAO;
 import com.fiap.burger.gateway.payment.model.PaymentJPA;
 import com.fiap.burger.usecase.adapter.gateway.PaymentGateway;
@@ -20,9 +18,6 @@ public class DefaultPaymentGateway implements PaymentGateway {
     @Autowired
     PaymentDAO paymentDAO;
 
-    @Autowired
-    OrderDAO orderDAO;
-
     @Override
     public Payment findById(Long id) {
         return paymentDAO.findById(id).map(PaymentJPA::toEntity).orElse(null);
@@ -31,10 +26,8 @@ public class DefaultPaymentGateway implements PaymentGateway {
 
     @Override
     public List<Payment> findByOrderId(Long orderId) {
-        OrderJPA orderJPA = orderDAO.findById(orderId).orElse(null);
-
-        if (orderJPA != null) {
-            return paymentDAO.findAllByDeletedAtNullAndOrderJPA(orderJPA).stream().map(PaymentJPA::toEntity).toList();
+        if (orderId != null) {
+            return paymentDAO.findAllByDeletedAtNullAndOrderId(orderId).stream().map(PaymentJPA::toEntity).toList();
         } else {
             return Collections.emptyList();
         }

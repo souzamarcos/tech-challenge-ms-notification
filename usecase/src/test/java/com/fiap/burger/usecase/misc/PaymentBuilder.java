@@ -1,6 +1,5 @@
 package com.fiap.burger.usecase.misc;
 
-import com.fiap.burger.entity.order.Order;
 import com.fiap.burger.entity.payment.Payment;
 import com.fiap.burger.entity.payment.PaymentStatus;
 
@@ -10,7 +9,7 @@ public class PaymentBuilder {
 
     private Long id = 1L;
 
-    private Order order = new OrderBuilder().build();
+    private Long orderId = 1L;
 
     private PaymentStatus paymentStatus = PaymentStatus.ABERTO;
 
@@ -35,7 +34,7 @@ public class PaymentBuilder {
     }
 
     public Payment build() {
-        return new Payment(id, order, paymentStatus, qrCode, externalId, createdAt, modifiedAt, deletedAt);
+        return new Payment(id, orderId, paymentStatus, qrCode, externalId, createdAt, modifiedAt, deletedAt);
     }
 
     ;

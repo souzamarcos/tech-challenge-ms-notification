@@ -1,41 +1,46 @@
 package com.fiap.burger.application.config;
 
-import com.fiap.burger.gateway.order.gateway.DefaultOrderGateway;
-import com.fiap.burger.usecase.adapter.gateway.ClientGateway;
-import com.fiap.burger.usecase.adapter.gateway.OrderGateway;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.client.builder.AwsClientBuilder;
+import com.amazonaws.services.sqs.AmazonSQSAsync;
+import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
 import com.fiap.burger.usecase.adapter.gateway.PaymentGateway;
-import com.fiap.burger.usecase.adapter.gateway.ProductGateway;
-import com.fiap.burger.usecase.adapter.usecase.ClientUseCase;
-import com.fiap.burger.usecase.adapter.usecase.OrderUseCase;
 import com.fiap.burger.usecase.adapter.usecase.PaymentUseCase;
-import com.fiap.burger.usecase.adapter.usecase.ProductUseCase;
-import com.fiap.burger.usecase.usecase.DefaultClientUseCase;
-import com.fiap.burger.usecase.usecase.DefaultOrderUseCase;
 import com.fiap.burger.usecase.usecase.DefaultPaymentUseCase;
-import com.fiap.burger.usecase.usecase.DefaultProductUseCase;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.aws.messaging.config.annotation.EnableSqs;
+import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
+@EnableSqs
 public class ApplicationConfiguration {
+    @Value("${cloud.aws.region}")
+    private String awsRegion;
+    @Value("${cloud.aws.end-point.uri}")
+    private String awsEndpointUri;
 
     @Bean
-    public ClientUseCase clientUseCase(ClientGateway repository) {
-        return new DefaultClientUseCase(repository);
+    public PaymentUseCase paymentUseCase(PaymentGateway paymentGateway) {
+        return new DefaultPaymentUseCase(paymentGateway);
     }
 
     @Bean
-    public OrderUseCase orderUseCase(OrderGateway orderGateway, ProductGateway productGateway, ClientGateway clientGateway) {
-        return new DefaultOrderUseCase(orderGateway, productGateway, clientGateway);
+    @Primary
+    public AmazonSQSAsync amazonSQSAsync() {
+        AwsClientBuilder.EndpointConfiguration endpoint = new AwsClientBuilder.EndpointConfiguration(awsEndpointUri, awsRegion);
+
+        return AmazonSQSAsyncClientBuilder
+            .standard()
+            .withEndpointConfiguration(endpoint)
+            .withCredentials(new DefaultAWSCredentialsProviderChain())
+            .build();
     }
 
     @Bean
-    public ProductUseCase productUseCase(ProductGateway productGateway) {
-        return new DefaultProductUseCase(productGateway);
-    }
-
-    @Bean
-    public PaymentUseCase paymentUseCase(PaymentGateway paymentGateway, OrderGateway orderGateway) {
-        return new DefaultPaymentUseCase(paymentGateway, orderGateway);
+    public QueueMessagingTemplate queueMessagingTemplate(AmazonSQSAsync amazonSQSAsync) {
+        return new QueueMessagingTemplate(amazonSQSAsync);
     }
 }
