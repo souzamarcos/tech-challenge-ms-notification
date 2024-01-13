@@ -7,6 +7,7 @@ import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
 import com.fiap.burger.usecase.misc.profiles.NotTest;
 import com.fiap.burger.usecase.misc.profiles.Production;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.aws.messaging.config.SimpleMessageListenerContainerFactory;
 import org.springframework.cloud.aws.messaging.config.annotation.EnableSqs;
 import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +42,16 @@ public class AwsSQSConfiguration
                 .withEndpointConfiguration(endpoint)
                 .withCredentials(new DefaultAWSCredentialsProviderChain())
                 .build();
+    }
+
+    @Bean
+    public SimpleMessageListenerContainerFactory simpleMessageListenerContainerFactory(
+            AmazonSQSAsync amazonSQSAsync
+    ) {
+        SimpleMessageListenerContainerFactory factory = new SimpleMessageListenerContainerFactory();
+        factory.setAmazonSqs(amazonSQSAsync);
+        factory.setWaitTimeOut(1);
+        return factory;
     }
 
     @Bean
