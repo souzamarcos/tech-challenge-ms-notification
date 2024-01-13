@@ -2,6 +2,7 @@ package com.fiap.burger.controller.controller;
 
 import com.fiap.burger.entity.payment.Payment;
 import com.fiap.burger.entity.payment.PaymentStatus;
+import com.fiap.burger.messenger.payment.DefaultPaymentMessenger;
 import com.fiap.burger.usecase.misc.exception.PaymentNotFoundException;
 import com.fiap.burger.usecase.usecase.DefaultPaymentUseCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,9 @@ class DefaultPaymentControllerTest {
 
     @Mock
     DefaultPaymentUseCase useCase;
+
+    @Mock
+    DefaultPaymentMessenger messenger;
 
     @InjectMocks
     DefaultPaymentController controller;
