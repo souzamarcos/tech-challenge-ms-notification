@@ -1,4 +1,4 @@
-rootProject.name = "burger"
+rootProject.name = "ms-payment"
 include("application")
 include("api")
 include("controller")
