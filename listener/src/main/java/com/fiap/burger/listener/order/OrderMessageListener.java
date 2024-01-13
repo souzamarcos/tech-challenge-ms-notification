@@ -2,13 +2,13 @@ package com.fiap.burger.listener.order;
 
 import com.fiap.burger.controller.adapter.api.PaymentController;
 import com.fiap.burger.usecase.misc.exception.OrderMessageListenerException;
+import com.fiap.burger.usecase.misc.profiles.Production;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.aws.messaging.listener.annotation.SqsListener;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-@Profile("prod")
+@Production
 @Component
 public class OrderMessageListener {
     @Autowired
