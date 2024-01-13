@@ -6,6 +6,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Profile("prod")
-public @interface Production {
+@Profile("!test")
+public @interface NotTest {
 }
