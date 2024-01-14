@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Production
 @Component
-public class OrderMessageListener {
+public class DefaultOrderMessageListener {
     @Autowired
     PaymentController paymentController;
 
@@ -20,7 +20,7 @@ public class OrderMessageListener {
             var dto = new Gson().fromJson(message, OrderMessageListenerDto.class);
             paymentController.insert(dto.getId());
         } catch (Exception ex) {
-            throw new OrderMessageListenerException("An exception was thrown during the execution of the SQS listener method and Message will be still available in Queue");
+            throw new OrderMessageListenerException(ex.getMessage());
         }
     }
 }
