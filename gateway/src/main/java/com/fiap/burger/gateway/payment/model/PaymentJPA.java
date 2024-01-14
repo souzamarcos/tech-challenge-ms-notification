@@ -10,7 +10,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Table(name = "payment")
 @Entity
@@ -51,38 +50,6 @@ public class PaymentJPA extends BaseDomainJPA {
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
         this.deletedAt = deletedAt;
-    }
-
-    public PaymentStatus getStatus() {
-        return status;
-    }
-
-    public String getQrCode() {
-        return qrCode;
-    }
-
-    public String getExternalId() {
-        return externalId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PaymentJPA paymentJPA)) return false;
-        return Objects.equals(hashCode(), paymentJPA.hashCode());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(
-            getId(),
-            getStatus(),
-            getQrCode(),
-            getExternalId(),
-            getCreatedAt(),
-            getModifiedAt(),
-            getDeletedAt()
-        );
     }
 
     public static PaymentJPA toJPA(Payment payment) {
