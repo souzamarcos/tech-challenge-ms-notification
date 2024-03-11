@@ -12,8 +12,8 @@ import org.springframework.test.context.TestPropertySource;
 import static io.restassured.RestAssured.given;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles(profiles = "test")
 @TestPropertySource("classpath:application.properties")
-@ActiveProfiles("test")
 class BurgerApplicationIT {
     @LocalServerPort
     private int port;
