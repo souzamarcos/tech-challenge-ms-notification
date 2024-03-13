@@ -62,16 +62,6 @@ aws --endpoint-url=http://localhost:4566 dynamodb list-tables
 
 Estamos usando um arquivo [.toml para versionar](https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format) as libs utilizadas pelo gradle. Para saber mais acesse o arquivo [libs.versions.toml](gradle/libs.versions.toml).
 
-### Cobertura de teste
-
-Foi configurado juntamente com o plugin do jacoco para o gradle a task com nome `codeCoverageReport` que irá disparar a execução de testes da aplicação e gerar o relatório hml. Para isso execute o comando:
-```bash
-./gradlew codeCoverageReport 
-```
-Para acessar esse relatório gerado acesse o caminho `build/reports/jacoco/codeCoverageReport/html/index.hml` e abre no navegador.
-
-![img.png](static/jacoco_report_example.png)
-
 
 ### Executando aplicação completa com docker
 
