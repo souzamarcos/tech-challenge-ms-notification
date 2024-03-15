@@ -1,7 +1,9 @@
 package com.fiap.burger.api.api;
 
+import com.fiap.burger.api.notification.request.NotificationRequestDto;
 import com.fiap.burger.api.notification.response.NotificationResponseDto;
 import com.fiap.burger.controller.adapter.api.NotificationController;
+import com.fiap.burger.entity.common.NotificationType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,14 +25,20 @@ class NotificationApiTest {
     @Test
     void shouldSendNotification() {
         var customerId = "123";
+        var orderId = 123L;
+        var notificationType = NotificationType.PAGAMENTO_CONFIRMADO;
         var expected = new NotificationResponseDto("Success");
 
-        when(controller.sendNotification(customerId)).thenReturn("Success");
+        when(controller.sendNotification(customerId, orderId, notificationType)).thenReturn("Success");
 
-        NotificationResponseDto actual = api.sendNotification(customerId);
+        NotificationResponseDto actual = api.sendNotification(new NotificationRequestDto(
+            customerId,
+            orderId,
+            notificationType
+        ));
 
         assertEquals(expected, actual);
 
-        verify(controller, times(1)).sendNotification(customerId);
+        verify(controller, times(1)).sendNotification(customerId, orderId, notificationType);
     }
 }

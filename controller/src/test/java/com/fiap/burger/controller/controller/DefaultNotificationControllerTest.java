@@ -1,5 +1,6 @@
 package com.fiap.burger.controller.controller;
 
+import com.fiap.burger.entity.common.NotificationType;
 import com.fiap.burger.gateway.customer.gateway.DefaultCustomerGateway;
 import com.fiap.burger.usecase.usecase.DefaultNotificationUseCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,15 +34,17 @@ class DefaultNotificationControllerTest {
         @Test
         void shouldSendNotifications() {
             var customerId = "123";
+            var orderId = 123L;
+            var notificationType = NotificationType.PAGAMENTO_CONFIRMADO;
             var expected = "Success";
 
-            when(useCase.sendNotification(customerId)).thenReturn(expected);
+            when(useCase.sendNotification(customerId, orderId, notificationType)).thenReturn(expected);
 
-            String actual = controller.sendNotification(customerId);
+            String actual = controller.sendNotification(customerId, orderId, notificationType);
 
             assertEquals(expected, actual);
 
-            verify(useCase, times(1)).sendNotification(customerId);
+            verify(useCase, times(1)).sendNotification(customerId, orderId, notificationType);
         }
     }
 }

@@ -15,8 +15,8 @@ public class InMemoryMessageListener {
 
     public void notificationQueueListener(String message) {
         try {
-            var dto = new Gson().fromJson(message, MessageListenerDto.class);
-            controller.sendNotification(dto.getCustomerId());
+            var dto = new Gson().fromJson(message, NotificationMessageDto.class);
+            controller.sendNotification(dto.customerId(), dto.orderId(), dto.notificationType());
         } catch (Exception ex) {
             throw new NotificationMessageListenerException(ex.getMessage());
         }
