@@ -20,6 +20,10 @@ public class DefaultNotificationUseCase implements NotificationUseCase {
     }
     @Override
     public String sendNotification(String customerId, Long orderId, NotificationType notificationType) {
+        Customer customer = customerGateway.findById(customerId);
+        if (customer == null) {
+            throw new InvalidAttributeException(String.format("Customer '%s' not found.", customerId), "customerToken");
+        }
         sendEmail(customerId, orderId, notificationType);
         sendSMS(customerId,orderId, notificationType);
 
@@ -27,20 +31,12 @@ public class DefaultNotificationUseCase implements NotificationUseCase {
     }
 
     private String sendEmail(String customerId, Long orderId, NotificationType notificationType) {
-        Customer customer = customerGateway.findById(customerId);
-        if (customer == null) {
-            throw new InvalidAttributeException(String.format("Customer '%s' not found.", customerId), "customerToken");
-        }
         LOGGER.info("E-mail sent successfully to customerId '" + customerId + "'");
 
         return buildMessageBy(orderId, notificationType);
     }
 
     private String sendSMS(String customerId, Long orderId, NotificationType notificationType) {
-        Customer customer = customerGateway.findById(customerId);
-        if (customer == null) {
-            throw new InvalidAttributeException(String.format("Customer '%s' not found.", customerId), "customerToken");
-        }
         LOGGER.info("SMS sent successfully to customerId '" + customerId + "'");
 
         return buildMessageBy(orderId, notificationType);

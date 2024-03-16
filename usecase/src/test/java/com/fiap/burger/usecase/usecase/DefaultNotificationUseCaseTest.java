@@ -3,6 +3,7 @@ package com.fiap.burger.usecase.usecase;
 import com.fiap.burger.entity.common.NotificationType;
 import com.fiap.burger.entity.customer.Customer;
 import com.fiap.burger.usecase.adapter.gateway.CustomerGateway;
+import com.fiap.burger.usecase.misc.exception.InvalidAttributeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -86,6 +87,19 @@ class DefaultNotificationUseCaseTest {
             String actual = useCase.sendNotification(customerId, orderId, notificationType);
 
             assertEquals(expected, actual);
+        }
+
+        @Test
+        void shouldThrowInvalidAttributeException() {
+            var customerId = "123";
+            var orderId = 123L;
+            var notificationType = NotificationType.PEDIDO_PRONTO;
+
+            when(customerGateway.findById(customerId)).thenThrow(new InvalidAttributeException("customerId", "customerId"));
+
+            assertThrows(InvalidAttributeException.class, () ->
+                    useCase.sendNotification(customerId, orderId, notificationType)
+            );
         }
     }
 }
