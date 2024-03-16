@@ -47,21 +47,10 @@ public class DefaultNotificationUseCase implements NotificationUseCase {
     }
 
     private String buildMessageBy(Long orderId, NotificationType notificationType) {
-        switch (notificationType) {
-            case PAGAMENTO_NAO_CONFIRMADO:
-                return "Pagamento não confirmado para o pedido " + orderId;
-
-            case PAGAMENTO_CONFIRMADO:
-                return "Pagamento confirmado para o pedido " + orderId;
-
-            case PEDIDO_PRONTO:
-                return "Pedido '" + orderId + "' pronto";
-
-            default:
-                throw new InvalidAttributeException(
-                    "Invalid notificationType '" + notificationType + "'",
-                    "notificationType"
-                );
-        }
+        return switch (notificationType) {
+            case PAGAMENTO_NAO_CONFIRMADO -> "Pagamento não confirmado para o pedido " + orderId;
+            case PAGAMENTO_CONFIRMADO -> "Pagamento confirmado para o pedido " + orderId;
+            case PEDIDO_PRONTO -> "Pedido '" + orderId + "' pronto";
+        };
     }
 }

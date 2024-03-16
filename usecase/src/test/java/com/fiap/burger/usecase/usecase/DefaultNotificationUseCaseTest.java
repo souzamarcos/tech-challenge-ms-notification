@@ -47,5 +47,45 @@ class DefaultNotificationUseCaseTest {
 
             assertEquals(expected, actual);
         }
+
+        @Test
+        void shouldSendNotifications_PAGAMENTO_CONFIRMADO() {
+            var customerId = "123";
+            var orderId = 123L;
+            var notificationType = NotificationType.PAGAMENTO_CONFIRMADO;
+            var expected = "Pagamento confirmado para o pedido " + orderId;
+
+            when(customerGateway.findById(customerId)).thenReturn(new Customer(
+                    customerId,
+                    "12345678909",
+                    "email@email.com",
+                    "Name"
+            ));
+
+
+            String actual = useCase.sendNotification(customerId, orderId, notificationType);
+
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void shouldSendNotifications_PEDIDO_ENVIADO() {
+            var customerId = "123";
+            var orderId = 123L;
+            var notificationType = NotificationType.PEDIDO_PRONTO;
+            var expected = "Pedido '" + orderId + "' pronto";
+
+            when(customerGateway.findById(customerId)).thenReturn(new Customer(
+                    customerId,
+                    "12345678909",
+                    "email@email.com",
+                    "Name"
+            ));
+
+
+            String actual = useCase.sendNotification(customerId, orderId, notificationType);
+
+            assertEquals(expected, actual);
+        }
     }
 }
