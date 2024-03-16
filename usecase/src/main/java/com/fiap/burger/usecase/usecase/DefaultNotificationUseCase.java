@@ -1,5 +1,6 @@
 package com.fiap.burger.usecase.usecase;
 
+import com.fiap.burger.entity.common.NotificationType;
 import com.fiap.burger.entity.customer.Customer;
 import com.fiap.burger.usecase.adapter.gateway.CustomerGateway;
 import com.fiap.burger.usecase.adapter.usecase.NotificationUseCase;
@@ -18,30 +19,34 @@ public class DefaultNotificationUseCase implements NotificationUseCase {
         this.customerGateway = customerGateway;
     }
     @Override
-    public String sendNotification(String customerId) {
-        sendEmail(customerId);
-        sendSMS(customerId);
-
-        return "Notifications sent successfully to customerId '" + customerId + "'";
-    }
-
-    private String sendEmail(String customerId) {
+    public String sendNotification(String customerId, Long orderId, NotificationType notificationType) {
         Customer customer = customerGateway.findById(customerId);
         if (customer == null) {
             throw new InvalidAttributeException(String.format("Customer '%s' not found.", customerId), "customerToken");
         }
+        sendEmail(customerId, orderId, notificationType);
+        sendSMS(customerId,orderId, notificationType);
+
+        return buildMessageBy(orderId, notificationType);
+    }
+
+    private String sendEmail(String customerId, Long orderId, NotificationType notificationType) {
         LOGGER.info("E-mail sent successfully to customerId '" + customerId + "'");
 
-        return "E-mail sent successfully to customerId '" + customerId + "'";
+        return buildMessageBy(orderId, notificationType);
     }
 
-    private String sendSMS(String customerId) {
-        Customer customer = customerGateway.findById(customerId);
-        if (customer == null) {
-            throw new InvalidAttributeException(String.format("Customer '%s' not found.", customerId), "customerToken");
-        }
+    private String sendSMS(String customerId, Long orderId, NotificationType notificationType) {
         LOGGER.info("SMS sent successfully to customerId '" + customerId + "'");
 
-        return "SMS sent successfully to customerId '" + customerId + "'";
+        return buildMessageBy(orderId, notificationType);
+    }
+
+    private String buildMessageBy(Long orderId, NotificationType notificationType) {
+        return switch (notificationType) {
+            case PAGAMENTO_NAO_CONFIRMADO -> "Pagamento não confirmado para o pedido " + orderId;
+            case PAGAMENTO_CONFIRMADO -> "Pagamento confirmado para o pedido " + orderId;
+            case PEDIDO_PRONTO -> "Pedido '" + orderId + "' pronto";
+        };
     }
 }

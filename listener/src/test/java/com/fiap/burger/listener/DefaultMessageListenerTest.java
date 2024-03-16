@@ -1,6 +1,7 @@
 package com.fiap.burger.listener;
 
 import com.fiap.burger.controller.adapter.api.NotificationController;
+import com.fiap.burger.entity.common.NotificationType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,10 +22,12 @@ class DefaultMessageListenerTest {
     @Test
     void shouldSendNotifications() {
         var customerId = "123";
-        when(controller.sendNotification(customerId)).thenReturn(customerId);
+        var orderId = 123L;
+        var notificationType = NotificationType.PAGAMENTO_CONFIRMADO;
+        when(controller.sendNotification(customerId, orderId, notificationType)).thenReturn(customerId);
 
-        listener.notificationsQueueListener("{\"customerId\":123,\"status\":\"APROVADO\"}");
+        listener.notificationsQueueListener("{\"customerId\":123,\"orderId\": 123,\"notificationType\":\"PAGAMENTO_CONFIRMADO\"}");
 
-        verify(controller, times(1)).sendNotification(customerId);
+        verify(controller, times(1)).sendNotification(customerId, orderId, notificationType);
     }
 }

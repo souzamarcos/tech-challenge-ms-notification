@@ -1,5 +1,6 @@
 package com.fiap.burger.api.api;
 
+import com.fiap.burger.api.notification.request.NotificationRequestDto;
 import com.fiap.burger.api.notification.response.NotificationResponseDto;
 import com.fiap.burger.controller.adapter.api.NotificationController;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,8 +18,13 @@ public class NotificationApi {
 
     @Operation(summary = "Enviar notificações", description = "Enviar notificações para o customerId especificado", tags = {"notificacao"})
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "customerId inválido")})
-    @PutMapping("/{customerId}")
-    public NotificationResponseDto sendNotification(@PathVariable String customerId) {
-        return NotificationResponseDto.toResponseDto(controller.sendNotification(customerId));
+    @PutMapping
+    public NotificationResponseDto sendNotification(@RequestBody NotificationRequestDto notificationRequestDto) {
+        return NotificationResponseDto.toResponseDto(
+                controller.sendNotification(
+                        notificationRequestDto.customerId(),
+                        notificationRequestDto.orderId(),
+                        notificationRequestDto.notificationType()
+                ));
     }
 }
