@@ -31,13 +31,15 @@ public class DefaultNotificationUseCase implements NotificationUseCase {
     }
 
     private String sendEmail(String customerId, Long orderId, NotificationType notificationType) {
-        LOGGER.info("E-mail sent successfully to customerId '" + customerId + "'");
+        var message = buildMessageBy(orderId, notificationType);
+        LOGGER.info("E-mail sent successfully to customerId '" + customerId + "': " + message);
 
-        return buildMessageBy(orderId, notificationType);
+        return message;
     }
 
     private String sendSMS(String customerId, Long orderId, NotificationType notificationType) {
-        LOGGER.info("SMS sent successfully to customerId '" + customerId + "'");
+        var message = buildMessageBy(orderId, notificationType);
+        LOGGER.info("SMS sent successfully to customerId '" + customerId + "': "+ message);
 
         return buildMessageBy(orderId, notificationType);
     }
