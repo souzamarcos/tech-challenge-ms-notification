@@ -8,4 +8,5 @@ dependencies {
     implementation("software.amazon.awssdk:sso")
     implementation("software.amazon.awssdk:ssooidc")
     implementation("software.amazon.awssdk:secretsmanager:2.21.10")
+    implementation("com.sun.mail:jakarta.mail:2.0.1")
 }

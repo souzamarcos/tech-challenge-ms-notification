@@ -3,8 +3,10 @@ package com.fiap.burger.usecase.usecase;
 import com.fiap.burger.entity.common.NotificationType;
 import com.fiap.burger.entity.customer.Customer;
 import com.fiap.burger.usecase.adapter.gateway.CustomerGateway;
+import com.fiap.burger.usecase.adapter.usecase.EmailUseCase;
 import com.fiap.burger.usecase.adapter.usecase.NotificationUseCase;
 import com.fiap.burger.usecase.misc.exception.*;
+import jakarta.validation.constraints.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,10 +15,12 @@ public class DefaultNotificationUseCase implements NotificationUseCase {
 
     private final Logger LOGGER = LoggerFactory.getLogger(DefaultNotificationUseCase.class);
 
+    private final EmailUseCase emailUseCase;
     private final CustomerGateway customerGateway;
 
-    public DefaultNotificationUseCase(CustomerGateway customerGateway) {
+    public DefaultNotificationUseCase(CustomerGateway customerGateway, EmailUseCase emailUseCase) {
         this.customerGateway = customerGateway;
+        this.emailUseCase = emailUseCase;
     }
     @Override
     public String sendNotification(String customerId, Long orderId, NotificationType notificationType) {
@@ -24,14 +28,18 @@ public class DefaultNotificationUseCase implements NotificationUseCase {
         if (customer == null) {
             throw new InvalidAttributeException(String.format("Customer '%s' not found.", customerId), "customerToken");
         }
-        sendEmail(customerId, orderId, notificationType);
+        sendEmail(customer, orderId, notificationType);
         sendSMS(customerId,orderId, notificationType);
 
         return buildMessageBy(orderId, notificationType);
     }
 
-    private String sendEmail(String customerId, Long orderId, NotificationType notificationType) {
-        LOGGER.info("E-mail sent successfully to customerId '" + customerId + "'");
+    private String sendEmail(Customer customer, Long orderId, NotificationType notificationType) {
+        emailUseCase.sendEmail(
+            customer.getEmail(),
+            buildMessageBy(orderId, notificationType),
+            buildMessageBy(orderId, notificationType)
+        );
 
         return buildMessageBy(orderId, notificationType);
     }
