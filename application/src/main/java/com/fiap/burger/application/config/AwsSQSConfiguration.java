@@ -5,6 +5,7 @@ import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
+import com.fiap.burger.usecase.misc.profiles.NotProduction;
 import com.fiap.burger.usecase.misc.profiles.NotTest;
 import com.fiap.burger.usecase.misc.profiles.Production;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +38,9 @@ public class AwsSQSConfiguration
     }
 
     @Bean
-    public AmazonSQS defaultAmazonSQSAsync() {
+    @Primary
+    @NotProduction
+    public AmazonSQSAsync defaultAmazonSQSAsync() {
         AwsClientBuilder.EndpointConfiguration endpoint = new AwsClientBuilder.EndpointConfiguration(LOCALSTACK_ENDPOINT, awsRegion);
 
         return AmazonSQSAsyncClientBuilder
