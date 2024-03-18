@@ -1,8 +1,9 @@
 package com.fiap.burger.application.config;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.client.builder.AwsClientBuilder;
-import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
 import com.fiap.burger.usecase.misc.profiles.NotProduction;
@@ -15,17 +16,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
-
-
-@EnableSqs
 @NotTest
+@EnableSqs
 @Configuration
 public class AwsSQSConfiguration
 {
-    private static final String LOCALSTACK_ENDPOINT = "http://localhost:4566";
-
+    @Value("${localstack.url}")
+    private String LOCALSTACK_ENDPOINT;
     @Value("${cloud.aws.region}")
-    private String awsRegion;
+    private String AWS_REGION;
 
     @Bean
     @Primary
@@ -41,12 +40,12 @@ public class AwsSQSConfiguration
     @Primary
     @NotProduction
     public AmazonSQSAsync defaultAmazonSQSAsync() {
-        AwsClientBuilder.EndpointConfiguration endpoint = new AwsClientBuilder.EndpointConfiguration(LOCALSTACK_ENDPOINT, awsRegion);
+        AwsClientBuilder.EndpointConfiguration endpoint = new AwsClientBuilder.EndpointConfiguration(LOCALSTACK_ENDPOINT, AWS_REGION);
 
         return AmazonSQSAsyncClientBuilder
                 .standard()
                 .withEndpointConfiguration(endpoint)
-                .withCredentials(new DefaultAWSCredentialsProviderChain())
+                .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials("fiap", "fiap")))
                 .build();
     }
 
